@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biblical Studies and Reviews</title>
+<meta name="description" content="Biblical Studies and Reviews — video Bible study, textual criticism, and reviews, inspired by Jonathan Edwards.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #E8E1D0;
+    --paper-2: #DDD4BE;
+    --paper-deep: #cfc4a8;
+    --ink: #2A241C;
+    --ink-soft: #57503e;
+    --ink-faint: #8b8370;
+    --rubric: #7A2E2A;
+    --rubric-bg: #f0dcd6;
+    --blue: #33465C;
+    --blue-bg: #dbe1e8;
+    --brass: #8a7038;
+    --brass-bg: #e9dcb8;
+    --line: #b9ac8e;
+    --card: #f3eddd;
+    --shadow: 0 2px 10px rgba(42,36,28,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'EB Garamond', Georgia, serif;
+    font-size:19px;
+    line-height:1.6;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cormorant Garamond', Georgia, serif;
+    color:var(--ink);
+    font-weight:600;
+  }
+  a{color:var(--blue);}
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+
+  /* Hero */
+  header.hero{
+    padding:64px 0 48px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  header.hero h1{
+    font-size:56px;
+    margin:0 0 8px;
+    letter-spacing:0.3px;
+  }
+  header.hero .tagline{
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:20px;
+    margin:0 0 20px;
+  }
+  .kicker{
+    font-family:'EB Garamond', serif;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--brass);
+    margin-bottom:18px;
+  }
+  .quote{
+    max-width:620px;
+    margin:24px auto 0;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:18px;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:18px 0;
+  }
+  .quote cite{
+    display:block;
+    margin-top:8px;
+    font-style:normal;
+    font-size:15px;
+    color:var(--ink-faint);
+  }
+
+  nav.pillbar{
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:28px;
+  }
+  nav.pillbar a{
+    text-decoration:none;
+    color:var(--ink);
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:8px 18px;
+    border-radius:999px;
+    font-size:15px;
+  }
+  nav.pillbar a:hover{background:var(--paper-2);}
+
+  section{padding:56px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  section h2{font-size:34px;margin:0 0 6px;}
+  section .section-sub{color:var(--ink-soft);font-style:italic;margin:0 0 28px;}
+
+  /* About */
+  .about-grid{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;}
+  .about-grid .photo{
+    width:180px;height:180px;border-radius:6px;
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--ink-faint);
+    font-size:14px;text-align:center;
+    box-shadow:var(--shadow);
+  }
+  .about-grid .text{flex:1;min-width:260px;}
+
+  /* Video grid */
+  .video-cta{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:28px;
+    box-shadow:var(--shadow);
+    text-align:center;
+    margin-bottom:32px;
+  }
+  .video-cta a.btn{
+    display:inline-block;
+    margin-top:14px;
+    background:var(--rubric);
+    color:#fdf7ee;
+    text-decoration:none;
+    padding:12px 26px;
+    border-radius:6px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:18px;
+    letter-spacing:0.3px;
+  }
+  .video-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+    gap:20px;
+  }
+  .video-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+  }
+  .video-card .thumb{
+    aspect-ratio:16/9;
+    background:var(--blue-bg);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--blue);
+    font-size:32px;
+  }
+  .video-card .info{padding:14px 16px;}
+  .video-card .info h3{font-size:19px;margin:0 0 4px;}
+  .video-card .info p{margin:0;color:var(--ink-soft);font-size:15px;}
+
+  /* Blog */
+  .blog-list{display:flex;flex-direction:column;gap:18px;}
+  .blog-post{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:22px 26px;
+    box-shadow:var(--shadow);
+  }
+  .blog-post h3{margin:0 0 6px;font-size:24px;}
+  .blog-post .meta{color:var(--ink-faint);font-size:14px;margin-bottom:10px;}
+  .blog-post p{margin:0;color:var(--ink-soft);}
+  .blog-empty{
+    text-align:center;
+    color:var(--ink-faint);
+    font-style:italic;
+    padding:24px;
+  }
+
+  /* App feature */
+  .app-feature{
+    display:flex;
+    gap:28px;
+    align-items:center;
+    background:var(--brass-bg);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:28px;
+    box-shadow:var(--shadow);
+    flex-wrap:wrap;
+  }
+  .app-feature .spine{
+    width:70px;height:130px;
+    background:#6a4b8a;
+    border-radius:4px;
+    flex-shrink:0;
+    box-shadow:var(--shadow);
+  }
+  .app-feature .text{flex:1;min-width:240px;}
+  .app-feature a.btn{
+    display:inline-block;
+    margin-top:12px;
+    background:var(--ink);
+    color:var(--paper);
+    text-decoration:none;
+    padding:10px 22px;
+    border-radius:6px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:17px;
+  }
+
+  /* Newsletter */
+  .newsletter-box{
+    background:var(--rubric-bg);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:32px;
+    text-align:center;
+    box-shadow:var(--shadow);
+  }
+  .newsletter-box form{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:18px;
+  }
+  .newsletter-box input[type="email"]{
+    font-family:'EB Garamond', serif;
+    font-size:17px;
+    padding:11px 14px;
+    border:1px solid var(--line);
+    border-radius:6px;
+    width:280px;
+    background:#fdf7ee;
+    color:var(--ink);
+  }
+  .newsletter-box button{
+    font-family:'Cormorant Garamond', serif;
+    font-size:18px;
+    padding:11px 24px;
+    background:var(--rubric);
+    color:#fdf7ee;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .newsletter-box .fineprint{
+    margin-top:12px;
+    font-size:13px;
+    color:var(--ink-faint);
+  }
+
+  footer{
+    text-align:center;
+    padding:36px 0 60px;
+    color:var(--ink-faint);
+    font-size:14px;
+  }
+  footer a{color:var(--ink-soft);}
+
+  @media (max-width:640px){
+    header.hero h1{font-size:40px;}
+    section h2{font-size:28px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">A Biblical Studies and Reviews Channel</div>
+    <h1>Biblical Studies and Reviews</h1>
+    <p class="tagline">Digging into the text, the manuscripts, and the questions worth resolving.</p>
+
+    <div class="quote">
+      &ldquo;Resolved, whenever I so much question whether I have done my duty, as that my quiet and calm is thereby disturbed, to set it down, and also how the question was resolved.&rdquo;
+      <cite>&mdash; Jonathan Edwards, Resolution 35, Dec. 18, 1722</cite>
+    </div>
+
+    <nav class="pillbar">
+      <a href="#about">About</a>
+      <a href="#videos">Videos</a>
+      <a href="#blog">Blog</a>
+      <a href="#app">The App</a>
+      <a href="#newsletter">Newsletter</a>
+    </nav>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <h2>About</h2>
+    <p class="section-sub">Who this channel is for, and why it exists.</p>
+    <div class="about-grid">
+      <div class="photo">Photo<br>goes here</div>
+      <div class="text">
+        <!-- EDIT ME: replace with your real bio -->
+        <p>I'm Stephen Hackett, and Biblical Studies and Reviews is where I work through Scripture the slow way &mdash; textual criticism, original languages, and the questions that come up when you actually sit with a passage instead of skimming it. Some of it is verse-by-verse study, some of it is reviewing tools and resources for people doing the same kind of digging.</p>
+        <p>This site is the home base for the channel: videos, a running blog for things that don't fit in a video, and a link to <a href="#app">Digging Deep: Notetaker Deluxe</a>, the Bible study notebook app that grew out of this work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="videos">
+  <div class="wrap">
+    <h2>Videos</h2>
+    <p class="section-sub">New studies and reviews, posted regularly.</p>
+
+    <div class="video-cta">
+      <p style="margin:0;">Subscribe on YouTube so you don't miss a new one.</p>
+      <a class="btn" href="https://www.youtube.com/@BiblicalStudiesandReviews" target="_blank" rel="noopener">Watch on YouTube &rarr;</a>
+    </div>
+
+    <!-- EDIT ME: swap these placeholder cards for your real videos.
+         For each one, replace the thumb/title/description, and wrap the whole
+         card in a link to the real video, or replace .thumb with a real
+         <iframe src="https://www.youtube.com/embed/VIDEO_ID"> embed. -->
+    <div class="video-grid">
+      <div class="video-card">
+        <div class="thumb">&#9654;</div>
+        <div class="info">
+          <h3>Latest episode</h3>
+          <p>Swap this card for your newest video.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="thumb">&#9654;</div>
+        <div class="info">
+          <h3>Featured study</h3>
+          <p>Swap this card for a featured or pinned video.</p>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="thumb">&#9654;</div>
+        <div class="info">
+          <h3>Featured review</h3>
+          <p>Swap this card for a resource or tool review.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blog">
+  <div class="wrap">
+    <h2>Blog</h2>
+    <p class="section-sub">Notes and write-ups that don't fit neatly into a video.</p>
+
+    <!-- EDIT ME: replace this placeholder with real posts as you write them -->
+    <div class="blog-list">
+      <div class="blog-empty">Nothing posted yet &mdash; check back soon.</div>
+    </div>
+  </div>
+</section>
+
+<section id="app">
+  <div class="wrap">
+    <h2>The App</h2>
+    <p class="section-sub">A running Bible study notebook, built alongside this channel.</p>
+    <div class="app-feature">
+      <div class="spine"></div>
+      <div class="text">
+        <h3 style="margin:0 0 8px;font-size:24px;">Digging Deep: Notetaker Deluxe</h3>
+        <p style="margin:0;color:var(--ink-soft);">A running notebook for Bible study, built around the way Jonathan Edwards worked: read, resolve, write it down, and cross-reference it later. Includes the KJV, ASV, SBLGNT with tap-to-view critical apparatus, Strong's numbers, and more &mdash; free to use, right in your browser.</p>
+        <a class="btn" href="https://hackett5014544949-debug.github.io/miscellanies/" target="_blank" rel="noopener">Open the app &rarr;</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="newsletter">
+  <div class="wrap">
+    <div class="newsletter-box">
+      <h2 style="margin:0;">Get new studies by email</h2>
+      <p class="section-sub" style="margin-bottom:0;">No spam &mdash; just a note when something new goes up.</p>
+
+      <!-- Mailchimp embedded form, standard pattern -->
+      <form action="https://outlook.us9.list-manage.com/subscribe/post?u=1b93f0f648a0ee28b86fced7b&amp;id=c54e302dc7" method="post" target="_blank" novalidate>
+        <input type="email" name="EMAIL" placeholder="you@example.com" required>
+        <!-- honeypot field, must stay hidden and empty -->
+        <div style="position:absolute;left:-5000px;" aria-hidden="true">
+          <input type="text" name="b_1b93f0f648a0ee28b86fced7b_c54e302dc7" tabindex="-1" value="">
+        </div>
+        <button type="submit">Subscribe</button>
+      </form>
+      <div class="fineprint">Powered by Mailchimp. Unsubscribe anytime.</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Biblical Studies and Reviews &middot; <a href="https://www.youtube.com/@BiblicalStudiesandReviews" target="_blank" rel="noopener">YouTube</a> &middot; <a href="https://hackett5014544949-debug.github.io/miscellanies/" target="_blank" rel="noopener">Digging Deep app</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
