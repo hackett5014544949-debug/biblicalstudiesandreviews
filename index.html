@@ -373,7 +373,15 @@
       <div class="text">
         <h3 style="margin:0 0 8px;font-size:24px;">Digging Deep: Notetaker Deluxe</h3>
         <p style="margin:0;color:var(--ink-soft);">A running notebook for Bible study, built around the way Jonathan Edwards worked: read, resolve, write it down, and cross-reference it later. Includes the KJV, ASV, SBLGNT with tap-to-view critical apparatus, Strong's numbers, and more &mdash; free to use, right in your browser.</p>
-        <a class="btn" href="https://hackett5014544949-debug.github.io/miscellanies/" target="_blank" rel="noopener">Open the app &rarr;</a>
+        <div class="app-gate">
+                  <p style="margin:10px 0 12px;color:var(--ink-soft);font-size:15px;">Free to use. Go through the quick page below &mdash; give your email and tip if you'd like &mdash; and you'll get a password to unlock it here.</p>
+                  <a class="btn" href="#" id="gumroadLink" target="_blank" rel="noopener" style="margin-bottom:14px;">Get your free password &rarr;</a>
+                  <form id="appGateForm" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px;">
+                    <input type="text" id="appGateInput" placeholder="Enter password" autocomplete="off" style="font-family:'EB Garamond', serif;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:#fdf7ee;color:var(--ink);width:200px;">
+                    <button type="submit" class="btn" style="margin-top:0;">Unlock &rarr;</button>
+                  </form>
+                  <p id="appGateError" style="display:none;color:var(--rubric);font-size:14px;margin-top:8px;">That's not quite right &mdash; check your Gumroad receipt email.</p>
+                </div>
       </div>
     </div>
   </div>
@@ -401,9 +409,32 @@
 
 <footer>
   <div class="wrap">
-    <p>Biblical Studies and Reviews &middot; <a href="https://www.youtube.com/@BiblicalStudiesandReviews" target="_blank" rel="noopener">YouTube</a> &middot; <a href="https://hackett5014544949-debug.github.io/miscellanies/" target="_blank" rel="noopener">Digging Deep app</a></p>
+    <p>Biblical Studies and Reviews &middot; <a href="https://www.youtube.com/@BiblicalStudiesandReviews" target="_blank" rel="noopener">YouTube</a> &middot; <a href="#app">Digging Deep app</a></p>
   </div>
 </footer>
 
+<script>
+(function(){
+  var GUMROAD_URL = 'https://gumroad.com/'; // EDIT ME: replace with your real Gumroad product link once created
+  var PASSWORD = 'alwaysfree';
+  var APP_URL = 'https://hackett5014544949-debug.github.io/miscellanies/';
+  var link = document.getElementById('gumroadLink');
+  if (link) link.href = GUMROAD_URL;
+  var form = document.getElementById('appGateForm');
+  var input = document.getElementById('appGateInput');
+  var err = document.getElementById('appGateError');
+  if (!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var val = (input.value || '').trim().toLowerCase();
+    if (val === PASSWORD) {
+      err.style.display = 'none';
+      window.open(APP_URL, '_blank', 'noopener');
+    } else {
+      err.style.display = 'block';
+    }
+  });
+})();
+</script>
 </body>
 </html>
