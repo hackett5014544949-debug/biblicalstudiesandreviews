@@ -121,27 +121,32 @@
     <h1>Use it without the internet</h1>
     <p>Digging Deep is a normal web page with no account and no server behind it &mdash; every note you write is saved right on your own device. That means it's already built to keep working with no internet connection, as long as you set it up the right way first. Here's the reliable way to do that.</p>
 
-    <div class="card">
-      <div class="badge">Recommended</div>
-      <h2>Install it like an app</h2>
-      <p>Digging Deep can install itself onto your phone or computer like a real app, with its own icon, and it will keep working even with airplane mode on. Do this once, with a normal internet connection:</p>
-      <ol>
-        <li>Open the app below and let it fully load.</li>
-        <li><strong>On iPhone/iPad (Safari):</strong> tap the Share icon, then "Add to Home Screen."</li>
-        <li><strong>On Android (Chrome):</strong> tap the &#8942; menu, then "Install app" (or "Add to Home screen").</li>
-        <li><strong>On a computer (Chrome/Edge):</strong> click the install icon at the right side of the address bar, or the &#8942; menu &rarr; "Install Digging Deep&hellip;"</li>
-      </ol>
-      <p style="margin-bottom:0;">After that, open it from its own icon &mdash; not from this website &mdash; and it will load and save your notes with no connection at all.</p>
-      <a class="btn" href="https://hackett5014544949-debug.github.io/miscellanies/" target="_blank" rel="noopener">Open Digging Deep &rarr;</a>
-      <div class="note">The first time you use a particular Bible translation, dictionary, or Strong's lookup, it needs one internet connection to fetch that piece &mdash; after that, it's cached on your device and keeps working offline. Your own notes always save locally, online or off, from the very first time you open it.</div>
+    <div class="note" style="margin:0 0 24px;">
+      <strong>Best on a computer, in Chrome or Edge.</strong> Both options below work best in <strong>Chrome or Edge on a Mac or PC</strong>. On a phone, the "Install it like an app" option still works, but with real limits &mdash; see the note under it. Safari on Mac can install the app too, but Chrome/Edge are more reliable for offline caching.
     </div>
 
     <div class="card">
-      <h2>Prefer a plain downloaded file?</h2>
-      <p>Click below to save the app itself as a single <code>.html</code> file on your computer &mdash; no install, no account, nothing else needed.</p>
-      <button type="button" id="downloadFileBtn" class="btn secondary" style="border:none;cursor:pointer;font-size:18px;">Download the file &rarr;</button>
+      <div class="badge">Recommended for computers</div>
+      <h2>Download the file</h2>
+      <p>Click below to save the app itself as a single <code>.html</code> file to your computer &mdash; no install, no account, nothing else needed. Works in Chrome or Edge on Mac or PC.</p>
+      <button type="button" id="downloadFileBtn" class="btn" style="border:none;cursor:pointer;font-size:18px;">Download the file &rarr;</button>
       <p id="downloadStatus" style="margin:10px 0 0;font-size:14px;color:var(--ink-soft);"></p>
-      <p style="margin:14px 0 0;color:var(--ink-soft);font-size:16px;">Double-click the downloaded file any time to open it &mdash; no internet required for your notes. The first use of a translation or dictionary still needs one connection to fetch that piece; after that it's cached in the file's browser storage.</p>
+      <p style="margin:14px 0 0;color:var(--ink-soft);font-size:16px;">Double-click the downloaded file any time to open it &mdash; no internet required for your notes. The first use of a particular Bible translation or dictionary still needs one connection to fetch that piece; after that it's cached and works offline from that file.</p>
+    </div>
+
+    <div class="card">
+      <div class="badge">Also works</div>
+      <h2>Install it like an app</h2>
+      <p>Digging Deep can also install itself like a real app, with its own icon. Do this once, with a normal internet connection:</p>
+      <ol>
+        <li>Open the app below and let it fully load.</li>
+        <li><strong>On a computer (Chrome/Edge):</strong> click the install icon at the right side of the address bar, or the &#8942; menu &rarr; "Install Digging Deep&hellip;"</li>
+        <li><strong>On Android (Chrome):</strong> tap the &#8942; menu, then "Install app" (or "Add to Home screen").</li>
+        <li><strong>On iPhone/iPad (Safari only &mdash; not Chrome on iOS):</strong> tap the Share icon, then "Add to Home Screen."</li>
+      </ol>
+      <p style="margin-bottom:0;">After that, open it from its own icon &mdash; not from this website &mdash; and it will load and save your notes with no connection at all.</p>
+      <a class="btn secondary" href="https://hackett5014544949-debug.github.io/miscellanies/" target="_blank" rel="noopener">Open Digging Deep &rarr;</a>
+      <div class="note">On phones, this is less reliable than on a computer: iPhones (and to a lesser extent Android) can clear an installed app's offline storage if it goes unused for a while or the device is low on space, which can mean losing the offline cache (not your notes &mdash; those export separately). The first time you use a Bible translation, dictionary, or Strong's lookup, it needs one internet connection to fetch that piece; after that it's cached and works offline.</div>
     </div>
   </div>
 </article>
