@@ -138,16 +138,44 @@
 
     <div class="card">
       <h2>Prefer a plain downloaded file?</h2>
-      <p>You can also save the app itself as a single file on your computer:</p>
-      <ol>
-        <li>Open the app (button above).</li>
-        <li>Press <strong>Ctrl+S</strong> (Windows) or <strong>Cmd+S</strong> (Mac) and save it as a webpage.</li>
-        <li>Double-click that saved file any time to open it, no internet required, for your notes and anything you'd already loaded.</li>
-      </ol>
-      <p style="margin-bottom:0;color:var(--ink-soft);font-size:16px;">This gives you a real local copy independent of this website, but the "Install it like an app" method above is easier to keep updated and is what we'd recommend for daily use.</p>
+      <p>Click below to save the app itself as a single <code>.html</code> file on your computer &mdash; no install, no account, nothing else needed.</p>
+      <button type="button" id="downloadFileBtn" class="btn secondary" style="border:none;cursor:pointer;font-size:18px;">Download the file &rarr;</button>
+      <p id="downloadStatus" style="margin:10px 0 0;font-size:14px;color:var(--ink-soft);"></p>
+      <p style="margin:14px 0 0;color:var(--ink-soft);font-size:16px;">Double-click the downloaded file any time to open it &mdash; no internet required for your notes. The first use of a translation or dictionary still needs one connection to fetch that piece; after that it's cached in the file's browser storage.</p>
     </div>
   </div>
 </article>
+
+<script>
+(function(){
+  var btn = document.getElementById('downloadFileBtn');
+  var status = document.getElementById('downloadStatus');
+  if (!btn) return;
+  btn.addEventListener('click', function(){
+    status.textContent = 'Fetching the latest version…';
+    fetch('https://hackett5014544949-debug.github.io/miscellanies/index.html', {cache:'no-store'})
+      .then(function(r){
+        if (!r.ok) throw new Error('Server responded with ' + r.status);
+        return r.text();
+      })
+      .then(function(html){
+        var blob = new Blob([html], {type:'text/html'});
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'digging-deep-offline.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
+        status.textContent = 'Downloaded — check your Downloads folder for digging-deep-offline.html.';
+      })
+      .catch(function(err){
+        status.textContent = 'Could not download automatically (' + err.message + '). Try "Open Digging Deep" above, then press Ctrl+S / Cmd+S to save it instead.';
+      });
+  });
+})();
+</script>
 
 <footer>
   <div class="wrap">
