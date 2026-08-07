@@ -399,18 +399,24 @@
     <h2>Blog</h2>
     <p class="section-sub">Notes and write-ups that don't fit neatly into a video.</p>
     <!-- EDIT ME: each post is its own page in the /blog folder, built from
-         blog/template.html. To publish a post, duplicate template.html,
-         write it, then add an entry here, newest first, like:
-
-           <div class="blog-post">
-             <h3><a href="blog/your-post-file.html">Your Post Title</a></h3>
-             <div class="meta">August 6, 2026</div>
-             <p>A short one- or two-sentence teaser for the post.</p>
-           </div>
-
-         Delete the .blog-empty line below once you have at least one post. -->
+         blog/template.html. To publish a new post, duplicate template.html,
+         write it, then add an entry here, newest first (top of the list). -->
     <div class="blog-list">
-      <div class="blog-empty">Nothing posted yet &mdash; check back soon.</div>
+      <div class="blog-post">
+        <h3><a href="blog/choosing-a-desert-island-bible.html">On Choosing a Desert-Island Bible</a></h3>
+        <div class="meta">August 6, 2026 &middot; Mark 8:34</div>
+        <p>Three English translations I'd keep if I could only have three &mdash; and why even three can't carry everything the Greek does.</p>
+      </div>
+      <div class="blog-post">
+        <h3><a href="blog/1400-missing-years-genesis-5-and-11.html">The 1,400 Missing Years: Genesis 5 and 11 in Greek and Hebrew</a></h3>
+        <div class="meta">August 6, 2026 &middot; Genesis 5:3</div>
+        <p>Why the Septuagint's chronology in Genesis 5 and 11 runs about 1,400 years longer than the Masoretic Text &mdash; and why neither side gets to claim neutrality by default.</p>
+      </div>
+      <div class="blog-post">
+        <h3><a href="blog/starlight-and-the-convention-of-simultaneity.html">Starlight and the Convention of Simultaneity</a></h3>
+        <div class="meta">August 6, 2026 &middot; Genesis 1:14</div>
+        <p>Why the starlight-travel-time objection to a young universe rests on an assumption most people never examine.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -431,6 +437,11 @@
             <button type="submit" class="btn" style="margin-top:0;">Unlock &rarr;</button>
           </form>
           <p id="appGateError" style="display:none;color:var(--rubric);font-size:14px;margin-top:8px;">That's not quite right &mdash; check your Gumroad receipt email.</p>
+          <div id="appGateUnlocked" style="display:none;">
+            <p style="margin:0 0 10px;color:var(--ink-soft);font-size:15px;">Welcome back &mdash; you've already unlocked this.</p>
+            <a class="btn" href="#" id="appOpenDirect" target="_blank" rel="noopener">Open Digging Deep &rarr;</a>
+            <button type="button" id="appForgetMe" style="margin-left:10px;background:none;border:none;color:var(--ink-faint);font-size:13px;text-decoration:underline;cursor:pointer;font-family:'EB Garamond', serif;">not you? reset</button>
+          </div>
         </div>
       </div>
     </div>
@@ -462,18 +473,49 @@
   var GUMROAD_URL = 'https://hackettwave.gumroad.com/l/digging-deep-free';
   var PASSWORD = 'alwaysfree';
   var APP_URL = 'https://hackett5014544949-debug.github.io/miscellanies/';
+  var UNLOCK_KEY = 'bsr_app_unlocked';
   var link = document.getElementById('gumroadLink');
   if (link) link.href = GUMROAD_URL;
   var form = document.getElementById('appGateForm');
   var input = document.getElementById('appGateInput');
   var err = document.getElementById('appGateError');
+  var unlockedBox = document.getElementById('appGateUnlocked');
+  var openDirect = document.getElementById('appOpenDirect');
+  var forgetMe = document.getElementById('appForgetMe');
+  if (openDirect) openDirect.href = APP_URL;
+
+  function showUnlocked(){
+    if (form) form.style.display = 'none';
+    if (err) err.style.display = 'none';
+    if (unlockedBox) unlockedBox.style.display = 'block';
+  }
+  function showLocked(){
+    if (form) form.style.display = 'flex';
+    if (unlockedBox) unlockedBox.style.display = 'none';
+  }
+
+  try {
+    if (window.localStorage && localStorage.getItem(UNLOCK_KEY) === 'yes') {
+      showUnlocked();
+    }
+  } catch (e) { /* localStorage unavailable, fall back to normal gate */ }
+
+  if (forgetMe) {
+    forgetMe.addEventListener('click', function(){
+      try { localStorage.removeItem(UNLOCK_KEY); } catch (e) {}
+      showLocked();
+    });
+  }
+
   if (!form) return;
   form.addEventListener('submit', function(e){
     e.preventDefault();
     var val = (input.value || '').trim().toLowerCase();
     if (val === PASSWORD) {
       err.style.display = 'none';
+      try { localStorage.setItem(UNLOCK_KEY, 'yes'); } catch (e2) {}
       window.open(APP_URL, '_blank', 'noopener');
+      showUnlocked();
     } else {
       err.style.display = 'block';
     }
