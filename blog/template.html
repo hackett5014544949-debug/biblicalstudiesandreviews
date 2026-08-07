@@ -1,0 +1,164 @@
+<!--
+  BLOG POST TEMPLATE — how to publish a new post
+
+  1. Duplicate this file. Name the copy something short and URL-friendly,
+     e.g. "why-i-love-textual-criticism.html" (lowercase, hyphens, no spaces).
+     Save it in the same "blog" folder as this template.
+  2. Edit the <title>, the POST TITLE, POST DATE, and POST BODY sections below.
+     Leave everything else (styles, header, footer) alone unless you want to
+     change the design site-wide.
+  3. In the main index.html file, find the Blog section (search for
+     id="blog") and add a new entry to the post list, for example:
+
+       <div class="blog-post">
+         <h3><a href="blog/why-i-love-textual-criticism.html">Why I Love Textual Criticism</a></h3>
+         <div class="meta">August 6, 2026</div>
+         <p>A short one- or two-sentence teaser for the post goes here.</p>
+       </div>
+
+     Put newest posts at the top of the list. Once you have at least one
+     real entry, delete the "Nothing posted yet" placeholder line.
+  4. Commit both files (the new post page + the updated index.html) the
+     same way you've been updating the site.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POST TITLE — Biblical Studies and Reviews</title>
+<meta name="description" content="A one-sentence description of this post for search engines and link previews.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #E8E1D0;
+    --paper-2: #DDD4BE;
+    --paper-deep: #cfc4a8;
+    --ink: #2A241C;
+    --ink-soft: #57503e;
+    --ink-faint: #8b8370;
+    --rubric: #7A2E2A;
+    --rubric-bg: #f0dcd6;
+    --blue: #33465C;
+    --blue-bg: #dbe1e8;
+    --brass: #8a7038;
+    --brass-bg: #e9dcb8;
+    --line: #b9ac8e;
+    --card: #f3eddd;
+    --shadow: 0 2px 10px rgba(42,36,28,0.14);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'EB Garamond', Georgia, serif;
+    font-size:19px;
+    line-height:1.7;
+  }
+  h1,h2,h3,.display{
+    font-family:'Cormorant Garamond', Georgia, serif;
+    color:var(--ink);
+    font-weight:600;
+  }
+  a{color:var(--blue);}
+  .wrap{max-width:760px;margin:0 auto;padding:0 24px;}
+
+  header.site{
+    padding:28px 0;
+    border-bottom:1px solid var(--line);
+  }
+  header.site .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+  header.site a.home{
+    text-decoration:none;
+    color:var(--ink);
+    font-family:'Cormorant Garamond', serif;
+    font-size:20px;
+    font-weight:600;
+  }
+  header.site a.back{
+    text-decoration:none;
+    color:var(--ink-soft);
+    font-size:15px;
+    border:1px solid var(--line);
+    background:var(--card);
+    padding:6px 14px;
+    border-radius:999px;
+  }
+  header.site a.back:hover{background:var(--paper-2);}
+
+  article{padding:48px 0 64px;}
+  article .kicker{
+    letter-spacing:2px;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--brass);
+    margin-bottom:10px;
+  }
+  article h1{font-size:42px;margin:0 0 10px;line-height:1.15;}
+  article .meta{color:var(--ink-faint);font-size:15px;margin-bottom:32px;font-style:italic;}
+  article .body p{margin:0 0 20px;}
+  article .body h2{font-size:28px;margin:36px 0 14px;}
+  article .body h3{font-size:22px;margin:28px 0 12px;}
+  article .body blockquote{
+    margin:24px 0;
+    padding:16px 22px;
+    background:var(--card);
+    border-left:3px solid var(--brass);
+    border-radius:4px;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+  article .body img{max-width:100%;border-radius:6px;box-shadow:var(--shadow);}
+
+  footer{
+    text-align:center;
+    padding:36px 0 60px;
+    color:var(--ink-faint);
+    font-size:14px;
+    border-top:1px solid var(--line);
+  }
+  footer a{color:var(--ink-soft);}
+
+  @media (max-width:640px){
+    article h1{font-size:32px;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="home" href="../index.html">Biblical Studies and Reviews</a>
+    <a class="back" href="../index.html#blog">&larr; Back to all posts</a>
+  </div>
+</header>
+
+<article>
+  <div class="wrap">
+    <div class="kicker">Blog</div>
+    <h1>POST TITLE GOES HERE</h1>
+    <div class="meta">POST DATE — e.g. August 6, 2026</div>
+
+    <div class="body">
+      <!-- POST BODY: write your post as plain paragraphs, headings, and
+           blockquotes below. Delete this comment and the placeholder
+           paragraphs when you're ready to write. -->
+      <p>This is the opening paragraph of the post. Replace this with your actual writing.</p>
+      <p>Use additional paragraphs like this one for the rest of the post. You can add
+        <code>&lt;h2&gt;</code> subheadings, <code>&lt;blockquote&gt;</code> quotes, and
+        images (<code>&lt;img src="..."&gt;</code>) as needed — the styling will match
+        automatically.</p>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <div class="wrap">
+    <p>Biblical Studies and Reviews &middot; <a href="https://www.youtube.com/@BiblicalStudiesandReviews" target="_blank" rel="noopener">YouTube</a> &middot; <a href="../index.html#blog">Blog</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
