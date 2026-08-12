@@ -356,7 +356,11 @@
   section .section-sub{font-size:18px;margin-top:9px;}
   .about-grid{gap:38px;}
   .about-grid .photo{width:196px;height:196px;border-radius:50%;padding:6px;background:var(--brass-bg);box-shadow:var(--shadow);}
-  .about-grid .photo img{border-radius:50%;}
+  .about-grid .photo img{
+    border-radius:50%;
+    transform:scale(1.28) translateY(-6%);
+    transform-origin:center;
+  }
   .about-grid .text p:first-child::first-letter{float:left;margin:.12em .12em 0 0;color:var(--rubric);font-family:'Cormorant Garamond',Georgia,serif;font-size:4.2em;line-height:.72;}
   .video-cta,.blog-post,.app-feature,.newsletter-box{border-radius:12px;box-shadow:var(--shadow);}
   .video-cta{padding:30px;background:linear-gradient(135deg,#fbf5e8,#eee0c4);}
