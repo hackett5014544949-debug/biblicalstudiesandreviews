@@ -5,8 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Biblical Studies and Reviews</title>
 <meta name="description" content="Biblical Studies and Reviews — video Bible study, textual criticism, and reviews, inspired by Jonathan Edwards.">
+<meta name="theme-color" content="#6E3929">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper: #E8E1D0;
@@ -324,6 +325,72 @@
     section h2{font-size:28px;}
     .quote{padding:18px 20px;}
     .quote::before,.quote::after{display:none;}
+  }
+
+  /* Site identity — a field notebook for careful study, not a generic ministry page. */
+  :root{
+    --paper:#e9dfca; --paper-2:#ded0b3; --paper-deep:#c9b790;
+    --ink:#29221b; --ink-soft:#5e5140; --ink-faint:#857763;
+    --rubric:#6e3929; --rubric-bg:#f1ddd2; --blue:#385168; --blue-bg:#dbe5e9;
+    --brass:#7d6430; --brass-bg:#eadcb7; --line:#c2ad85; --card:#faf3e5;
+    --shadow:0 12px 32px rgba(60,43,23,.11), 0 2px 5px rgba(60,43,23,.07);
+    --ui:'Source Sans 3', Arial, sans-serif;
+  }
+  body{background:radial-gradient(1100px 560px at 50% -110px,rgba(255,250,236,.95),transparent 68%),repeating-linear-gradient(0deg,rgba(98,72,38,.018) 0,rgba(98,72,38,.018) 1px,transparent 1px,transparent 5px),var(--paper);}
+  .wrap{max-width:1020px;}
+  header.hero{padding:58px 0 50px;border-bottom-color:rgba(125,100,48,.55);}
+  header.hero h1{font-size:clamp(46px,7vw,68px);line-height:.94;letter-spacing:.01em;text-shadow:0 1px 0 #fff9ea,0 4px 16px rgba(73,49,23,.1);}
+  header.hero .tagline{max-width:620px;margin:14px auto 0;font-size:21px;}
+  .kicker,.quote cite{font-family:var(--ui);font-weight:600;letter-spacing:.14em;}
+  .kicker{font-size:10px;margin-bottom:15px;}
+  .quote{max-width:600px;margin-top:26px;padding:17px 25px;font-size:17px;background:rgba(250,243,229,.68);border-color:rgba(125,100,48,.48);}
+  .quote cite{font-size:10px;letter-spacing:.075em;}
+  nav.pillbar{gap:8px;margin-top:26px;}
+  nav.pillbar a{font-family:var(--ui);font-weight:600;font-size:13px;letter-spacing:.02em;padding:8px 15px;background:rgba(250,243,229,.72);transition:all .18s ease;}
+  nav.pillbar a[href="#videos"]{background:var(--rubric);border-color:var(--rubric);color:#fff9ed;box-shadow:0 3px 8px rgba(110,57,41,.19);}
+  nav.pillbar a:hover{transform:translateY(-2px);box-shadow:0 5px 12px rgba(64,45,22,.12);}
+  section{position:relative;padding:70px 0;border-bottom-color:rgba(194,173,133,.68);}
+  section:nth-of-type(even){background:rgba(255,251,239,.35);}
+  section h2{font-size:clamp(32px,4vw,42px);line-height:1;letter-spacing:.01em;}
+  section h2::before{content:'✦';display:block;margin-bottom:9px;color:var(--brass);font-family:var(--ui);font-size:12px;}
+  section .section-sub{font-size:18px;margin-top:9px;}
+  .about-grid{gap:38px;}
+  .about-grid .photo{width:196px;height:196px;border-radius:50%;padding:6px;background:var(--brass-bg);box-shadow:var(--shadow);}
+  .about-grid .photo img{border-radius:50%;}
+  .about-grid .text p:first-child::first-letter{float:left;margin:.12em .12em 0 0;color:var(--rubric);font-family:'Cormorant Garamond',Georgia,serif;font-size:4.2em;line-height:.72;}
+  .video-cta,.blog-post,.app-feature,.newsletter-box{border-radius:12px;box-shadow:var(--shadow);}
+  .video-cta{padding:30px;background:linear-gradient(135deg,#fbf5e8,#eee0c4);}
+  .video-cta a.btn,.app-feature a.btn,.newsletter-box button{font-family:var(--ui);font-weight:700;letter-spacing:.015em;border-radius:7px;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;}
+  .video-cta a.btn{background:var(--rubric);box-shadow:0 4px 11px rgba(110,57,41,.2);}
+  .video-cta a.btn:hover,.app-feature a.btn:hover,.newsletter-box button:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
+  .video-grid{gap:22px;}
+  .video-card{border-radius:12px;transition:transform .2s ease,box-shadow .2s ease;}
+  .video-card:hover{transform:translateY(-5px);box-shadow:0 16px 28px rgba(53,37,19,.15);}
+  .video-card .thumb{position:relative;overflow:hidden;}
+  .video-card .thumb::after{content:'▶';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:50px;height:50px;padding-left:3px;border-radius:50%;background:rgba(41,34,27,.77);color:#fffaf0;font-family:var(--ui);font-size:17px;opacity:0;transition:opacity .2s ease,transform .2s ease;}
+  .video-card:hover .thumb::after{opacity:1;transform:translate(-50%,-50%) scale(1.06);}
+  .video-card .info{padding:18px 19px 20px;}
+  .video-card .info h3{font-size:23px;line-height:1.06;}
+  .video-card .info p,.blog-post .meta,.newsletter-box .fineprint{font-family:var(--ui);}
+  .video-card .info p{font-size:14px;line-height:1.45;}
+  .blog-list{gap:14px;}
+  .blog-post{padding:23px 28px;border-left:4px solid var(--brass);transition:transform .18s ease,box-shadow .18s ease;}
+  .blog-post:hover{transform:translateX(5px);box-shadow:0 12px 24px rgba(53,37,19,.1);}
+  .blog-post h3{font-size:27px;line-height:1.05;}
+  .blog-post .meta{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+  .app-feature{padding:34px;background:linear-gradient(135deg,#ebdbb4,#e2cd9c);}
+  .app-feature .spine{position:relative;width:84px;height:146px;background:linear-gradient(90deg,#422d56,#6a4b8a 16%,#7d5ca0 58%,#51376d);box-shadow:inset 5px 0 10px rgba(255,255,255,.12),inset -7px 0 10px rgba(0,0,0,.22),var(--shadow);}
+  .app-feature .spine::after{content:'DIGGING\A DEEP';white-space:pre;position:absolute;inset:16px 0;color:#f8edcc;writing-mode:vertical-rl;text-align:center;font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.18em;}
+  .newsletter-box{padding:40px 32px;background:linear-gradient(135deg,#f3dfd5,#edd3c5);}
+  .newsletter-box input[type="email"]{font-family:var(--ui);border-radius:7px;}
+  .newsletter-box button{font-size:15px;}
+  footer{font-family:var(--ui);font-size:12px;letter-spacing:.04em;padding:42px 0 60px;}
+  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(56,81,104,.5);outline-offset:3px;}
+  @media (max-width:640px){
+    header.hero{padding:45px 0 40px;} header.hero .tagline{font-size:19px;}
+    section{padding:52px 0;} .about-grid .photo{margin:0 auto;}
+    .video-card .thumb::after{opacity:1;width:42px;height:42px;font-size:14px;}
+    .app-feature{padding:26px;}
   }
 </style>
 </head>
