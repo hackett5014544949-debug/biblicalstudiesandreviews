@@ -241,6 +241,29 @@
     font-style:italic;
     padding:24px;
   }
+  /* Resources */
+  .resource-list{display:flex;flex-direction:column;gap:18px;}
+  .resource-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:22px 26px;
+    box-shadow:var(--shadow);
+  }
+  .resource-card h3{margin:0 0 6px;font-size:24px;}
+  .resource-card .meta{color:var(--ink-faint);font-size:14px;margin-bottom:10px;}
+  .resource-card p{margin:0 0 14px;color:var(--ink-soft);}
+  .resource-card a.btn{
+    display:inline-block;
+    background:var(--ink);
+    color:var(--paper);
+    text-decoration:none;
+    padding:10px 22px;
+    border-radius:6px;
+    font-family:'Cormorant Garamond', serif;
+    font-size:18px;
+    letter-spacing:0.3px;
+  }
   /* App feature */
   .app-feature{
     display:flex;
@@ -382,6 +405,13 @@
   .blog-post:hover{transform:translateX(5px);box-shadow:0 12px 24px rgba(53,37,19,.1);}
   .blog-post h3{font-size:27px;line-height:1.05;}
   .blog-post .meta{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+  .resource-list{gap:14px;}
+  .resource-card{padding:23px 28px;border-left:4px solid var(--blue);transition:transform .18s ease,box-shadow .18s ease;}
+  .resource-card:hover{transform:translateX(5px);box-shadow:0 12px 24px rgba(53,37,19,.1);}
+  .resource-card h3{font-size:27px;line-height:1.05;}
+  .resource-card .meta{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-family:var(--ui);}
+  .resource-card a.btn{transition:transform .18s ease,box-shadow .18s ease;}
+  .resource-card a.btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
   .app-feature{padding:34px;background:linear-gradient(135deg,#ebdbb4,#e2cd9c);}
   .app-feature .spine{position:relative;width:84px;height:146px;background:linear-gradient(90deg,#422d56,#6a4b8a 16%,#7d5ca0 58%,#51376d);box-shadow:inset 5px 0 10px rgba(255,255,255,.12),inset -7px 0 10px rgba(0,0,0,.22),var(--shadow);}
   .app-feature .spine::after{content:'DIGGING\A DEEP';white-space:pre;position:absolute;inset:16px 0;color:#f8edcc;writing-mode:vertical-rl;text-align:center;font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.18em;}
@@ -412,6 +442,7 @@
       <a href="#about">About</a>
       <a href="#videos">Videos</a>
       <a href="#blog">Blog</a>
+      <a href="#resources">Resources</a>
       <a href="#app">The App</a>
       <a href="#newsletter">Newsletter</a>
     </nav>
@@ -487,6 +518,20 @@
         <h3><a href="blog/starlight-and-the-convention-of-simultaneity.html">Starlight and the Convention of Simultaneity</a></h3>
         <div class="meta">August 6, 2026 &middot; Genesis 1:14</div>
         <p>Why the starlight-travel-time objection to a young universe rests on an assumption most people never examine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="resources">
+  <div class="wrap">
+    <h2>Resources</h2>
+    <p class="section-sub">Public-domain texts and reference tools worth having on hand.</p>
+    <div class="resource-list">
+      <div class="resource-card">
+        <h3>The Greek New Testament According to the Byzantine Text (2026)</h3>
+        <div class="meta">Robinson&ndash;Pierpont Byzantine Textform &middot; Guardian Press &middot; Public domain</div>
+        <p>A full, hardback-quality edition of the Byzantine (Majority) Greek New Testament, aligned with the newly released Robinson&ndash;Pierpont 2026 text. It includes two comparative apparatuses: an <em>edition apparatus</em> tracing this text against eleven landmark Greek New Testaments (NA28, SBL, Tyndale House, Westcott&ndash;Hort, both Textus Receptus editions, and more), and a <em>manuscript apparatus</em> citing early papyri and uncial evidence for 50 significant variant units. Released into the public domain &mdash; free to copy, print, or redistribute.</p>
+        <a class="btn" href="resources/greek-new-testament-byzantine-text-2026.pdf" download>Download the PDF &rarr;</a>
       </div>
     </div>
   </div>
