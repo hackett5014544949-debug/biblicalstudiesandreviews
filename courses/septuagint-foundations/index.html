@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Foundations of the Septuagint — Ad Fontes Course</title>
+<style>
+  :root {
+    --ink: #2b2620;
+    --paper: #faf6ee;
+    --accent: #7a4b2e;
+    --accent-dark: #5c3820;
+    --line: #ddd2bd;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 48px 24px 96px; }
+
+  /* ---------- Password + name gate ---------- */
+  #gate {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  #gate .box { max-width: 420px; text-align: left; }
+  #gate h1 { font-size: 1.6rem; margin-bottom: 8px; text-align: center; }
+  #gate p.intro { color: #6b6355; margin-bottom: 24px; text-align: center; }
+  #gate label {
+    display: block;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent-dark);
+    margin-bottom: 4px;
+  }
+  #gate input[type="text"], #gate input[type="password"] {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 1rem;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-family: inherit;
+  }
+  #gate button {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 1rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  #gate button:hover { background: var(--accent-dark); }
+  #gate .error {
+    color: #a33b2a;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    display: none;
+    text-align: center;
+  }
+
+  /* ---------- Course content (hidden until unlocked) ---------- */
+  #course { display: none; }
+
+  header.course-header { text-align: center; margin-bottom: 16px; }
+  header.course-header .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-family: Georgia, serif;
+  }
+  header.course-header h1 { font-size: 2rem; margin: 8px 0 12px; }
+  header.course-header p.lede { color: #55503f; max-width: 560px; margin: 0 auto; }
+  header.course-header p.welcome { font-size: 0.9rem; color: var(--accent-dark); margin-top: 10px; }
+
+  .progress-panel {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #6b6355;
+    margin-top: 18px;
+  }
+  .progress-panel .bar {
+    width: 100%;
+    max-width: 400px;
+    margin: 8px auto 0;
+    height: 6px;
+    background: #e7ddc7;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-panel .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .book-panel {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    background: #f1ead9;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 18px 20px;
+    margin: 32px 0 48px;
+  }
+  .book-panel .book-label {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent-dark);
+    margin: 0 0 4px;
+  }
+  .book-panel p { margin: 0; }
+  .book-panel a { color: var(--accent-dark); }
+
+  .module {
+    border-top: 1px solid var(--line);
+    padding: 40px 0;
+  }
+  .module:first-of-type { border-top: none; }
+  .module .module-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .module h2 { font-size: 1.4rem; margin: 0 0 6px; }
+  .module .reading {
+    font-size: 0.92rem;
+    color: #6b6355;
+    font-style: italic;
+    margin: 0 0 20px;
+  }
+
+  /* Locked module teaser */
+  .module.is-locked .module-body { display: none; }
+  .module.is-locked .locked-teaser { display: block; }
+  .locked-teaser { display: none; }
+  .locked-teaser h2 { opacity: 0.55; }
+  .locked-teaser .lock-note {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: #8a7d5c;
+    background: #efe6cf;
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 6px 14px;
+    margin-top: 4px;
+  }
+
+  .video-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .video-frame iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+  .video-placeholder {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: repeating-linear-gradient(135deg, #e7ddc7, #e7ddc7 10px, #ded2b6 10px, #ded2b6 20px);
+    border: 2px dashed #b8a97e;
+    border-radius: 8px;
+    margin-bottom: 12px;
+  }
+  .video-placeholder .label {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center; color: #6b5b34; font-size: 0.9rem; max-width: 80%;
+  }
+  .video-caption {
+    font-size: 0.85rem;
+    color: #6b6355;
+    margin: 0 0 20px;
+  }
+
+  /* ---------- Lite YouTube embed (thumbnail -> click -> inline player, never leaves page) ---------- */
+  .yt-lite {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%;
+    background: #000;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .yt-lite img {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .yt-lite .yt-play {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 68px; height: 48px;
+    background: rgba(20, 14, 8, 0.75);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .yt-lite .yt-play::after {
+    content: "";
+    border-style: solid;
+    border-width: 11px 0 11px 18px;
+    border-color: transparent transparent transparent #fff;
+    margin-left: 4px;
+  }
+  .yt-lite .yt-caption {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75), transparent);
+    color: #fff; font-size: 0.85rem; padding: 20px 14px 10px;
+  }
+  .yt-lite.is-playing { cursor: default; }
+  .yt-lite iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+  .yt-lite-wrap { margin-bottom: 8px; }
+  .yt-lite-title { font-size: 0.85rem; color: #6b6355; margin: 0 0 20px; }
+
+  .supplemental {
+    margin: 20px 0;
+    padding: 14px 18px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  .supplemental p.slabel {
+    font-weight: bold;
+    margin: 0 0 8px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent-dark);
+  }
+  .supplemental .yt-lite-wrap:last-child .yt-lite-title { margin-bottom: 0; }
+  .supplemental .yt-lite { max-width: 320px; }
+
+  .questions {
+    background: #f1ead9;
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 6px 6px 0;
+    margin-top: 20px;
+  }
+  .questions p.qlabel {
+    font-weight: bold;
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent-dark);
+  }
+  .questions ol { margin: 0; padding-left: 20px; }
+  .questions li { margin-bottom: 8px; }
+
+  /* ---------- Module quiz ---------- */
+  .module-quiz {
+    margin-top: 28px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 20px 22px;
+    background: #fffdf8;
+  }
+  .module-quiz .quiz-label {
+    font-weight: bold;
+    margin: 0 0 4px;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--accent-dark);
+  }
+  .module-quiz .quiz-sub {
+    font-size: 0.85rem;
+    color: #6b6355;
+    margin: 0 0 18px;
+  }
+  .quiz-question {
+    margin-bottom: 18px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--line);
+  }
+  .quiz-question:last-of-type { border-bottom: none; }
+  .quiz-question p.qtext { font-weight: bold; margin: 0 0 8px; }
+  .quiz-question label {
+    display: block;
+    padding: 6px 0;
+    cursor: pointer;
+    font-size: 0.96rem;
+  }
+  .quiz-question label input { margin-right: 8px; }
+  .quiz-question.unanswered { outline: 2px solid #c65b3d; outline-offset: 6px; border-radius: 4px; }
+
+  .quiz-submit-btn {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 1rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-top: 6px;
+  }
+  .quiz-submit-btn:hover { background: var(--accent-dark); }
+  .quiz-submit-btn:disabled { background: #7a8a6b; cursor: default; }
+
+  .quiz-result {
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: #f1ead9;
+    border-radius: 6px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .quiz-warning {
+    color: #a33b2a;
+    font-size: 0.85rem;
+    margin: 10px 0 0;
+    text-align: center;
+    display: none;
+  }
+
+  footer.course-footer {
+    text-align: center;
+    margin-top: 56px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    color: #6b6355;
+    font-size: 0.9rem;
+  }
+
+  /* ---------- Certificate ---------- */
+  #certificate-section { display: none; margin-top: 56px; }
+  #certificate-section .cert-intro { text-align: center; margin-bottom: 18px; }
+  #certificate-section .cert-intro h2 { margin-bottom: 6px; }
+  .certificate {
+    border: 3px double var(--accent);
+    border-radius: 4px;
+    padding: 48px 40px;
+    text-align: center;
+    background: #fffdf6;
+  }
+  .certificate .cert-eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    color: var(--accent);
+  }
+  .certificate .cert-title { font-size: 1.7rem; margin: 10px 0 6px; }
+  .certificate .cert-sub { color: #6b6355; margin-bottom: 28px; }
+  .certificate .cert-name {
+    font-size: 2rem;
+    font-style: italic;
+    border-bottom: 1px solid var(--line);
+    display: inline-block;
+    padding: 0 24px 10px;
+    margin-bottom: 24px;
+  }
+  .certificate .cert-body { max-width: 480px; margin: 0 auto 24px; color: #4a4438; }
+  .certificate .cert-meta {
+    display: flex;
+    justify-content: space-between;
+    max-width: 480px;
+    margin: 32px auto 0;
+    font-size: 0.85rem;
+    color: #6b6355;
+  }
+  .cert-actions { text-align: center; margin-top: 20px; }
+  .cert-actions button {
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 6px;
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
+  .cert-actions button:hover { background: var(--accent-dark); }
+
+  @media print {
+    body * { visibility: hidden; }
+    #certificate-section, #certificate-section * { visibility: visible; }
+    #certificate-section { display: block !important; position: absolute; top: 0; left: 0; width: 100%; margin: 0; }
+    .cert-intro, .cert-actions { display: none !important; }
+    .certificate { border-width: 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ PASSWORD + NAME GATE ============ -->
+<div id="gate">
+  <div class="box">
+    <h1>Foundations of the Septuagint</h1>
+    <p class="intro">This course is available to members. Register your name and enter the course password to begin.</p>
+
+    <label for="gate-name">Your Name (as it should appear on your certificate)</label>
+    <input type="text" id="gate-name" placeholder="Jane Smith" autocomplete="name">
+
+    <label for="gate-input">Course Password</label>
+    <input type="password" id="gate-input" placeholder="Course password" autocomplete="off">
+
+    <button id="gate-submit">Register &amp; Unlock Course</button>
+    <p class="error" id="gate-error">Check your name and password — one of those isn't right, or reach out if you're not sure.</p>
+  </div>
+</div>
+
+<!-- ============ COURSE CONTENT ============ -->
+<div class="wrap" id="course">
+  <header class="course-header">
+    <div class="eyebrow">Ad Fontes Courses</div>
+    <h1>Foundations of the Septuagint</h1>
+    <p class="lede">A guided companion course to Gregory R. Lanier and William A. Ross's <em>The Septuagint: What It Is and Why It Matters</em> — eight lectures walking chapter by chapter through the book, paired with original discussion questions and a short quiz.</p>
+    <p class="welcome" id="welcome-line"></p>
+    <div class="progress-panel">
+      <span id="progress-text">Module 1 of 8 unlocked</span>
+      <div class="bar"><div class="bar-fill" id="progress-bar-fill"></div></div>
+    </div>
+  </header>
+
+  <div class="book-panel">
+    <div>
+      <p class="book-label">Required Reading</p>
+      <p><strong>The Septuagint: What It Is and Why It Matters</strong> by Gregory R. Lanier and William A. Ross (Crossway). Grab a copy before you start — each module assumes you've read the matching chapter, and the quiz draws on it.
+      <br><a href="https://www.crossway.org/books/the-septuagint-tpb/" target="_blank" rel="noopener">View the book at Crossway →</a></p>
+    </div>
+  </div>
+
+  <!-- Module 1 -->
+  <section class="module" id="module-1" data-module="1">
+    <div class="module-body">
+      <div class="module-label">Module 1 · Orientation</div>
+      <h2>Why This Course, Why This Book</h2>
+      <p class="reading">Reading: Introduction</p>
+      <div class="video-placeholder">
+        <div class="label">🎥 Your lecture goes here<br>Record: course intro — why you chose this book, how the course works, what students will walk away with.</div>
+      </div>
+      <p class="video-caption">Swap in your video once recorded — see the HTML comment near this module for the embed snippet.</p>
+      <!-- Once recorded, replace the .video-placeholder div above with:
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Module 1: Why This Course, Why This Book" data-thumb="thumbs/module-1.jpg"></div>
+      </div>
+      -->
+      <div class="supplemental">
+        <p class="slabel">Optional Warm-Up</p>
+        <div class="yt-lite-wrap">
+          <div class="yt-lite" data-video-id="tLUqv01BBiY" data-title="The Septuagint: Ultimate 3-Minute Crash-Course!" data-thumb="thumbs/warmup-crash-course.jpg"></div>
+          <p class="yt-lite-title">The Septuagint: Ultimate 3-Minute Crash-Course! — a fast overview if you're brand new to the topic</p>
+        </div>
+      </div>
+      <div class="questions">
+        <p class="qlabel">Discussion Questions</p>
+        <ol>
+          <li>What drew you to study the Septuagint in the first place?</li>
+          <li>What do you hope to be able to explain to someone else by the end of this course?</li>
+        </ol>
+      </div>
+      <div class="module-quiz" data-quiz-mount="1"></div>
+    </div>
+    <div class="locked-teaser">
+      <div class="module-label">Module 1 · Orientation</div>
+      <h2>🔒 Why This Course, Why This Book</h2>
+      <p class="lock-note">Complete the previous module's quiz to unlock</p>
+    </div>
+  </section>
+
+  <!-- Module 2 -->
+  <section class="module" id="module-2" data-module="2">
+    <div class="module-body">
+      <div class="module-label">Module 2</div>
+      <h2>What (If Anything) Is the "So-Called" Septuagint?</h2>
+      <p class="reading">Reading: Chapter 1</p>
+      <div class="video-placeholder">
+        <div class="label">🎥 Your lecture goes here<br>Record: your walkthrough of Chapter 1 — what the term "Septuagint" actually refers to, and why the authors call it "so-called."</div>
+      </div>
+      <!-- Once recorded, replace the .video-placeholder div above with:
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Module 2: What Is the So-Called Septuagint?" data-thumb="thumbs/module-2.jpg"></div>
+      </div>
+      -->
+      <div class="questions">
+        <p class="qlabel">Discussion Questions</p>
+        <ol>
+          <li>In your own words, what is "the Septuagint" — and what isn't it?</li>
+          <li>Why do Lanier and Ross hedge with "so-called"? What's at stake in that qualification?</li>
+          <li>What misconception about the LXX did this chapter correct for you?</li>
+        </ol>
+      </div>
+      <div class="module-quiz" data-quiz-mount="2"></div>
+    </div>
+    <div class="locked-teaser">
+      <div class="module-label">Module 2</div>
+      <h2>🔒 What (If Anything) Is the "So-Called" Septuagint?</h2>
+      <p class="lock-note">Complete the previous module's quiz to unlock</p>
+    </div>
+  </section>
+
+  <!-- Module 3 -->
+  <section class="module" id="module-3" data-module="3">
+    <div class="module-body">
+      <div class="module-label">Module 3</div>
+      <h2>Who and Where Did the Greek Old Testament Come From?</h2>
+      <p class="reading">Reading: Chapter 2</p>
+      <div class="video-placeholder">
+        <div class="label">🎥 Your lecture goes here<br>Record: your walkthrough of Chapter 2 — origins of the Greek Old Testament, the Letter of Aristeas, and what we can actually verify historically.</div>
+      </div>
+      <!-- Once recorded, replace the .video-placeholder div above with:
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Module 3: Who and Where Did the Greek Old Testament Come From?" data-thumb="thumbs/module-3.jpg"></div>
+      </div>
+      -->
+      <div class="supplemental">
+        <p class="slabel">Companion Interview</p>
+        <div class="yt-lite-wrap">
+          <div class="yt-lite" data-video-id="dNoaBz6oc6A" data-title="Was the Septuagint Translated Before Jesus? Dr. Greg Lanier Explains" data-thumb="thumbs/interview-lanier.jpg"></div>
+          <p class="yt-lite-title">Was the Septuagint Translated Before Jesus? Dr. Greg Lanier Explains — hear it straight from one of the book's authors</p>
+        </div>
+      </div>
+      <div class="questions">
+        <p class="qlabel">Discussion Questions</p>
+        <ol>
+          <li>What does the Letter of Aristeas claim, and how much of it do scholars think is reliable?</li>
+          <li>How does Dr. Lanier's interview add to or complicate what you read in Chapter 2?</li>
+          <li>Why does dating the translation matter for later arguments in the book?</li>
+        </ol>
+      </div>
+      <div class="module-quiz" data-quiz-mount="3"></div>
+    </div>
+    <div class="locked-teaser">
+      <div class="module-label">Module 3</div>
+      <h2>🔒 Who and Where Did the Greek Old Testament Come From?</h2>
+      <p class="lock-note">Complete the previous module's quiz to unlock</p>
+    </div>
+  </section>
+
+  <!-- Module 4 -->
+  <section class="module" id="module-4" data-module="4">
+    <div class="module-body">
+      <div class="module-label">Module 4</div>
+      <h2>How Was the Greek Old Testament Translated?</h2>
+      <p class="reading">Reading: Chapter 3</p>
+      <div class="video-placeholder">
+        <div class="label">🎥 Your lecture goes here<br>Record: your walkthrough of Chapter 3 — translation technique, style differences across books, and what that tells us about the translators.</div>
+      </div>
+      <!-- Once recorded, replace the .video-placeholder div above with:
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Module 4: How Was the Greek Old Testament Translated?" data-thumb="thumbs/module-4.jpg"></div>
+      </div>
+      -->
+      <div class="questions">
+        <p class="qlabel">Discussion Questions</p>
+        <ol>
+          <li>What surprised you about how "literal" or "free" different books of the LXX are?</li>
+          <li>What would make a translation choice "interpretive" rather than strictly literal?</li>
+        </ol>
+      </div>
+      <div class="module-quiz" data-quiz-mount="4"></div>
+    </div>
+    <div class="locked-teaser">
+      <div class="module-label">Module 4</div>
+      <h2>🔒 How Was the Greek Old Testament Translated?</h2>
+      <p class="lock-note">Complete the previous module's quiz to unlock</p>
+    </div>
+  </section>
+
+  <!-- Module 5 -->
+  <section class="module" id="module-5" data-module="5">
+    <div class="module-body">
+      <div class="module-label">Module 5</div>
+      <h2>How Did the Greek Old Testament Develop?</h2>
+      <p class="reading">Reading: Chapter 4</p>
+      <div class="video-placeholder">
+        <div class="label">🎥 Your lecture goes here<br>Record: your walkthrough of Chapter 4 — the LXX's transmission history, recensions, and how the text changed over centuries.</div>
+      </div>
+      <!-- Once recorded, replace the .video-placeholder div above with:
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Module 5: How Did the Greek Old Testament Develop?" data-thumb="thumbs/module-5.jpg"></div>
+      </div>
+      -->
+      <div class="questions">
+        <p class="qlabel">Discussion Questions</p>
+        <ol>
+          <li>What is a "recension," and why does it matter that the LXX has more than one?</li>
+          <li>How does textual development here compare to what you know about the Hebrew Bible's transmission?</li>
+        </ol>
+      </div>
+      <div class="module-quiz" data-quiz-mount="5"></div>
+    </div>
+    <div class="locked-teaser">
+      <div class="module-label">Module 5</div>
+      <h2>🔒 How Did the Greek Old Testament Develop?</h2>
+      <p class="lock-note">Complete the previous module's quiz to unlock</p>
+    </div>
+  </section>
+
+  <!-- Module 6 -->
+  <section class="module" id="module-6" data-module="6">
+    <div class="module-body">
+      <div class="module-label">Module 6</div>
+      <h2>Why Does the Septuagint Matter for Studying the Old Testament?</h2>
+      <p class="reading">Reading: Chapter 5</p>
+      <div class="video-placeholder">
+        <div class="label">🎥 Your lecture goes here<br>Record: your walkthrough of Chapter 5 — how the LXX helps (and sometimes complicates) Old Testament textual criticism.</div>
+      </div>
+      <!-- Once recorded, replace the .video-placeholder div above with:
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Module 6: Why Does the Septuagint Matter for the Old Testament?" data-thumb="thumbs/module-6.jpg"></div>
+      </div>
+      -->
+      <div class="supplemental">
+        <p class="slabel">Companion Videos</p>
+        <div class="yt-lite-wrap">
+          <div class="yt-lite" data-video-id="vFQ5cFS42nk" data-title="Septuagint vs Hebrew Bible" data-thumb="thumbs/companion-septuagint-vs-hebrew.jpg"></div>
+          <p class="yt-lite-title">Septuagint vs Hebrew Bible</p>
+        </div>
+        <div class="yt-lite-wrap">
+          <div class="yt-lite" data-video-id="OGPvW1uk7kE" data-title="The Bible's Most Overlooked Change: A 1,400-Year Discrepancy" data-thumb="thumbs/companion-1400-year-gap.jpg"></div>
+          <p class="yt-lite-title">The Bible's Most Overlooked Change: A 1,400-Year Discrepancy</p>
+        </div>
+      </div>
+      <div class="questions">
+        <p class="qlabel">Discussion Questions</p>
+        <ol>
+          <li>Pick one example from Chapter 5 where the LXX preserves a reading the Hebrew doesn't (or vice versa). What's at stake in that difference?</li>
+          <li>How do the two companion videos illustrate or complicate the chapter's argument?</li>
+          <li>How should Christians today weigh LXX readings against the Masoretic tradition?</li>
+        </ol>
+      </div>
+      <div class="module-quiz" data-quiz-mount="6"></div>
+    </div>
+    <div class="locked-teaser">
+      <div class="module-label">Module 6</div>
+      <h2>🔒 Why Does the Septuagint Matter for Studying the Old Testament?</h2>
+      <p class="lock-note">Complete the previous module's quiz to unlock</p>
+    </div>
+  </section>
+
+  <!-- Module 7 -->
+  <section class="module" id="module-7" data-module="7">
+    <div class="module-body">
+      <div class="module-label">Module 7</div>
+      <h2>Why Does the Septuagint Matter for Studying the New Testament?</h2>
+      <p class="reading">Reading: Chapter 6</p>
+      <div class="video-placeholder">
+        <div class="label">🎥 Your lecture goes here<br>Record: your walkthrough of Chapter 6 — how NT authors quote and allude to the LXX, and what that means for interpretation.</div>
+      </div>
+      <!-- Once recorded, replace the .video-placeholder div above with:
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Module 7: Why Does the Septuagint Matter for the New Testament?" data-thumb="thumbs/module-7.jpg"></div>
+      </div>
+      -->
+      <div class="supplemental">
+        <p class="slabel">Companion Videos</p>
+        <div class="yt-lite-wrap">
+          <div class="yt-lite" data-video-id="MCmGIXFozpY" data-title="Jesus Used a Different Bible Than You Think" data-thumb="thumbs/companion-different-bible.jpg"></div>
+          <p class="yt-lite-title">Jesus Used a Different Bible Than You Think</p>
+        </div>
+        <div class="yt-lite-wrap">
+          <div class="yt-lite" data-video-id="3nsciYqPZME" data-title="Did Jesus use the Septuagint?" data-thumb="thumbs/companion-did-jesus-use-lxx.jpg"></div>
+          <p class="yt-lite-title">Did Jesus use the Septuagint?</p>
+        </div>
+      </div>
+      <div class="questions">
+        <p class="qlabel">Discussion Questions</p>
+        <ol>
+          <li>Find one NT quotation of the Old Testament that follows the LXX rather than the Hebrew. What changes in meaning, if anything?</li>
+          <li>Does this chapter change how confident you feel about "New Testament use of the Old Testament" arguments you've heard before?</li>
+        </ol>
+      </div>
+      <div class="module-quiz" data-quiz-mount="7"></div>
+    </div>
+    <div class="locked-teaser">
+      <div class="module-label">Module 7</div>
+      <h2>🔒 Why Does the Septuagint Matter for Studying the New Testament?</h2>
+      <p class="lock-note">Complete the previous module's quiz to unlock</p>
+    </div>
+  </section>
+
+  <!-- Module 8 -->
+  <section class="module" id="module-8" data-module="8">
+    <div class="module-body">
+      <div class="module-label">Module 8 · Closing</div>
+      <h2>What Kind of Authority Does the Septuagint Have?</h2>
+      <p class="reading">Reading: Chapter 7 + Appendix ("Ten Key Questions")</p>
+      <div class="video-placeholder">
+        <div class="label">🎥 Your lecture goes here<br>Record: your walkthrough of Chapter 7 and a closing review using the appendix's "Ten Key Questions" as a course recap.</div>
+      </div>
+      <!-- Once recorded, replace the .video-placeholder div above with:
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Module 8: What Kind of Authority Does the Septuagint Have?" data-thumb="thumbs/module-8.jpg"></div>
+      </div>
+      -->
+      <div class="supplemental">
+        <p class="slabel">Optional Further Viewing</p>
+        <div class="yt-lite-wrap">
+          <div class="yt-lite" data-video-id="UunZmlSm2lU" data-title="The Best Septuagint Translation (With Shocking Warnings)" data-thumb="thumbs/further-best-translation.jpg"></div>
+          <p class="yt-lite-title">The Best Septuagint Translation (With Shocking Warnings) — for choosing an English edition to keep reading</p>
+        </div>
+        <div class="yt-lite-wrap">
+          <div class="yt-lite" data-video-id="VQh-4BgYnGo" data-title="Another little surprise from the LXX" data-thumb="thumbs/further-another-surprise.jpg"></div>
+          <p class="yt-lite-title">Another little surprise from the LXX</p>
+        </div>
+      </div>
+      <div class="questions">
+        <p class="qlabel">Final Reflection</p>
+        <ol>
+          <li>Work through the appendix's "Ten Key Questions" — which one do you still feel unsettled about?</li>
+          <li>What's the single biggest shift in how you read Scripture after this course?</li>
+          <li>Who's one person you'd want to walk through this book/course with next?</li>
+        </ol>
+      </div>
+      <div class="module-quiz" data-quiz-mount="8"></div>
+    </div>
+    <div class="locked-teaser">
+      <div class="module-label">Module 8 · Closing</div>
+      <h2>🔒 What Kind of Authority Does the Septuagint Have?</h2>
+      <p class="lock-note">Complete the previous module's quiz to unlock</p>
+    </div>
+  </section>
+
+  <!-- ============ CERTIFICATE (shown once all 8 modules are complete) ============ -->
+  <section id="certificate-section">
+    <div class="cert-intro">
+      <h2>🎉 Course Complete</h2>
+      <p>You've finished all eight modules. Here's your certificate.</p>
+    </div>
+    <div class="certificate">
+      <div class="cert-eyebrow">Ad Fontes Courses</div>
+      <div class="cert-title">Certificate of Completion</div>
+      <div class="cert-sub">Foundations of the Septuagint</div>
+      <div class="cert-name" id="cert-name">Student Name</div>
+      <div class="cert-body">has successfully completed all eight modules of <em>Foundations of the Septuagint</em>, a companion course to <em>The Septuagint: What It Is and Why It Matters</em> by Gregory R. Lanier and William A. Ross.</div>
+      <div class="cert-meta">
+        <span id="cert-date">Date</span>
+        <span>Stephen Hackett, Ad Fontes</span>
+      </div>
+    </div>
+    <div class="cert-actions">
+      <button id="cert-print-btn">Print / Save as PDF</button>
+    </div>
+  </section>
+
+  <footer class="course-footer">
+    Thank you for studying alongside me. — Stephen Hackett, Ad Fontes<br>
+    Companion course to <em>The Septuagint: What It Is and Why It Matters</em> by Gregory R. Lanier and William A. Ross (Crossway). Not officially affiliated with or endorsed by the authors or publisher unless noted.
+  </footer>
+</div>
+
+<!-- ============ QUIZ CONTENT ============ -->
+<!--
+  NOTE FOR STEPHEN: These 80 questions (10 per module) are drafted from general
+  knowledge of Septuagint scholarship to match each chapter's likely topic —
+  they are NOT copied from the book, but you should proofread each set against
+  the actual chapter before publishing, since I haven't read your copy of the
+  book directly. Easy to hand-edit: each question is a plain JS object below.
+
+  THUMBNAILS: to use your own custom thumbnail images (like your YouTube
+  thumbnails), upload image files into a "thumbs" subfolder next to this
+  page (e.g. courses/septuagint-foundations/thumbs/module-2.jpg) and the
+  data-thumb path on each .yt-lite div already points there. If a file is
+  missing, the page automatically falls back to YouTube's own thumbnail for
+  that video, so nothing breaks if you haven't uploaded one yet.
+-->
+<script>
+  const QUIZZES = {
+    1: [
+      { q: "What does \"Septuagint\" traditionally refer to?", choices: ["The Latin Vulgate", "The Greek translation of the Hebrew Scriptures", "The Aramaic Targums", "The Samaritan Pentateuch"], correct: 1 },
+      { q: "The word \"Septuagint\" comes from the Latin word for what number?", choices: ["Twelve", "Forty", "Seventy", "One hundred"], correct: 2 },
+      { q: "Which language is the Septuagint written in?", choices: ["Hebrew", "Aramaic", "Greek", "Latin"], correct: 2 },
+      { q: "According to legend, how many translators produced the Septuagint?", choices: ["12", "70 or 72", "24", "100"], correct: 1 },
+      { q: "What is the primary textbook for this course?", choices: ["The Hebrew Bible: A Beginner's Guide", "The Septuagint: What It Is and Why It Matters", "An Introduction to the Dead Sea Scrolls", "The Greek New Testament"], correct: 1 },
+      { q: "Who are the co-authors of the course textbook?", choices: ["N.T. Wright and Craig Blomberg", "Gregory R. Lanier and William A. Ross", "Bart Ehrman and Dan Wallace", "F.F. Bruce and Bruce Metzger"], correct: 1 },
+      { q: "Which part of the Old Testament was translated into Greek first, according to most scholars?", choices: ["The Prophets", "The Psalms", "The Pentateuch (Torah)", "The Wisdom literature"], correct: 2 },
+      { q: "Why does the study of the Septuagint matter for New Testament studies?", choices: ["It has no relevance", "Many New Testament quotations of the Old Testament align with it", "It replaced the New Testament", "It was written after the New Testament"], correct: 1 },
+      { q: "What is the modern academic term sometimes used instead of \"Septuagint\" for the broader body of Greek Jewish scriptures?", choices: ["The Old Greek", "The New Vulgate", "The Masoretic Greek", "The Alexandrian Targum"], correct: 0 },
+      { q: "What should you do before starting each module in this course?", choices: ["Skip the reading", "Read the corresponding chapter in the textbook", "Watch a random video", "Nothing, just watch the lecture"], correct: 1 }
+    ],
+    2: [
+      { q: "In the strictest, most technical sense, the term \"Septuagint\" originally referred only to:", choices: ["The entire Greek Old Testament", "The Greek translation of just the Pentateuch (Torah)", "The Greek New Testament", "The Dead Sea Scrolls"], correct: 1 },
+      { q: "Why do Lanier and Ross call it the \"so-called\" Septuagint?", choices: ["They doubt it exists", "The term is popularly applied more broadly than its original, narrow meaning", "It was mistranslated", "It's a modern forgery"], correct: 1 },
+      { q: "What term do scholars often use for the broader collection of ancient Greek translations of the Hebrew Scriptures?", choices: ["Old Greek", "New Testament Greek", "Koine Vulgate", "Aramaic Targum"], correct: 0 },
+      { q: "True or false: \"The Septuagint\" is a single, unified, uniform translation produced all at once.", choices: ["True", "False"], correct: 1 },
+      { q: "Which of these books did NOT originate as a Hebrew-to-Greek translation but was composed in Greek?", choices: ["Genesis", "Wisdom of Solomon", "Exodus", "Isaiah"], correct: 1 },
+      { q: "What is a helpful reason to be precise about what \"Septuagint\" does and doesn't mean?", choices: ["It has no practical effect", "Precision affects how confidently we can make historical and textual claims", "It only matters to translators", "The term is legally trademarked"], correct: 1 },
+      { q: "The popular, everyday use of \"Septuagint\" today usually refers to:", choices: ["Only Genesis", "The whole collection of Greek Jewish scriptures, Pentateuch and beyond", "Only the Psalms", "The Greek New Testament"], correct: 1 },
+      { q: "Which modern published edition is a well-known critical text of the Septuagint?", choices: ["The Nestle-Aland", "The Rahlfs / Göttingen Septuagint", "The Textus Receptus", "The Biblia Hebraica Stuttgartensia"], correct: 1 },
+      { q: "What does \"textual pluriformity\" mean when applied to the Septuagint?", choices: ["It exists in only one manuscript", "There are multiple manuscript traditions and variant readings, not a single fixed text", "It's written in multiple modern languages", "It has multiple authors named \"Septuagint\""], correct: 1 },
+      { q: "Why does the imprecise popular use of \"Septuagint\" sometimes cause confusion in debates?", choices: ["People assume it's a single, monolithic thing when it's actually a diverse collection with a complex history", "It never causes confusion", "Because it's actually written in Latin", "Because scholars agree completely on its origins"], correct: 0 }
+    ],
+    3: [
+      { q: "The traditional account of the Septuagint's origin is found in which ancient text?", choices: ["The Letter of Aristeas", "The Gospel of Thomas", "The Mishnah", "The Talmud"], correct: 0 },
+      { q: "According to legend, which Egyptian ruler commissioned the translation?", choices: ["Ptolemy I Soter", "Ptolemy II Philadelphus", "Cleopatra", "Alexander the Great"], correct: 1 },
+      { q: "In the traditional account, where was the translation reportedly produced?", choices: ["Jerusalem", "Babylon", "Alexandria, Egypt", "Rome"], correct: 2 },
+      { q: "How many translators does the legend say were sent, according to the most common version of the story?", choices: ["6 from each of the 12 tribes (72 total)", "12 total", "3", "144"], correct: 0 },
+      { q: "What do most modern scholars think about the historical reliability of the Letter of Aristeas?", choices: ["It's entirely factual with no embellishment", "It contains a historical kernel but is substantially legendary/apologetic in character", "It was written by Moses", "It's a modern forgery from the 1800s"], correct: 1 },
+      { q: "Approximately when do most scholars date the translation of the Pentateuch into Greek?", choices: ["3rd century BC", "1st century AD", "10th century AD", "6th century BC"], correct: 0 },
+      { q: "What does Dr. Greg Lanier's interview add to the discussion of dating?", choices: ["Nothing new", "Scholarly perspective on the evidence for when translation work began", "A claim that the LXX was written after the NT", "A rejection of the Letter of Aristeas entirely"], correct: 1 },
+      { q: "Why was there likely a practical need for a Greek translation of the Hebrew Scriptures in Alexandria?", choices: ["A large Greek-speaking Jewish community lived there and needed access to Scripture", "Hebrew had gone extinct", "The original scrolls were lost", "It was required by Roman law"], correct: 0 },
+      { q: "Books beyond the Pentateuch (Prophets, Writings) were translated into Greek:", choices: ["All at the exact same time as the Pentateuch", "Over a longer period, by different translators, in subsequent centuries", "Never translated", "Only after the New Testament was written"], correct: 1 },
+      { q: "What is one reason historians treat origin legends like the Letter of Aristeas with both interest and caution?", choices: ["Ancient origin accounts often blend historical memory with legend-building for religious or political purposes", "All ancient texts are pure fiction", "Because it's written in Latin", "Because no one has ever studied it"], correct: 0 }
+    ],
+    4: [
+      { q: "Translation technique across the Septuagint corpus is:", choices: ["Perfectly uniform across every book", "Variable — some books more literal, others more free/paraphrastic", "Nonexistent", "Identical to the Latin Vulgate"], correct: 1 },
+      { q: "Which is generally considered among the more literal, word-for-word translated books of the LXX?", choices: ["The Pentateuch", "Proverbs", "Job", "Daniel (Greek additions)"], correct: 0 },
+      { q: "Which book is often cited as a notably free or paraphrastic translation?", choices: ["Genesis", "Proverbs", "Leviticus", "Exodus"], correct: 1 },
+      { q: "What is a \"calque\" in translation studies?", choices: ["A type of ancient scroll", "A word-for-word (literal) rendering that carries over source-language structure into the target language", "A scribal error", "A type of ink"], correct: 1 },
+      { q: "Why might translators have varied their approach from book to book?", choices: ["Different translators worked on different books, at different times, with different goals and audiences", "They were required by law to vary style", "They flipped a coin", "All books were translated by the exact same person"], correct: 0 },
+      { q: "What can inconsistent or unusual Greek vocabulary choices in the LXX sometimes reveal to scholars?", choices: ["Nothing useful", "Clues about the translator's underlying Hebrew text or interpretive choices", "That the LXX is entirely fictional", "That Greek had no vocabulary for Hebrew concepts"], correct: 1 },
+      { q: "A highly literal translation technique tends to prioritize:", choices: ["Smooth, idiomatic reading in the target language", "Preserving word order and structure from the source language, sometimes at the cost of readability", "Removing difficult passages", "Adding new content not in the source"], correct: 1 },
+      { q: "Why does understanding translation technique matter for textual criticism?", choices: ["It doesn't matter at all", "It helps scholars judge whether a Greek reading reflects a real difference in the underlying Hebrew text or just a translator's stylistic choice", "It only matters for grammar teachers", "Translation technique is identical to authorship"], correct: 1 },
+      { q: "The study of how translators handled their source text is sometimes called:", choices: ["Translation technique / translation studies", "Church history", "Paleography only", "Numerology"], correct: 0 },
+      { q: "What does variability in translation technique suggest about the Septuagint as a whole?", choices: ["It's best understood as a collection of related but distinct translation projects, not one single work", "It proves the whole LXX was forged", "It means the LXX has no scholarly value", "It means only one person ever translated it"], correct: 0 }
+    ],
+    5: [
+      { q: "What is a \"recension\" in the context of the Septuagint's transmission history?", choices: ["A brand-new translation from scratch", "A revised or edited form of an existing Greek text, adjusting it toward a particular standard", "A type of ancient binding", "A synonym for the Hebrew Bible"], correct: 1 },
+      { q: "Origen's major scholarly project that arranged multiple text versions in parallel columns is called the:", choices: ["Hexapla", "Talmud", "Mishnah", "Vulgate"], correct: 0 },
+      { q: "Which three \"recensions\" are commonly discussed by scholars in relation to the Septuagint's later history?", choices: ["Kaige, Lucianic (Antiochene), and Hexaplaric (Origenic)", "Masoretic, Samaritan, and Targumic", "Vulgate, Peshitta, and Coptic", "Byzantine, Alexandrian, and Western only"], correct: 0 },
+      { q: "Which are the three major uncial (capital-letter) manuscripts often cited for the Septuagint?", choices: ["Vaticanus, Sinaiticus, and Alexandrinus", "Aleppo, Leningrad, and Cairo", "Chester Beatty, Bodmer, and Oxyrhynchus", "Nash, Nag Hammadi, and Qumran"], correct: 0 },
+      { q: "What did the discovery of Septuagint fragments among the Dead Sea Scrolls demonstrate?", choices: ["That the LXX was invented in the Middle Ages", "That Greek biblical texts, including early recensions, were circulating well before or in the earliest centuries of the common era", "That the LXX has no manuscript history", "That the Dead Sea Scrolls contain no Greek material at all"], correct: 1 },
+      { q: "The \"kaige\" recension is named for its tendency to translate a particular Hebrew word consistently as:", choices: ["\"kai ge\" (Greek for \"and also/even\")", "\"logos\"", "\"theos\"", "\"pneuma\""], correct: 0 },
+      { q: "What modern scholarly edition attempts to reconstruct the earliest recoverable form of the Greek text, book by book?", choices: ["The Göttingen Septuagint", "The King James Version", "The Textus Receptus", "The Peshitta"], correct: 0 },
+      { q: "Why does it matter that the Septuagint has a complex transmission history with multiple recensions?", choices: ["It doesn't matter", "Scholars must be careful about which manuscript or recension underlies a given claim about \"what the Septuagint says\"", "It means the Septuagint is worthless", "It means there's only one manuscript in existence"], correct: 1 },
+      { q: "Rahlfs' Septuaginta (1935) is best described as:", choices: ["A widely used, more compact eclectic edition of the Greek Old Testament, since supplemented by the fuller Göttingen edition", "A complete forgery", "A translation into English", "The original autograph manuscript"], correct: 0 },
+      { q: "Textual development over centuries means that \"the Septuagint\" a reader encounters today is:", choices: ["Identical letter-for-letter to what left the original translators' hands", "The product of a long transmission and editorial history, reconstructed critically by scholars", "Written entirely in the 20th century", "Based on no manuscripts at all"], correct: 1 }
+    ],
+    6: [
+      { q: "For Old Testament textual criticism, the Septuagint is valuable because it:", choices: ["Is always more accurate than the Hebrew Masoretic Text in every instance", "Sometimes reflects a Hebrew source text that differs from — and may predate — the Masoretic tradition", "Has no relevance to Hebrew Bible studies", "Was translated centuries after the Masoretic Text was finalized"], correct: 1 },
+      { q: "Which book of the Hebrew Bible is famously about one-eighth shorter in its Septuagint form than in the Masoretic Text?", choices: ["Genesis", "Jeremiah", "Psalms", "Ruth"], correct: 1 },
+      { q: "Discoveries at Qumran (Dead Sea Scrolls) showed that some Septuagint readings once assumed to be translator errors were actually:", choices: ["Based on Hebrew source texts different from the later Masoretic tradition", "Complete fabrications", "Borrowed from the New Testament", "Later Christian insertions with no ancient precedent"], correct: 0 },
+      { q: "Deuteronomy 32:43 (the Song of Moses) is a well-known example where:", choices: ["The LXX and a Dead Sea Scrolls fragment share a longer reading not found in the standard Masoretic Text", "The Masoretic Text is longer than every other version", "No manuscript variation exists", "The LXX omits the entire chapter"], correct: 0 },
+      { q: "What does the term \"Masoretic Text\" (MT) refer to?", choices: ["An early Greek translation", "The standardized Hebrew text tradition preserved and vocalized by Jewish scribes (the Masoretes) in the medieval period", "A Latin translation", "A Samaritan text tradition only"], correct: 1 },
+      { q: "Why shouldn't the Septuagint automatically be treated as more \"original\" than the Masoretic Text?", choices: ["Both traditions have their own histories of transmission, and each preserves both older and later readings depending on the passage", "The Septuagint is always wrong", "The Masoretic Text has no manuscript basis", "There's no way to compare them"], correct: 0 },
+      { q: "A responsible approach to LXX/MT differences involves:", choices: ["Assuming one tradition is always right", "Weighing each variant on its own textual evidence and merits, case by case", "Ignoring the Septuagint entirely", "Ignoring the Masoretic Text entirely"], correct: 1 },
+      { q: "What kind of scholarly discipline studies these Hebrew/Greek differences to reconstruct the most likely earliest text?", choices: ["Textual criticism", "Systematic theology", "Church history", "Homiletics"], correct: 0 },
+      { q: "Which of these is a real category of difference between LXX and MT that scholars study?", choices: ["Different word order, additions/omissions, and alternate wording", "Only spelling differences", "There are no real differences", "Differences only in chapter numbering"], correct: 0 },
+      { q: "Why might a modern Bible translation footnote a Septuagint reading?", choices: ["To ignore it entirely", "To alert readers that an ancient witness offers a differing/possibly earlier reading worth noting", "Because footnotes are required by copyright law", "Because the LXX is never relevant"], correct: 1 }
+    ],
+    7: [
+      { q: "About how many explicit Old Testament quotations appear in the New Testament?", choices: ["Around a dozen", "Roughly 300 (with many more allusions)", "None", "Over 10,000"], correct: 1 },
+      { q: "When New Testament authors quote the Old Testament, their wording most often aligns with:", choices: ["The Masoretic Text exclusively", "The Septuagint (Greek) tradition, in a majority of cases", "The Latin Vulgate", "An Aramaic Targum exclusively"], correct: 1 },
+      { q: "In Isaiah 7:14, the Septuagint's Greek word \"parthenos\" is often translated:", choices: ["\"young woman\" ambiguously", "\"virgin,\" which Matthew's Gospel draws on", "\"widow\"", "\"mother\""], correct: 1 },
+      { q: "Hebrews 10:5 quotes Psalm 40 using a phrase that matches the Septuagint's \"a body you have prepared for me\" rather than the Hebrew Masoretic Text's:", choices: ["\"ears you have dug/opened for me\"", "\"hands you have given me\"", "\"eyes you have opened\"", "There is no difference between the versions"], correct: 0 },
+      { q: "Acts 15, in the Jerusalem Council speech, quotes Amos 9:11-12 in a form that matches the Septuagint's reading about \"the rest of mankind\" seeking the Lord rather than the Masoretic Text's reading about:", choices: ["Possessing the remnant of Edom", "Rebuilding the temple", "Destroying the nations", "A different prophet entirely"], correct: 0 },
+      { q: "Why does it matter that many NT quotations follow the LXX rather than the Hebrew?", choices: ["It doesn't matter for interpretation", "It shows the Greek-speaking early church's Bible shaped how the NT authors read and applied the Old Testament", "It proves the Hebrew Bible is fake", "It means the NT authors couldn't read Hebrew at all"], correct: 1 },
+      { q: "What should careful Bible students do when they notice a NT quotation doesn't match their English OT translation exactly?", choices: ["Assume a copying error with no explanation", "Consider that the NT author may be quoting the Septuagint's wording, which can differ from the Hebrew-based translation in their Bible", "Assume the NT is unreliable", "Ignore the difference"], correct: 1 },
+      { q: "Which of these NT books is well known for extensive engagement with Old Testament quotations, many LXX-based?", choices: ["Hebrews", "Philemon", "3 John", "Jude — it has none"], correct: 0 },
+      { q: "Does the New Testament's frequent use of the Septuagint mean the Hebrew text was unimportant to early Christians?", choices: ["Yes, entirely unimportant", "No — it mainly reflects the Greek-speaking context and available texts of the writers and their audiences", "Yes, because Hebrew had died out completely", "It proves the NT was written first"], correct: 1 },
+      { q: "What's one responsible takeaway from studying LXX use in the New Testament?", choices: ["It deepens understanding of how the earliest Christians read and applied their Scriptures", "It should be ignored in serious Bible study", "It proves translations don't matter", "It means only the Septuagint should be studied"], correct: 0 }
+    ],
+    8: [
+      { q: "Regarding the Septuagint's authority, Lanier and Ross generally argue for a view that:", choices: ["The LXX should replace the Hebrew Bible entirely", "The LXX is a valuable historical and textual witness, without needing to claim it as equally \"inspired Scripture\" independent of the Hebrew", "The LXX has zero value or authority", "Only the Latin Vulgate has any authority"], correct: 1 },
+      { q: "Which Christian traditions historically gave the Septuagint a higher degree of canonical authority?", choices: ["None ever did", "Eastern Orthodox and some other traditions that use LXX-based Old Testaments liturgically", "Only 20th-century evangelicals", "Only Islamic scholars"], correct: 1 },
+      { q: "The \"Apocrypha\" or \"deuterocanonical\" books (like Tobit, Wisdom, 1-2 Maccabees) are:", choices: ["Found in Septuagint manuscripts but not in the Protestant Old Testament canon", "Found in every Protestant Bible", "Not found in any ancient manuscript", "Part of the New Testament"], correct: 0 },
+      { q: "Why do Protestant and Catholic/Orthodox Old Testament canons differ in scope?", choices: ["They don't differ at all", "They diverge partly over how much weight to give books preserved in the Greek (Septuagint) tradition versus the Hebrew canon", "Random chance", "All were decided in the same century by the same council"], correct: 1 },
+      { q: "What's a balanced way to describe the Septuagint's role for Protestant Bible readers today?", choices: ["An essential, uniquely inspired replacement text", "A significant historical, translational, and text-critical resource, without independent canonical authority equal to the Hebrew text", "Something to be ignored entirely", "A forgery to be rejected"], correct: 1 },
+      { q: "Across this course, which of the following did you study as reasons the Septuagint matters?", choices: ["Only its Greek grammar", "Its origins, translation technique, transmission history, and its use in both Old and New Testament study", "Its irrelevance to Christian history", "Its exclusive use in Islamic scholarship"], correct: 1 },
+      { q: "Which ancient legend describes the Septuagint's traditional origin?", choices: ["The Letter of Aristeas", "The Gospel of Peter", "The Talmud", "The Nag Hammadi library"], correct: 0 },
+      { q: "What did you learn about how consistent the Septuagint's translation technique is across different biblical books?", choices: ["Completely uniform everywhere", "It varies significantly by book and translator", "It doesn't exist", "It was translated by a single person in a single sitting"], correct: 1 },
+      { q: "What is one example of a New Testament quotation that follows the Septuagint's wording over the Hebrew Masoretic Text?", choices: ["Isaiah 7:14's \"parthenos\" (virgin), used in Matthew's Gospel", "Genesis 1:1", "The Ten Commandments", "The Lord's Prayer"], correct: 0 },
+      { q: "Having completed this course, what's a responsible next step for continued study?", choices: ["Stop studying Scripture altogether", "Keep reading primary sources, engaging good scholarship (like Lanier and Ross), and staying humble about ongoing debates", "Assume you now know everything", "Reject all modern scholarship"], correct: 1 }
+    ]
+  };
+</script>
+
+<!-- ============ GATE + PROGRESS + QUIZ + LITE-EMBED + CERTIFICATE LOGIC ============ -->
+<script>
+  // Per-course settings — change these two values for each new course page.
+  const COURSE_ID = "septuagint-foundations";   // unique slug per course
+  const COURSE_PASSWORD = "CHANGE-ME-2026";     // set the real password before publishing
+  const TOTAL_MODULES = 8;
+
+  (function () {
+    const accessKey = "adfontes-course-access-" + COURSE_ID;
+    const nameKey = "adfontes-course-name-" + COURSE_ID;
+    const completedDateKey = "adfontes-course-completeddate-" + COURSE_ID;
+    const progressKey = "adfontes-course-progress-" + COURSE_ID; // number of modules whose quiz is complete
+    const gate = document.getElementById("gate");
+    const course = document.getElementById("course");
+    const nameInput = document.getElementById("gate-name");
+    const input = document.getElementById("gate-input");
+    const submit = document.getElementById("gate-submit");
+    const error = document.getElementById("gate-error");
+    const progressText = document.getElementById("progress-text");
+    const progressBarFill = document.getElementById("progress-bar-fill");
+    const welcomeLine = document.getElementById("welcome-line");
+    const certSection = document.getElementById("certificate-section");
+
+    function getCompleted() {
+      return parseInt(localStorage.getItem(progressKey) || "0", 10);
+    }
+    function setCompleted(n) {
+      localStorage.setItem(progressKey, String(n));
+    }
+    function quizScoreKey(moduleNum) {
+      return "adfontes-course-quizscore-" + COURSE_ID + "-" + moduleNum;
+    }
+
+    // ---------- Lite YouTube embeds (thumbnail -> click -> inline iframe; never leaves the page) ----------
+    function initLiteEmbeds(scope) {
+      (scope || document).querySelectorAll(".yt-lite").forEach(function (el) {
+        if (el.dataset.initialized) return;
+        el.dataset.initialized = "1";
+        const videoId = el.getAttribute("data-video-id");
+        const title = el.getAttribute("data-title") || "Video";
+        const customThumb = el.getAttribute("data-thumb");
+        const fallbackThumb = "https://i.ytimg.com/vi/" + videoId + "/hqdefault.jpg";
+
+        const img = document.createElement("img");
+        img.alt = title;
+        img.src = customThumb || fallbackThumb;
+        img.onerror = function () {
+          if (img.src !== fallbackThumb) img.src = fallbackThumb;
+        };
+
+        const playBtn = document.createElement("div");
+        playBtn.className = "yt-play";
+
+        const caption = document.createElement("div");
+        caption.className = "yt-caption";
+        caption.textContent = title;
+
+        el.appendChild(img);
+        el.appendChild(playBtn);
+        el.appendChild(caption);
+
+        el.addEventListener("click", function () {
+          el.classList.add("is-playing");
+          el.innerHTML = "";
+          const iframe = document.createElement("iframe");
+          iframe.src = "https://www.youtube-nocookie.com/embed/" + videoId + "?autoplay=1";
+          iframe.title = title;
+          iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+          iframe.allowFullscreen = true;
+          el.appendChild(iframe);
+        }, { once: true });
+      });
+    }
+
+    // ---------- Quizzes ----------
+    function buildQuiz(moduleNum) {
+      const mount = document.querySelector('[data-quiz-mount="' + moduleNum + '"]');
+      if (!mount) return;
+      const questions = QUIZZES[moduleNum] || [];
+
+      let html = '<p class="quiz-label">Module Quiz</p>';
+      html += '<p class="quiz-sub">' + questions.length + ' multiple-choice questions. Answer all of them to unlock the next module — your score is just for you.</p>';
+
+      questions.forEach(function (item, qi) {
+        html += '<div class="quiz-question" data-qindex="' + qi + '">';
+        html += '<p class="qtext">' + (qi + 1) + '. ' + item.q + '</p>';
+        item.choices.forEach(function (choice, ci) {
+          const name = 'm' + moduleNum + '-q' + qi;
+          html += '<label><input type="radio" name="' + name + '" value="' + ci + '"> ' + choice + '</label>';
+        });
+        html += '</div>';
+      });
+
+      html += '<button class="quiz-submit-btn" data-module="' + moduleNum + '">Submit Quiz &amp; Continue →</button>';
+      html += '<p class="quiz-warning" data-module-warning="' + moduleNum + '">Please answer every question before submitting.</p>';
+      html += '<p class="quiz-result" data-module-result="' + moduleNum + '" style="display:none;"></p>';
+
+      mount.innerHTML = html;
+
+      const submitBtn = mount.querySelector(".quiz-submit-btn");
+      submitBtn.addEventListener("click", function () {
+        handleQuizSubmit(moduleNum, questions);
+      });
+
+      const savedScore = localStorage.getItem(quizScoreKey(moduleNum));
+      if (savedScore !== null) {
+        lockQuizAsDone(moduleNum, JSON.parse(savedScore));
+      }
+    }
+
+    function handleQuizSubmit(moduleNum, questions) {
+      const mount = document.querySelector('[data-quiz-mount="' + moduleNum + '"]');
+      const warning = mount.querySelector('[data-module-warning="' + moduleNum + '"]');
+      let allAnswered = true;
+      let score = 0;
+
+      questions.forEach(function (item, qi) {
+        const name = 'm' + moduleNum + '-q' + qi;
+        const selected = mount.querySelector('input[name="' + name + '"]:checked');
+        const qDiv = mount.querySelector('.quiz-question[data-qindex="' + qi + '"]');
+        if (!selected) {
+          allAnswered = false;
+          qDiv.classList.add("unanswered");
+        } else {
+          qDiv.classList.remove("unanswered");
+          if (parseInt(selected.value, 10) === item.correct) score++;
+        }
+      });
+
+      if (!allAnswered) {
+        warning.style.display = "block";
+        return;
+      }
+      warning.style.display = "none";
+
+      const result = { score: score, total: questions.length };
+      localStorage.setItem(quizScoreKey(moduleNum), JSON.stringify(result));
+      lockQuizAsDone(moduleNum, result);
+
+      if (getCompleted() < moduleNum) setCompleted(moduleNum);
+      if (moduleNum === TOTAL_MODULES && !localStorage.getItem(completedDateKey)) {
+        localStorage.setItem(completedDateKey, new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" }));
+      }
+      renderProgress();
+
+      const next = document.getElementById("module-" + (moduleNum + 1));
+      if (next) {
+        next.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        certSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    function lockQuizAsDone(moduleNum, result) {
+      const mount = document.querySelector('[data-quiz-mount="' + moduleNum + '"]');
+      if (!mount) return;
+      mount.querySelectorAll("input[type=radio]").forEach(function (r) { r.disabled = true; });
+      const btn = mount.querySelector(".quiz-submit-btn");
+      if (btn) { btn.disabled = true; btn.textContent = "Quiz Complete ✓"; }
+      const resultEl = mount.querySelector('[data-module-result="' + moduleNum + '"]');
+      if (resultEl) {
+        resultEl.style.display = "block";
+        resultEl.textContent = "You scored " + result.score + "/" + result.total + ". Module unlocked below.";
+      }
+    }
+
+    // ---------- Progress + certificate ----------
+    function renderProgress() {
+      const completed = getCompleted();
+      const unlockedThrough = Math.min(completed + 1, TOTAL_MODULES);
+
+      document.querySelectorAll(".module").forEach(function (section) {
+        const num = parseInt(section.getAttribute("data-module"), 10);
+        if (num <= unlockedThrough) {
+          section.classList.remove("is-locked");
+        } else {
+          section.classList.add("is-locked");
+        }
+      });
+
+      progressText.textContent = "Module " + unlockedThrough + " of " + TOTAL_MODULES + " unlocked";
+      progressBarFill.style.width = Math.round((unlockedThrough / TOTAL_MODULES) * 100) + "%";
+
+      if (completed >= TOTAL_MODULES) {
+        showCertificate();
+      }
+    }
+
+    function showCertificate() {
+      const name = localStorage.getItem(nameKey) || "Student";
+      const date = localStorage.getItem(completedDateKey) || new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+      document.getElementById("cert-name").textContent = name;
+      document.getElementById("cert-date").textContent = "Completed " + date;
+      certSection.style.display = "block";
+    }
+
+    document.getElementById("cert-print-btn").addEventListener("click", function () {
+      window.print();
+    });
+
+    // ---------- Gate ----------
+    function unlockCourse() {
+      gate.style.display = "none";
+      course.style.display = "block";
+      window.scrollTo(0, 0);
+      const name = localStorage.getItem(nameKey);
+      if (name) welcomeLine.textContent = "Welcome back, " + name + ".";
+      for (let m = 1; m <= TOTAL_MODULES; m++) buildQuiz(m);
+      initLiteEmbeds(document);
+      renderProgress();
+    }
+
+    if (localStorage.getItem(accessKey) === "granted") {
+      unlockCourse();
+    }
+
+    function tryRegister() {
+      const name = nameInput.value.trim();
+      if (!name || input.value !== COURSE_PASSWORD) {
+        error.style.display = "block";
+        return;
+      }
+      localStorage.setItem(accessKey, "granted");
+      localStorage.setItem(nameKey, name);
+      unlockCourse();
+    }
+
+    submit.addEventListener("click", tryRegister);
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") tryRegister(); });
+    nameInput.addEventListener("keydown", function (e) { if (e.key === "Enter") tryRegister(); });
+  })();
+</script>
+
+</body>
+</html>
