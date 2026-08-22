@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Courses — Biblical Studies and Reviews</title>
+<meta name="description" content="Courses from Biblical Studies and Reviews.">
+<meta name="theme-color" content="#6E3929">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e9dfca; --paper-2:#ded0b3; --paper-deep:#c9b790;
+  --ink:#29221b; --ink-soft:#5e5140; --ink-faint:#857763;
+  --rubric:#6e3929; --rubric-bg:#f1ddd2; --blue:#385168; --blue-bg:#dbe5e9;
+  --brass:#7d6430; --brass-bg:#eadcb7; --line:#c2ad85; --card:#faf3e5;
+  --shadow:0 12px 32px rgba(60,43,23,.11), 0 2px 5px rgba(60,43,23,.07);
+  --ui:'Source Sans 3', Arial, sans-serif;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0;
+  background:radial-gradient(1100px 560px at 50% -110px,rgba(255,250,236,.95),transparent 68%),repeating-linear-gradient(0deg,rgba(98,72,38,.018) 0,rgba(98,72,38,.018) 1px,transparent 1px,transparent 5px),var(--paper);
+  color:var(--ink);
+  font-family:'EB Garamond', Georgia, serif;
+  font-size:19px;
+  line-height:1.6;
+}
+h1,h2,h3{font-family:'Cormorant Garamond', Georgia, serif;color:var(--ink);font-weight:600;}
+a{color:var(--blue);}
+.wrap{max-width:720px;margin:0 auto;padding:0 24px;}
+
+header.hero{
+  padding:58px 0 44px;
+  text-align:center;
+  border-bottom:1px solid rgba(125,100,48,.55);
+}
+header.hero .kicker{
+  font-family:var(--ui);font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  font-size:11px;color:var(--brass);margin-bottom:14px;
+}
+header.hero .kicker::before,header.hero .kicker::after{content:"✦";margin:0 10px;opacity:.55;}
+header.hero h1{font-size:clamp(38px,6vw,54px);line-height:1;margin:0 0 10px;letter-spacing:.01em;}
+header.hero .tagline{font-style:italic;color:var(--ink-soft);font-size:19px;max-width:480px;margin:0 auto;}
+header.hero a.back{
+  display:inline-block;margin-top:22px;font-family:var(--ui);font-size:13px;font-weight:600;
+  color:var(--ink-soft);text-decoration:none;letter-spacing:.02em;
+}
+header.hero a.back:hover{color:var(--rubric);}
+
+/* Gate */
+#gate{padding:56px 24px 80px;}
+#gate .box{max-width:400px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:32px 30px;box-shadow:var(--shadow);}
+#gate p.intro{color:var(--ink-soft);font-size:17px;margin:0 0 22px;text-align:center;}
+#gate label{
+  display:block;font-family:var(--ui);font-size:12px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--brass);margin-bottom:6px;
+}
+#gate input[type="password"]{
+  width:100%;padding:12px 14px;font-size:1rem;border:1px solid var(--line);border-radius:6px;
+  margin-bottom:16px;font-family:'EB Garamond',serif;background:#fdf7ee;color:var(--ink);
+}
+#gate button{
+  width:100%;padding:12px 14px;font-family:var(--ui);font-weight:700;font-size:15px;
+  background:var(--rubric);color:#fdf7ee;border:none;border-radius:7px;cursor:pointer;
+  box-shadow:0 4px 11px rgba(110,57,41,.2);transition:transform .18s ease,box-shadow .18s ease;
+}
+#gate button:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
+#gate .error{
+  color:#a33b2a;font-family:var(--ui);font-size:14px;margin-top:12px;display:none;text-align:center;
+}
+
+/* Course list (hidden until unlocked) */
+#courses{display:none;padding:48px 0 80px;}
+.course-card{
+  background:var(--card);border:1px solid var(--line);border-radius:12px;
+  padding:26px 28px;box-shadow:var(--shadow);border-left:4px solid var(--brass);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.course-card + .course-card{margin-top:18px;}
+.course-card:hover{transform:translateX(5px);box-shadow:0 12px 24px rgba(53,37,19,.1);}
+.course-card .meta{
+  font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-faint);margin-bottom:6px;
+}
+.course-card h3{font-size:26px;line-height:1.1;margin:0 0 8px;}
+.course-card p{margin:0 0 16px;color:var(--ink-soft);}
+.course-card a.btn{
+  display:inline-block;font-family:var(--ui);font-weight:700;font-size:15px;
+  background:var(--ink);color:var(--paper);text-decoration:none;padding:10px 22px;
+  border-radius:7px;transition:transform .18s ease,box-shadow .18s ease;
+}
+.course-card a.btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
+.empty-note{text-align:center;color:var(--ink-faint);font-style:italic;padding:24px;}
+
+footer{text-align:center;padding:30px 0 50px;color:var(--ink-faint);font-family:var(--ui);font-size:12px;letter-spacing:.04em;}
+footer a{color:var(--ink-soft);}
+
+@media (max-width:640px){
+  header.hero{padding:44px 0 34px;}
+  #gate .box{padding:26px 22px;}
+  .course-card{padding:20px 20px;}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Biblical Studies and Reviews</div>
+    <h1>Courses</h1>
+    <p class="tagline">Guided, self-paced study to go with the channel — enter your course password to see what's available.</p>
+    <a class="back" href="/">&larr; Back to the main site</a>
+  </div>
+</header>
+
+<div id="gate">
+  <div class="wrap">
+    <div class="box">
+      <p class="intro">This area is for members. Enter the courses password to continue.</p>
+      <label for="gate-input">Courses Password</label>
+      <input type="password" id="gate-input" placeholder="Password" autocomplete="off">
+      <button id="gate-submit">Unlock Courses</button>
+      <p class="error" id="gate-error">That password isn't right — check it and try again, or reach out if you're not sure.</p>
+    </div>
+  </div>
+</div>
+
+<div id="courses">
+  <div class="wrap">
+
+    <div class="course-card">
+      <p class="meta">Companion Course · 7 Modules</p>
+      <h3>Foundations of the Septuagint</h3>
+      <p>A guided companion course to Gregory R. Lanier and William A. Ross's <em>The Septuagint: What It Is and Why It Matters</em> — chapter-by-chapter lectures, discussion questions, and short quizzes.</p>
+      <a class="btn" href="/courses/septuagint-foundations/">Go to course &rarr;</a>
+    </div>
+
+    <!-- Add more <div class="course-card">...</div> blocks here as new courses are published. -->
+
+  </div>
+</div>
+
+<footer>
+  Biblical Studies and Reviews · <a href="/">excavatingthetext.com</a>
+</footer>
+
+<script>
+(function () {
+  const COURSES_PASSWORD = "CHANGE-ME-2026"; // set the real password before sharing this page
+
+  const gate = document.getElementById("gate");
+  const courses = document.getElementById("courses");
+  const input = document.getElementById("gate-input");
+  const submit = document.getElementById("gate-submit");
+  const error = document.getElementById("gate-error");
+  const STORAGE_KEY = "bsr-courses-unlocked";
+
+  function unlock() {
+    gate.style.display = "none";
+    courses.style.display = "block";
+  }
+
+  if (localStorage.getItem(STORAGE_KEY) === "yes") {
+    unlock();
+  }
+
+  function tryUnlock() {
+    if (input.value === COURSES_PASSWORD) {
+      localStorage.setItem(STORAGE_KEY, "yes");
+      error.style.display = "none";
+      unlock();
+    } else {
+      error.style.display = "block";
+    }
+  }
+
+  submit.addEventListener("click", tryUnlock);
+  input.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") tryUnlock();
+  });
+})();
+</script>
+
+</body>
+</html>
