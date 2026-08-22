@@ -149,6 +149,17 @@
     margin: 0 0 20px;
   }
 
+  /* Intro block — sits before Module 1, not gated/counted as a module */
+  .intro { padding: 0 0 40px; }
+  .intro .module-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .intro h2 { font-size: 1.4rem; margin: 0 0 6px; }
+
   /* Locked module teaser */
   .module.is-locked .module-body { display: none; }
   .module.is-locked .locked-teaser { display: block; }
@@ -447,6 +458,39 @@
     </div>
   </div>
 
+  <!-- Intro (not a module — no quiz, no gating, always visible) -->
+  <div class="intro">
+    <div class="module-label">Before You Begin</div>
+    <h2>Welcome to the Course</h2>
+    <div class="video-placeholder">
+      <div class="label">🎥 Your lecture goes here<br>Record: course intro — why you chose this book, how the course works, what students will walk away with.</div>
+    </div>
+    <p class="video-caption">Swap in your video once recorded — see the HTML comment near this block for the embed snippet.</p>
+    <!-- Once recorded, replace the .video-placeholder div above with:
+    <div class="yt-lite-wrap">
+      <div class="yt-lite" data-video-id="YOUR_VIDEO_ID" data-title="Welcome to the Course" data-thumb="thumbs/intro.jpg"></div>
+    </div>
+    -->
+    <div class="supplemental">
+      <p class="slabel">3-Minute Primer · Intro to the Course</p>
+      <div class="yt-lite-wrap">
+        <div class="yt-lite" data-video-id="tLUqv01BBiY" data-title="The Septuagint: Ultimate 3-Minute Crash-Course!" data-thumb="thumbs/warmup-crash-course.jpg"></div>
+        <p class="yt-lite-title">The Septuagint: Ultimate 3-Minute Crash-Course! — watch this before Module 1</p>
+      </div>
+    </div>
+    <div class="questions">
+      <p class="qlabel">Discussion Questions</p>
+      <ol>
+        <li>In your own words, summarize the main point the 3-minute video makes about what the Septuagint is.</li>
+        <li>What in the video was new information to you, or something you hadn't heard framed that way before?</li>
+        <li>Before watching, what did you already believe about the Septuagint — did the video confirm or challenge any of that?</li>
+        <li>Who would you send this video to if you wanted to explain "why the Septuagint matters" to someone in under five minutes?</li>
+        <li>What question does the video raise that you expect the rest of this course to answer?</li>
+        <li>If you had to compress everything you know about the Septuagint into three minutes, what would you include that the video left out?</li>
+      </ol>
+    </div>
+  </div>
+
   <!-- Module 1 -->
   <section class="module" id="module-1" data-module="1">
     <div class="module-body">
@@ -456,20 +500,12 @@
       <div class="yt-lite-wrap">
         <div class="yt-lite" data-video-id="efEhYMTZ-Kc" data-title="Module 1: What Is the So-Called Septuagint?" data-thumb="thumbs/module-1.jpg"></div>
       </div>
-      <div class="supplemental">
-        <p class="slabel">Second Video · Quick Primer</p>
-        <div class="yt-lite-wrap">
-          <div class="yt-lite" data-video-id="tLUqv01BBiY" data-title="The Septuagint: Ultimate 3-Minute Crash-Course!" data-thumb="thumbs/warmup-crash-course.jpg"></div>
-          <p class="yt-lite-title">The Septuagint: Ultimate 3-Minute Crash-Course! — a fast overview before you dig into Chapter 1</p>
-        </div>
-      </div>
       <div class="questions">
         <p class="qlabel">Discussion Questions</p>
         <ol>
           <li>In your own words, what is "the Septuagint" — and what isn't it?</li>
           <li>Why do Lanier and Ross hedge with "so-called"? What's at stake in that qualification?</li>
           <li>What misconception about the LXX did this chapter correct for you?</li>
-          <li>The 3-minute crash-course video gives you the short version — what did it get across well, and what did Chapter 1 add that three minutes couldn't cover?</li>
         </ol>
       </div>
       <div class="module-quiz" data-quiz-mount="1"></div>
