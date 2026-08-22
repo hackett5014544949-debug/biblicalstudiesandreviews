@@ -429,11 +429,14 @@
     <label for="gate-name">Your Name (as it should appear on your certificate)</label>
     <input type="text" id="gate-name" placeholder="Jane Smith" autocomplete="name">
 
+    <label for="gate-email">Your Email</label>
+    <input type="email" id="gate-email" placeholder="jane@example.com" autocomplete="email">
+
     <label for="gate-input">Course Password</label>
     <input type="password" id="gate-input" placeholder="Course password" autocomplete="off">
 
     <button id="gate-submit">Register &amp; Unlock Course</button>
-    <p class="error" id="gate-error">Check your name and password — one of those isn't right, or reach out if you're not sure.</p>
+    <p class="error" id="gate-error">Check your name, email, and password — one of those isn't right, or reach out if you're not sure.</p>
   </div>
 </div>
 
@@ -873,17 +876,19 @@
 <script>
   // Per-course settings — change these two values for each new course page.
   const COURSE_ID = "septuagint-foundations";   // unique slug per course
-  const COURSE_PASSWORD = "CHANGE-ME-2026";     // set the real password before publishing
+  const COURSE_PASSWORD = "Change-me-2026";     // set the real password before publishing
   const TOTAL_MODULES = 7;
 
   (function () {
     const accessKey = "adfontes-course-access-" + COURSE_ID;
     const nameKey = "adfontes-course-name-" + COURSE_ID;
+    const emailKey = "adfontes-course-email-" + COURSE_ID;
     const completedDateKey = "adfontes-course-completeddate-" + COURSE_ID;
     const progressKey = "adfontes-course-progress-" + COURSE_ID; // number of modules whose quiz is complete
     const gate = document.getElementById("gate");
     const course = document.getElementById("course");
     const nameInput = document.getElementById("gate-name");
+    const emailInput = document.getElementById("gate-email");
     const input = document.getElementById("gate-input");
     const submit = document.getElementById("gate-submit");
     const error = document.getElementById("gate-error");
@@ -1085,20 +1090,49 @@
       unlockCourse();
     }
 
+    // ---------- Mailchimp signup (fill in once you have your Audience's embedded-form
+    // details: Mailchimp > Audience > Signup forms > Embedded forms > "Naked" style.
+    // MAILCHIMP_FORM_ACTION is the form's action="..." URL (posts to a list-manage.com
+    // address). MAILCHIMP_HONEYPOT_FIELD is the hidden bot-check input name that looks
+    // like "b_xxxxxxxxxxxxxxxxxxxxxxxxx_xxxxxxxxxx" in that same generated form — leave
+    // it blank if it's not been set up yet and signups just won't be sent to Mailchimp. ----------
+    const MAILCHIMP_FORM_ACTION = ""; // e.g. "https://ad-fontes.us1.list-manage.com/subscribe/post?u=XXXX&id=YYYY"
+    const MAILCHIMP_HONEYPOT_FIELD = ""; // e.g. "b_abc123def456_abc123def4"
+
+    function sendToMailchimp(name, email) {
+      if (!MAILCHIMP_FORM_ACTION) return; // not wired up yet — no-op
+      const params = new URLSearchParams();
+      params.set("EMAIL", email);
+      params.set("FNAME", name);
+      if (MAILCHIMP_HONEYPOT_FIELD) params.set(MAILCHIMP_HONEYPOT_FIELD, "");
+      // Mailchimp's embedded forms expect a plain cross-origin GET/POST from the browser,
+      // not a fetch with credentials — no-cors keeps this from erroring even though we
+      // can't read the response (Mailchimp doesn't send CORS headers back).
+      fetch(MAILCHIMP_FORM_ACTION + (MAILCHIMP_FORM_ACTION.includes("?") ? "&" : "?") + params.toString(), {
+        method: "GET",
+        mode: "no-cors"
+      }).catch(function () { /* best-effort; never block registration on this */ });
+    }
+
     function tryRegister() {
       const name = nameInput.value.trim();
-      if (!name || input.value !== COURSE_PASSWORD) {
+      const email = emailInput.value.trim();
+      const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      if (!name || !emailOk || input.value !== COURSE_PASSWORD) {
         error.style.display = "block";
         return;
       }
       localStorage.setItem(accessKey, "granted");
       localStorage.setItem(nameKey, name);
+      localStorage.setItem(emailKey, email);
+      sendToMailchimp(name, email);
       unlockCourse();
     }
 
     submit.addEventListener("click", tryRegister);
     input.addEventListener("keydown", function (e) { if (e.key === "Enter") tryRegister(); });
     nameInput.addEventListener("keydown", function (e) { if (e.key === "Enter") tryRegister(); });
+    emailInput.addEventListener("keydown", function (e) { if (e.key === "Enter") tryRegister(); });
   })();
 </script>
 
