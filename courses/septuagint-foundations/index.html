@@ -1103,26 +1103,20 @@
     function sendToMailchimp(name, email) {
       if (!MAILCHIMP_FORM_ACTION) return; // not wired up yet — no-op
       // A background fetch() to Mailchimp's subscribe endpoint is silently dropped by
-      // Mailchimp's own filtering for some names (e.g. ones with a hyphen or parentheses)
-      // with no way for us to detect the failure, since the cross-origin response can't be
-      // read. A real browser submission (the same kind the newsletter form on the homepage
-      // does) doesn't have that problem, so we submit a real, invisible form into a hidden
-      // iframe — same reliability as a normal page submission, but without navigating the
-      // visitor away from the course. (With method="GET" the browser rebuilds the query
-      // string purely from the form's own fields, so u/id/f_id have to be hidden inputs
-      // too — they can't just live in the action URL, or they'd be dropped.)
-      let frame = document.getElementById("mc-signup-frame");
-      if (!frame) {
-        frame = document.createElement("iframe");
-        frame.id = "mc-signup-frame";
-        frame.name = "mc-signup-frame";
-        frame.style.display = "none";
-        document.body.appendChild(frame);
-      }
+      // Mailchimp's filtering with no way for us to detect the failure, since the
+      // cross-origin response can't be read. Submitting into a hidden iframe (or via a
+      // script-opened popup) turned out to be unreliable too — Mailchimp appears to trust
+      // a genuine top-level browser submission more than anything triggered purely by
+      // script. So this uses exactly the same mechanism as the newsletter form already on
+      // the homepage: a real form, POST, opening in a new tab. The new tab briefly shows
+      // Mailchimp's own "thanks for subscribing" page — a minor visible step, but the most
+      // reliable option we found.
       const form = document.createElement("form");
-      form.action = MAILCHIMP_FORM_BASE;
-      form.method = "GET";
-      form.target = "mc-signup-frame";
+      form.action = MAILCHIMP_FORM_BASE + "?" + Object.keys(MAILCHIMP_FORM_FIELDS).map(function (key) {
+        return encodeURIComponent(key) + "=" + encodeURIComponent(MAILCHIMP_FORM_FIELDS[key]);
+      }).join("&");
+      form.method = "POST";
+      form.target = "_blank";
       form.style.display = "none";
 
       function addField(fieldName, value) {
@@ -1132,9 +1126,6 @@
         field.value = value;
         form.appendChild(field);
       }
-      Object.keys(MAILCHIMP_FORM_FIELDS).forEach(function (key) {
-        addField(key, MAILCHIMP_FORM_FIELDS[key]);
-      });
       addField("EMAIL", email);
       addField("FNAME", name);
       if (MAILCHIMP_HONEYPOT_FIELD) addField(MAILCHIMP_HONEYPOT_FIELD, "");
