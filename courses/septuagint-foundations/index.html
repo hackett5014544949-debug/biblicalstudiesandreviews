@@ -1090,14 +1090,13 @@
       unlockCourse();
     }
 
-    // ---------- Mailchimp signup (fill in once you have your Audience's embedded-form
-    // details: Mailchimp > Audience > Signup forms > Embedded forms > "Naked" style.
-    // MAILCHIMP_FORM_ACTION is the form's action="..." URL (posts to a list-manage.com
-    // address). MAILCHIMP_HONEYPOT_FIELD is the hidden bot-check input name that looks
-    // like "b_xxxxxxxxxxxxxxxxxxxxxxxxx_xxxxxxxxxx" in that same generated form — leave
-    // it blank if it's not been set up yet and signups just won't be sent to Mailchimp. ----------
-    const MAILCHIMP_FORM_ACTION = ""; // e.g. "https://ad-fontes.us1.list-manage.com/subscribe/post?u=XXXX&id=YYYY"
-    const MAILCHIMP_HONEYPOT_FIELD = ""; // e.g. "b_abc123def456_abc123def4"
+    // ---------- Mailchimp signup ----------
+    // Posts into the "Biblical Studies and Reviews" audience (same one the newsletter
+    // uses) via its dedicated "Septuagint Course Signup" embedded form, which auto-tags
+    // every submission "Septuagint Course" so these signups stay distinguishable from
+    // general newsletter subscribers without needing a separate audience.
+    const MAILCHIMP_FORM_ACTION = "https://outlook.us9.list-manage.com/subscribe/post?u=1b93f0f648a0ee28b86fced7b&id=c54e302dc7&f_id=001cc2e1f0";
+    const MAILCHIMP_HONEYPOT_FIELD = "b_1b93f0f648a0ee28b86fced7b_c54e302dc7";
 
     function sendToMailchimp(name, email) {
       if (!MAILCHIMP_FORM_ACTION) return; // not wired up yet — no-op
