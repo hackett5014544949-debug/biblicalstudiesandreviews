@@ -1095,22 +1095,53 @@
     // uses) via its dedicated "Septuagint Course Signup" embedded form, which auto-tags
     // every submission "Septuagint Course" so these signups stay distinguishable from
     // general newsletter subscribers without needing a separate audience.
-    const MAILCHIMP_FORM_ACTION = "https://outlook.us9.list-manage.com/subscribe/post?u=1b93f0f648a0ee28b86fced7b&id=c54e302dc7&f_id=001cc2e1f0";
+    const MAILCHIMP_FORM_BASE = "https://outlook.us9.list-manage.com/subscribe/post";
+    const MAILCHIMP_FORM_ACTION = MAILCHIMP_FORM_BASE; // kept for the "not wired up" check below
+    const MAILCHIMP_FORM_FIELDS = { u: "1b93f0f648a0ee28b86fced7b", id: "c54e302dc7", f_id: "001cc2e1f0" };
     const MAILCHIMP_HONEYPOT_FIELD = "b_1b93f0f648a0ee28b86fced7b_c54e302dc7";
 
     function sendToMailchimp(name, email) {
       if (!MAILCHIMP_FORM_ACTION) return; // not wired up yet — no-op
-      const params = new URLSearchParams();
-      params.set("EMAIL", email);
-      params.set("FNAME", name);
-      if (MAILCHIMP_HONEYPOT_FIELD) params.set(MAILCHIMP_HONEYPOT_FIELD, "");
-      // Mailchimp's embedded forms expect a plain cross-origin GET/POST from the browser,
-      // not a fetch with credentials — no-cors keeps this from erroring even though we
-      // can't read the response (Mailchimp doesn't send CORS headers back).
-      fetch(MAILCHIMP_FORM_ACTION + (MAILCHIMP_FORM_ACTION.includes("?") ? "&" : "?") + params.toString(), {
-        method: "GET",
-        mode: "no-cors"
-      }).catch(function () { /* best-effort; never block registration on this */ });
+      // A background fetch() to Mailchimp's subscribe endpoint is silently dropped by
+      // Mailchimp's own filtering for some names (e.g. ones with a hyphen or parentheses)
+      // with no way for us to detect the failure, since the cross-origin response can't be
+      // read. A real browser submission (the same kind the newsletter form on the homepage
+      // does) doesn't have that problem, so we submit a real, invisible form into a hidden
+      // iframe — same reliability as a normal page submission, but without navigating the
+      // visitor away from the course. (With method="GET" the browser rebuilds the query
+      // string purely from the form's own fields, so u/id/f_id have to be hidden inputs
+      // too — they can't just live in the action URL, or they'd be dropped.)
+      let frame = document.getElementById("mc-signup-frame");
+      if (!frame) {
+        frame = document.createElement("iframe");
+        frame.id = "mc-signup-frame";
+        frame.name = "mc-signup-frame";
+        frame.style.display = "none";
+        document.body.appendChild(frame);
+      }
+      const form = document.createElement("form");
+      form.action = MAILCHIMP_FORM_BASE;
+      form.method = "GET";
+      form.target = "mc-signup-frame";
+      form.style.display = "none";
+
+      function addField(fieldName, value) {
+        const field = document.createElement("input");
+        field.type = "hidden";
+        field.name = fieldName;
+        field.value = value;
+        form.appendChild(field);
+      }
+      Object.keys(MAILCHIMP_FORM_FIELDS).forEach(function (key) {
+        addField(key, MAILCHIMP_FORM_FIELDS[key]);
+      });
+      addField("EMAIL", email);
+      addField("FNAME", name);
+      if (MAILCHIMP_HONEYPOT_FIELD) addField(MAILCHIMP_HONEYPOT_FIELD, "");
+
+      document.body.appendChild(form);
+      form.submit();
+      form.remove();
     }
 
     function tryRegister() {
