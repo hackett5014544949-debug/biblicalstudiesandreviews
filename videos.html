@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Videos | Biblical Studies and Reviews</title>
+<meta name="description" content="Browse Bible studies, textual criticism, creation research, and reviews from Biblical Studies and Reviews.">
+<meta name="theme-color" content="#6E3929">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=EB+Garamond:wght@400;600&family=Source+Sans+3:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e9dfca;
+    --paper-2:#ded0b3;
+    --ink:#29221b;
+    --ink-soft:#5e5140;
+    --ink-faint:#857763;
+    --rubric:#6e3929;
+    --brass:#7d6430;
+    --line:#c2ad85;
+    --card:#faf3e5;
+    --shadow:0 12px 32px rgba(60,43,23,.11),0 2px 5px rgba(60,43,23,.07);
+    --ui:'Source Sans 3',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    color:var(--ink);
+    font-family:'EB Garamond',Georgia,serif;
+    font-size:18px;
+    line-height:1.55;
+    background:
+      radial-gradient(1100px 560px at 50% -110px,rgba(255,250,236,.95),transparent 68%),
+      repeating-linear-gradient(0deg,rgba(98,72,38,.018) 0,rgba(98,72,38,.018) 1px,transparent 1px,transparent 5px),
+      var(--paper);
+  }
+  a{color:inherit;}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 24px;}
+  header{
+    text-align:center;
+    padding:56px 0 48px;
+    border-bottom:1px solid rgba(125,100,48,.55);
+  }
+  .kicker{
+    color:var(--brass);
+    font-family:var(--ui);
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+  }
+  h1,h2,h3{font-family:'Cormorant Garamond',Georgia,serif;}
+  h1{font-size:clamp(44px,7vw,68px);line-height:.98;margin:12px 0 14px;}
+  header p{max-width:650px;margin:0 auto;color:var(--ink-soft);font-size:20px;}
+  nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px;}
+  .btn{
+    display:inline-block;
+    padding:10px 18px;
+    border:1px solid var(--rubric);
+    border-radius:7px;
+    color:#fff9ed;
+    background:var(--rubric);
+    font-family:var(--ui);
+    font-size:14px;
+    font-weight:700;
+    text-decoration:none;
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .btn.secondary{color:var(--rubric);background:transparent;}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
+  main{padding:58px 0 72px;}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:26px;}
+  .section-head h2{font-size:38px;line-height:1;margin:0;}
+  .section-head p{margin:0;color:var(--ink-faint);font-family:var(--ui);font-size:13px;}
+  .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;}
+  .video-card{
+    display:block;
+    overflow:hidden;
+    border:1px solid var(--line);
+    border-radius:12px;
+    background:var(--card);
+    box-shadow:var(--shadow);
+    text-decoration:none;
+    transition:transform .2s ease,box-shadow .2s ease;
+  }
+  .video-card:hover{transform:translateY(-5px);box-shadow:0 16px 28px rgba(53,37,19,.15);}
+  .thumb{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--paper-2);}
+  .thumb img{display:block;width:100%;height:100%;object-fit:cover;}
+  .thumb::after{
+    content:'▶';
+    position:absolute;
+    left:50%;top:50%;
+    transform:translate(-50%,-50%);
+    display:grid;place-items:center;
+    width:50px;height:50px;
+    padding-left:3px;
+    border-radius:50%;
+    background:rgba(41,34,27,.78);
+    color:#fffaf0;
+    font-family:var(--ui);
+    font-size:17px;
+    opacity:.9;
+  }
+  .info{padding:17px 18px 19px;}
+  .info h3{font-size:23px;line-height:1.08;margin:0 0 9px;}
+  .meta{color:var(--ink-faint);font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+  .channel-cta{text-align:center;margin-top:42px;padding:30px;border:1px solid var(--line);border-radius:12px;background:rgba(250,243,229,.72);}
+  .channel-cta h2{font-size:30px;margin:0 0 8px;}
+  .channel-cta p{color:var(--ink-soft);margin:0 0 17px;}
+  footer{text-align:center;padding:32px 0 48px;border-top:1px solid var(--line);color:var(--ink-faint);font-family:var(--ui);font-size:12px;}
+  footer a{color:var(--ink-soft);}
+  a:focus-visible{outline:3px solid rgba(56,81,104,.5);outline-offset:3px;}
+  @media(max-width:640px){
+    header{padding:44px 0 40px;}
+    main{padding:44px 0 56px;}
+    .section-head{display:block;}
+    .section-head p{margin-top:9px;}
+    .video-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kicker">Biblical Studies and Reviews</div>
+    <h1>Videos</h1>
+    <p>Bible study, textual criticism, creation research, and reviews for people who want to dig deeper.</p>
+    <nav aria-label="Video page navigation">
+      <a class="btn secondary" href="index.html">&larr; Back to the homepage</a>
+      <a class="btn" href="https://www.youtube.com/@BiblicalStudiesandReviews" target="_blank" rel="noopener">Visit the YouTube channel &rarr;</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Latest studies and reviews</h2>
+      <p>Newest first &middot; Updated September 7, 2026</p>
+    </div>
+    <!-- To add a video, copy one .video-card block and replace the video ID,
+         title, and publication date. The thumbnail URL uses the same video ID. -->
+    <div class="video-grid">
+      <a class="video-card" href="https://www.youtube.com/watch?v=Ji_16I9ZZPc" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/Ji_16I9ZZPc/hqdefault.jpg" alt="" loading="eager"></div>
+        <div class="info"><h3>The Best Note-Taking System in the World! (Now Improved!)</h3><div class="meta">August 27, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=n5BOxwS5jkU" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/n5BOxwS5jkU/hqdefault.jpg" alt="" loading="eager"></div>
+        <div class="info"><h3>The Ahaziah Problem: Why the Bible Numbers Don't Match (And How to Resolve It)</h3><div class="meta">August 20, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=s_M-zks4QqM" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/s_M-zks4QqM/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>Exciting Release of Long Awaited Greek New Testament!</h3><div class="meta">August 16, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=qysrJ_ObvzM" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/qysrJ_ObvzM/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>Proof: Creationism BOOSTS Church Attendance!</h3><div class="meta">August 10, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=GE0bAMTiqw8" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/GE0bAMTiqw8/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>Their Best Fossil Just Backfired on Them!</h3><div class="meta">August 2, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=z9LQrZfnF3I" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/z9LQrZfnF3I/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>What Lucy's Bones Actually Reveal</h3><div class="meta">July 18, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=aiqAnin7li8" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/aiqAnin7li8/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>The Fossil Evidence They Don't Want You to See | Lucy Exposed</h3><div class="meta">July 17, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=OytaXyRNQF8" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/OytaXyRNQF8/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>Meet the Brilliant Minds Who Believe in Creation!</h3><div class="meta">July 15, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=17yz7K5BvvE" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/17yz7K5BvvE/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>MRI Inventor: “I Am a Young Earth Creationist”</h3><div class="meta">July 15, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=_o0tIjtyCVs" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/_o0tIjtyCVs/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>Scripture Holds Up—Stunning Creationist Prediction Confirmed!?</h3><div class="meta">July 14, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=5uM3azrGcLA" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/5uM3azrGcLA/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>Do Ice Cores Really Show Millions of Years?</h3><div class="meta">July 7, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=uH8xkybi7Xk" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/uH8xkybi7Xk/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>The Liberal Scholar Who Reads Akkadian Admitted This About Genesis!</h3><div class="meta">June 27, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=nuIgTe1lN7w" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/nuIgTe1lN7w/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>3 Biggest Myths About Young Earth Creationists Debunked!</h3><div class="meta">June 20, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=PqFSWXUmd6M" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/PqFSWXUmd6M/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>New Research May Confirm One of Genesis' Boldest Claims!</h3><div class="meta">June 13, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=McqBalKiNmQ" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/McqBalKiNmQ/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>This Question Has Vexed Me Since I Became a YEC</h3><div class="meta">June 6, 2026</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=tkAGIzgkR-E" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/tkAGIzgkR-E/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>Creationism and the Septuagint: Recent Study Alters Debate!</h3><div class="meta">From the archive</div></div>
+      </a>
+      <a class="video-card" href="https://www.youtube.com/watch?v=Su_WhkptRnk" target="_blank" rel="noopener">
+        <div class="thumb"><img src="https://i.ytimg.com/vi/Su_WhkptRnk/hqdefault.jpg" alt="" loading="lazy"></div>
+        <div class="info"><h3>Septuagint Bible Makeover: Turning an Ugly Bible into a Masterpiece</h3><div class="meta">From the archive</div></div>
+      </a>
+    </div>
+    <div class="channel-cta">
+      <h2>Want the complete archive?</h2>
+      <p>Visit the YouTube channel for every upload, playlist, Short, and future release.</p>
+      <a class="btn" href="https://www.youtube.com/@BiblicalStudiesandReviews" target="_blank" rel="noopener">See everything on YouTube &rarr;</a>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="wrap">Biblical Studies and Reviews &middot; <a href="index.html">Home</a> &middot; <a href="https://www.youtube.com/@BiblicalStudiesandReviews" target="_blank" rel="noopener">YouTube</a></div>
+</footer>
+</body>
+</html>
