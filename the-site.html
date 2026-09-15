@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About this site — Biblical Studies and Reviews</title>
+<meta name="description" content="About excavatingthetext.com — the home base for Biblical Studies and Reviews: videos, Resources, courses, and Digging Deep: Notetaker Deluxe.">
+<meta name="theme-color" content="#6E3929">
+<link rel="canonical" href="https://excavatingthetext.com/the-site.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://excavatingthetext.com/the-site.html">
+<meta property="og:title" content="About this site — Biblical Studies and Reviews">
+<meta property="og:description" content="The home base for Biblical Studies and Reviews: videos, Resources, courses, and Digging Deep: Notetaker Deluxe.">
+<meta property="og:site_name" content="Biblical Studies and Reviews">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About this site — Biblical Studies and Reviews">
+<meta name="twitter:description" content="The home base for Biblical Studies and Reviews: videos, Resources, courses, and Digging Deep: Notetaker Deluxe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#e9dfca; --paper-2:#ded0b3; --paper-deep:#c9b790;
+    --ink:#29221b; --ink-soft:#5e5140; --ink-faint:#857763;
+    --rubric:#6e3929; --rubric-bg:#f1ddd2; --blue:#385168; --blue-bg:#dbe5e9;
+    --brass:#7d6430; --brass-bg:#eadcb7; --line:#c2ad85; --card:#faf3e5;
+    --shadow:0 12px 32px rgba(60,43,23,.11), 0 2px 5px rgba(60,43,23,.07);
+    --ui:'Source Sans 3', Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    color:var(--ink);
+    font-family:'EB Garamond', Georgia, serif;
+    font-size:19px;
+    line-height:1.65;
+    background:
+      radial-gradient(1100px 560px at 50% -110px, rgba(255,250,236,.95), transparent 68%),
+      repeating-linear-gradient(0deg, rgba(98,72,38,.018) 0, rgba(98,72,38,.018) 1px, transparent 1px, transparent 5px),
+      var(--paper);
+  }
+  h1,h2,h3{
+    font-family:'Cormorant Garamond', Georgia, serif;
+    color:var(--ink);
+    font-weight:600;
+    letter-spacing:.01em;
+  }
+  a{color:var(--rubric);}
+  a:hover{color:var(--ink);}
+  a:focus-visible{outline:3px solid rgba(56,81,104,.5);outline-offset:3px;}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px;}
+
+  .topbar{
+    padding:18px 0 0;
+    font-family:var(--ui);
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.02em;
+  }
+  .topbar a{
+    color:var(--ink-soft);
+    text-decoration:none;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+  }
+  .topbar a:hover{color:var(--rubric);}
+
+  header.hero{
+    position:relative;
+    padding:42px 0 48px;
+    text-align:center;
+    border-bottom:1px solid rgba(125,100,48,.55);
+  }
+  header.hero .kicker{
+    font-family:var(--ui);
+    font-weight:600;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    font-size:10px;
+    color:var(--brass);
+    margin-bottom:15px;
+  }
+  header.hero .kicker::before,
+  header.hero .kicker::after{
+    content:"✦";
+    margin:0 10px;
+    opacity:.55;
+    font-size:11px;
+  }
+  header.hero h1{
+    font-size:clamp(40px,6.5vw,58px);
+    line-height:.96;
+    margin:0 0 12px;
+    text-shadow:0 1px 0 #fff9ea, 0 4px 16px rgba(73,49,23,.1);
+  }
+  header.hero .tagline{
+    max-width:620px;
+    margin:0 auto;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:20px;
+  }
+
+  section{
+    position:relative;
+    padding:56px 0;
+    border-bottom:1px solid rgba(194,173,133,.68);
+  }
+  section:nth-of-type(even){background:rgba(255,251,239,.35);}
+  section:last-of-type{border-bottom:none;}
+  section h2{
+    font-size:clamp(30px,4vw,40px);
+    line-height:1.05;
+    margin:0 0 8px;
+  }
+  section h2::before{
+    content:"✦";
+    display:block;
+    margin-bottom:9px;
+    color:var(--brass);
+    font-family:var(--ui);
+    font-size:12px;
+  }
+  .section-sub{
+    color:var(--ink-soft);
+    font-style:italic;
+    margin:0 0 26px;
+    font-size:18px;
+  }
+  p{margin:0 0 1em;}
+  p:last-child{margin-bottom:0;}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:24px 28px;
+    box-shadow:var(--shadow);
+    margin-bottom:14px;
+  }
+  .card.bar-brass{border-left:4px solid var(--brass);}
+  .card.bar-blue{border-left:4px solid var(--blue);}
+  .card h3{
+    margin:0 0 8px;
+    font-size:26px;
+    line-height:1.1;
+  }
+  .card .meta{
+    font-family:var(--ui);
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin-bottom:10px;
+  }
+  .card p{color:var(--ink-soft);margin:0 0 .85em;}
+  .card p:last-child{margin-bottom:0;}
+
+  .btn{
+    display:inline-block;
+    margin-top:10px;
+    background:var(--rubric);
+    color:#fdf7ee;
+    text-decoration:none;
+    padding:11px 22px;
+    border-radius:7px;
+    font-family:var(--ui);
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:.015em;
+    box-shadow:0 4px 11px rgba(110,57,41,.2);
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .btn:hover{
+    color:#fdf7ee;
+    transform:translateY(-2px);
+    box-shadow:0 6px 14px rgba(55,35,19,.18);
+  }
+  .btn.ink{
+    background:var(--ink);
+    box-shadow:0 4px 11px rgba(41,34,27,.18);
+  }
+
+  .callout{
+    background:var(--blue-bg);
+    border:1px solid rgba(56,81,104,.28);
+    border-radius:12px;
+    padding:20px 24px;
+    color:var(--blue);
+    font-size:17px;
+    margin-top:8px;
+  }
+
+  .palette{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:16px;
+  }
+  .swatch{
+    width:52px;height:52px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+  }
+
+  footer{
+    text-align:center;
+    padding:42px 0 60px;
+    color:var(--ink-faint);
+    font-family:var(--ui);
+    font-size:12px;
+    letter-spacing:.04em;
+  }
+  footer a{color:var(--ink-soft);text-decoration:none;}
+  footer a:hover{color:var(--rubric);}
+  footer .sep{margin:0 8px;opacity:.5;}
+
+  @media (max-width:640px){
+    header.hero{padding:32px 0 36px;}
+    header.hero .tagline{font-size:18px;}
+    section{padding:44px 0;}
+    .card{padding:20px 22px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap topbar">
+  <a href="https://excavatingthetext.com/">← Biblical Studies and Reviews</a>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Excavating the Text</div>
+    <h1>About this site</h1>
+    <p class="tagline">The home base for Biblical Studies and Reviews — where the videos, notes, and tools gather.</p>
+  </div>
+</header>
+
+<section id="what">
+  <div class="wrap">
+    <h2>What this site is</h2>
+    <p class="section-sub">A quiet desk for careful work in Scripture.</p>
+    <div class="card bar-brass">
+      <p>This is the home base for Stephen Hackett’s channel, <em>Biblical Studies and Reviews</em>. Here you’ll find video Bible study, textual criticism, and work in the original languages; a running blog for things that don’t fit neatly in a video; a Resources shelf of public-domain texts; and a path to <strong>Digging Deep: Notetaker Deluxe</strong>, the Bible study notebook app that grew out of this same habit of reading slowly.</p>
+      <p>The aim is simple: digging into the text, the manuscripts, and the questions worth resolving — without rushing past the hard places.</p>
+    </div>
+  </div>
+</section>
+
+<section id="whats-here">
+  <div class="wrap">
+    <h2>What’s here</h2>
+    <p class="section-sub">A map of the main rooms on the site.</p>
+
+    <div class="card bar-brass">
+      <div class="meta">Videos &amp; studies</div>
+      <h3>Videos / studies</h3>
+      <p>New studies and reviews posted regularly — verse-by-verse work, textual questions, and tools worth knowing about when you sit with a passage instead of skimming it.</p>
+      <a class="btn" href="https://excavatingthetext.com/videos.html">Browse videos</a>
+    </div>
+
+    <div class="card bar-blue">
+      <div class="meta">Resources</div>
+      <h3>Public-domain Greek New Testament</h3>
+      <p>Free PDFs of the Robinson–Pierpont Byzantine Text (Guardian Press edition) — a plain edition and a hyperlinked edition with bookmarks, a clickable table of contents, and a clickable manuscript apparatus index. They’re hosted here simply because the text is free and public domain. Hosting is not an endorsement of Guardian Press, and hosting doesn’t mean Guardian Press endorses anything else on this site.</p>
+      <a class="btn ink" href="https://excavatingthetext.com/#resources">Open Resources</a>
+    </div>
+
+    <div class="card bar-brass">
+      <div class="meta">Hardbound printing</div>
+      <h3>An independent project</h3>
+      <p>The hardbound printing of that Greek New Testament is an independent project of Biblical Studies and Reviews (Stephen). It is <strong>not</strong> affiliated with, published by, or endorsed by Guardian Press. When more copies become available, a waitlist on the homepage is the place to hear about it.</p>
+      <p>If you’re comparing editions, there’s also a short guide on which hardbound edition may fit you.</p>
+      <a class="btn" href="https://excavatingthetext.com/#resources">Homepage Resources</a>
+      <a class="btn ink" href="https://excavatingthetext.com/gnt-edition-picker.html" style="margin-left:8px;">Which hardbound edition fits you?</a>
+    </div>
+
+    <div class="card bar-blue">
+      <div class="meta">The app</div>
+      <h3>Digging Deep: Notetaker Deluxe</h3>
+      <p>A running Bible study notebook built alongside this channel — read, resolve, write it down, and cross-reference later. Access is through excavatingthetext.com (the donation path / gate on the homepage). That’s the only door; please start there.</p>
+      <a class="btn" href="https://excavatingthetext.com/#app">Go to The App on the homepage</a>
+    </div>
+
+    <div class="card bar-brass">
+      <div class="meta">Courses</div>
+      <h3>Member &amp; course work</h3>
+      <p>There’s a courses area under <a href="https://excavatingthetext.com/courses/">/courses/</a>, including Foundations of the Septuagint. Details and enrollment live there — this page doesn’t invent those particulars.</p>
+    </div>
+  </div>
+</section>
+
+<section id="built">
+  <div class="wrap">
+    <h2>How the site is built</h2>
+    <p class="section-sub">Light notes — nothing operational.</p>
+    <div class="card bar-brass">
+      <p>The site is hand-built static HTML — no CMS. It’s hosted on GitHub Pages from a public repository, with the domain <strong>excavatingthetext.com</strong>.</p>
+      <p>That’s enough of the plumbing for most visitors. The interesting part is still the text.</p>
+    </div>
+  </div>
+</section>
+
+<section id="identity">
+  <div class="wrap">
+    <h2>Visual identity</h2>
+    <p class="section-sub">A field notebook feel, not a generic ministry page.</p>
+    <div class="card bar-blue">
+      <p>Warm manuscript palette: parchment ground, dark ink, brass and rubric accents. Display headings in a serif face; kickers and labels in a small-caps sans. Navy is reserved for quote and callout treatments — a quiet shelf-mark rather than a brand shout.</p>
+      <div class="palette" aria-hidden="true">
+        <div class="swatch" style="background:var(--paper);" title="paper"></div>
+        <div class="swatch" style="background:var(--paper-2);" title="paper-2"></div>
+        <div class="swatch" style="background:var(--ink);" title="ink"></div>
+        <div class="swatch" style="background:var(--brass);" title="brass"></div>
+        <div class="swatch" style="background:var(--rubric);" title="rubric"></div>
+        <div class="swatch" style="background:var(--blue);" title="blue"></div>
+        <div class="swatch" style="background:var(--card);" title="card"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <h2>Contact / elsewhere</h2>
+    <p class="section-sub">Where to find updates without inventing a new inbox.</p>
+    <div class="card bar-brass">
+      <p>On X: <a href="https://x.com/stephen_hackett">@stephen_hackett</a>.</p>
+      <p>For news and Resources, the homepage newsletter and Resources section are the best places to start — rather than hunting for an email that isn’t listed here.</p>
+      <div class="callout">
+        Prefer the quiet path: <a href="https://excavatingthetext.com/#newsletter">newsletter</a> · <a href="https://excavatingthetext.com/#resources">Resources</a> · <a href="https://excavatingthetext.com/">home</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="https://excavatingthetext.com/">Biblical Studies and Reviews</a>
+    <span class="sep">·</span>
+    <a href="https://x.com/stephen_hackett">X / Twitter</a>
+    <p style="margin-top:14px;opacity:.85;">excavatingthetext.com</p>
+  </div>
+</footer>
+
+</body>
+</html>
