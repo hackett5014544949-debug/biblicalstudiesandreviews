@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GNT Edition Picker — Biblical Studies and Reviews</title>
+<meta name="description" content="Which hardbound Byzantine Greek New Testament edition fits you? A short comparison quiz and a deeper look at the Guardian Press edition.">
+<meta name="theme-color" content="#6E3929">
+<link rel="canonical" href="https://excavatingthetext.com/gnt-edition-picker.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="GNT Edition Picker — Biblical Studies and Reviews">
+<meta property="og:description" content="Which hardbound Byzantine Greek New Testament edition fits you? A short comparison quiz and a deeper look at the Guardian Press edition.">
+<meta property="og:site_name" content="Biblical Studies and Reviews">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+
+  :root {
+    /* Match excavatingthetext.com identity override block */
+    --paper: #e9dfca;
+    --paper-2: #ded0b3;
+    --paper-deep: #c9b790;
+    --ink: #29221b;
+    --ink-soft: #5e5140;
+    --ink-faint: #857763;
+    --rubric: #6e3929;
+    --rubric-bg: #f1ddd2;
+    --blue: #385168;
+    --blue-bg: #dbe5e9;
+    --brass: #7d6430;
+    --brass-bg: #eadcb7;
+    --line: #c2ad85;
+    --card: #faf3e5;
+    --shadow: 0 12px 32px rgba(60,43,23,.11), 0 2px 5px rgba(60,43,23,.07);
+    --cream: #fff9ed;
+    --ui: var(--ui);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background:
+      radial-gradient(1100px 560px at 50% -110px, rgba(255,250,236,.95), transparent 68%),
+      repeating-linear-gradient(0deg, rgba(98,72,38,.018) 0, rgba(98,72,38,.018) 1px, transparent 1px, transparent 5px),
+      var(--paper);
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.55;
+    padding-block: 28px;
+  }
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 22px 20px 28px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow), inset 0 0 0 4px rgba(232,225,208,0.55);
+  }
+  .back-link {
+    display: inline-block;
+    margin: 0 0 16px;
+    font-family: var(--ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--blue);
+    text-decoration: none;
+  }
+  .back-link:hover {
+    color: var(--rubric);
+    text-decoration: underline;
+  }
+  h1, h2, .result-title {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  h1 {
+    font-size: 1.55rem;
+    line-height: 1.25;
+    margin: 0 0 6px;
+  }
+  .sub {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    font-style: italic;
+    margin: 0 0 22px;
+  }
+
+  .progress {
+    height: 6px;
+    background: var(--paper-2);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 22px;
+    border: 1px solid var(--line);
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--brass);
+    width: 0%;
+    transition: width 0.25s ease;
+  }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 24px 22px;
+    min-height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .q-label,
+  .why-title,
+  .editions-grid h3,
+  .tab {
+    font-family: var(--ui);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .q-label {
+    font-size: 0.72rem;
+    color: var(--brass);
+    margin: 0 0 8px;
+  }
+  .q-text {
+    font-size: 1.12rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+  .q-note {
+    font-size: 0.82rem;
+    color: var(--ink-faint);
+    margin: 8px 0 0;
+    line-height: 1.4;
+  }
+
+  .btn-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  button.choice {
+    width: 100%;
+    padding: 11px 14px;
+    font-size: 0.98rem;
+    font-family: 'EB Garamond', Georgia, serif;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    text-align: left;
+    transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  button.choice.neutral {
+    border-style: dashed;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  button.choice:hover {
+    background: var(--brass-bg);
+    border-color: var(--brass);
+  }
+  button.choice:active {
+    transform: scale(0.99);
+  }
+
+  .trail {
+    margin-top: 2px;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    max-height: 90px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .trail div span.a {
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .result { display: none; }
+  .result.show { display: block; }
+  .result-card {
+    border-radius: 8px;
+    padding: 26px 22px;
+    border-width: 1px;
+    border-style: solid;
+    box-shadow: var(--shadow);
+  }
+  .result-card.guardian {
+    background: var(--brass-bg);
+    border-color: var(--line);
+    color: var(--ink);
+  }
+  .result-card.clearview {
+    background: var(--blue-bg);
+    border-color: var(--blue);
+    color: var(--ink);
+  }
+  .result-card.tie {
+    background: var(--card);
+    border-color: var(--line);
+  }
+  .result-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+  }
+  .result-sub {
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    margin: 0 0 14px;
+  }
+  .score-row {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    margin: 0 0 14px;
+  }
+  .spec-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    row-gap: 8px;
+    column-gap: 14px;
+    font-size: 0.95rem;
+    margin-bottom: 16px;
+  }
+  .spec-grid dt { color: var(--ink-soft); }
+  .spec-grid dd { margin: 0; font-weight: 600; }
+  .why-title {
+    font-size: 0.72rem;
+    color: var(--brass);
+    margin: 0 0 8px;
+  }
+  .why-list {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .why-wrap {
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+
+  .restart {
+    margin-top: 18px;
+    background: var(--rubric);
+    border: 1px solid var(--rubric);
+    color: var(--cream);
+    padding: 9px 16px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .restart:hover {
+    filter: brightness(1.06);
+  }
+
+  .tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .tab {
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--ink-soft);
+    font-size: 0.72rem;
+    padding: 8px 2px 10px;
+    cursor: pointer;
+  }
+  .tab.active {
+    color: var(--brass);
+    border-bottom-color: var(--brass);
+  }
+
+  .info-section { margin-bottom: 22px; }
+  .info-section h2 {
+    font-size: 1.2rem;
+    margin: 0 0 10px;
+  }
+  .info-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    padding: 20px 22px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    row-gap: 9px;
+    column-gap: 16px;
+    font-size: 0.95rem;
+  }
+  .info-grid dt { color: var(--ink-soft); }
+  .info-grid dd { margin: 0; font-weight: 600; }
+  .info-p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 0 0 12px;
+  }
+  .buy-list {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .disclaimer {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 0.78rem;
+    color: var(--ink-faint);
+    line-height: 1.6;
+  }
+
+  .info-list {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+  .info-list li + li { margin-top: 4px; }
+  .info-card .info-p:last-child { margin-bottom: 0; }
+  .editions-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    font-size: 0.9rem;
+  }
+  @media (min-width: 560px) {
+    .editions-grid { grid-template-columns: 1fr 1fr 1fr; }
+  }
+  .editions-grid h3 {
+    font-size: 0.72rem;
+    color: var(--brass);
+    margin: 0 0 6px;
+  }
+  .editions-grid ul {
+    margin: 0;
+    padding-left: 16px;
+    line-height: 1.55;
+  }
+  .anchor-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin: 0 0 22px;
+    font-size: 0.85rem;
+  }
+  .anchor-nav a {
+    color: var(--blue);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+  .anchor-nav a:hover {
+    color: var(--rubric);
+    border-bottom-color: var(--rubric);
+  }
+
+  a { color: var(--blue); }
+  [hidden] { display: none !important; }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back-link" href="https://excavatingthetext.com/">&larr; Biblical Studies and Reviews</a>
+
+  <div class="tabs">
+    <button class="tab active" id="tabCompareBtn">Compare editions</button>
+    <button class="tab" id="tabGuardianBtn">Guardian Press edition</button>
+  </div>
+
+  <div id="viewCompare">
+    <h1>Which Byzantine Greek NT edition should you buy?</h1>
+    <p class="sub">Eleven questions about what you want in the book itself &mdash; the editions aren't named until your result.</p>
+
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+
+    <div class="card" id="quizCard">
+      <div>
+        <p class="q-label" id="qLabel">Question 1 of 11</p>
+        <p class="q-text" id="qText"></p>
+        <p class="q-note" id="qNote" hidden></p>
+      </div>
+      <div class="btn-col" id="btnCol"></div>
+      <div class="trail" id="trail"></div>
+    </div>
+
+    <div class="result" id="resultWrap">
+      <div class="result-card" id="resultCard">
+        <p class="result-title" id="resultTitle"></p>
+        <p class="result-sub" id="resultSub"></p>
+        <p class="score-row" id="scoreRow"></p>
+        <dl class="spec-grid" id="specGrid"></dl>
+        <div class="why-wrap">
+          <p class="why-title">What drove this</p>
+          <ul class="why-list" id="whyList"></ul>
+        </div>
+      </div>
+      <button class="restart" id="restartBtn">Start over</button>
+    </div>
+
+    <p class="disclaimer">This page is compiled by Stephen Hackett, who serves on the Guardian Press editorial committee, using each publisher's own published specifications. He is solely responsible for its content &mdash; not Guardian Press &mdash; and it is not sponsored, endorsed, or supported by Clearview Press. Information is provided to the best of his knowledge and is subject to change.</p>
+  </div>
+
+  <div id="viewGuardian" hidden>
+    <h1>The Greek New Testament According to the Byzantine Text</h1>
+    <p class="sub">Guardian Press, 2026 &mdash; a deeper look at the edition, its apparatus, and how to get a copy.</p>
+
+    <nav class="anchor-nav" aria-label="On this page">
+      <a href="#g-specs">At a glance</a>
+      <a href="#g-background">Background</a>
+      <a href="#g-team">Team &amp; credits</a>
+      <a href="#g-text">Textual basis</a>
+      <a href="#g-apparatus">Apparatus</a>
+      <a href="#g-appendices">Appendices</a>
+      <a href="#g-buy">How to get a copy</a>
+    </nav>
+
+    <div class="info-section" id="g-specs">
+      <h2>At a glance</h2>
+      <div class="info-card">
+        <dl class="info-grid">
+          <dt>Publisher</dt><dd>Guardian Press, Inc. &mdash; Valparaiso, Indiana</dd>
+          <dt>Title</dt><dd>The Greek New Testament According to the Byzantine Text</dd>
+          <dt>Base text</dt><dd>Robinson&ndash;Pierpont Byzantine Textform, 2026 edition</dd>
+          <dt>Editorial body</dt><dd>Guardian Press Editorial Committee; J. Jeffrey Dodson, Layout &amp; Content Editor</dd>
+          <dt>Format</dt><dd>Hardback, Smyth-sewn, dark blue cloth cover with foil stamp, ribbon &amp; headbands, 6&Prime;&times;9&Prime;, 752 pages</dd>
+          <dt>Apparatus</dt><dd>Footnoted comparison against 11 Greek NT editions (Byzantine, critical-text, and Textus Receptus families), plus a dedicated manuscript-evidence apparatus for 50 historically significant variant units</dd>
+          <dt>Margins</dt><dd>Wide margins for personal notes</dd>
+          <dt>ISBN-13</dt><dd>979-8-234-23137-6</dd>
+          <dt>Rights</dt><dd>Entire edition placed in the public domain on its official release date</dd>
+          <dt>Price</dt><dd>Targeting around $20 + shipping; final price not yet set. International orders will require higher shipping.</dd>
+          <dt>Site</dt><dd>greeknt.org &middot; waitlist at excavatingthetext.com</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="info-section" id="g-background">
+      <h2>Project background</h2>
+      <div class="info-card">
+        <p class="info-p">This edition is the fruit of a four-year project. The preface is signed by &ldquo;The Editors,&rdquo; dated August 1, 2026, from Nashville, Tennessee.</p>
+        <p class="info-p">The volume presents the Greek New Testament according to the Robinson&ndash;Pierpont Byzantine Textform, with a new comparative apparatus built for clarity in study and teaching &mdash; not as a traditional critical apparatus of manuscript sigla alone.</p>
+        <p class="info-p">Interior structure runs through all 27 New Testament books (pages 1&ndash;705 in the content layout), followed by indexes, abbreviations, preface and introduction material, and Appendices A&ndash;D. The hardbound print run is specified at 752 pages.</p>
+      </div>
+    </div>
+
+    <div class="info-section" id="g-team">
+      <h2>Team &amp; credits</h2>
+      <div class="info-card">
+        <dl class="info-grid">
+          <dt>Editorial body</dt><dd>The Guardian Press Editorial Committee edited and prepared the text with its comparative apparatuses</dd>
+          <dt>Layout &amp; content</dt><dd>J. Jeffrey Dodson</dd>
+          <dt>Scholarly foundation</dt><dd>Dr. Maurice A. Robinson and the late William G. Pierpont, credited for their decades of work preserving the Byzantine Textform</dd>
+          <dt>Contributors</dt><dd>Many assistants helped with collation, software development, typesetting, proofreading, and promoting the edition</dd>
+          <dt>Catalyst acknowledged</dt><dd>Robert Adam Boyd, publisher of <em>The Text-Critical Greek New Testament: Byzantine Text</em> (2022), whose public-domain work and early software approach to variant marking served as a model for this edition&rsquo;s apparatus</dd>
+        </dl>
+      </div>
+    </div>
+
+    <div class="info-section" id="g-text">
+      <h2>Textual basis</h2>
+      <div class="info-card">
+        <p class="info-p"><strong>Base text.</strong> Robinson&ndash;Pierpont Byzantine Textform, 2026 edition. The main text differs from the 2018 R-P text in six places (Matt. 26:29; Rom. 13:9; Phil. 3:5; Phlm. 1:1; Rev. 11:16; Rev. 13:14) and reflects thirteen changes to alternate readings versus 2018 (documented in Appendix A).</p>
+        <p class="info-p"><strong>Paragraph formatting.</strong> Follows the Robinson&ndash;Pierpont 2005/2018 pattern. Paragraph divisions were reviewed and restored to match the original intent of the 2005 R-P editors (including corrections where some divisions had collapsed to chapter breaks only, e.g. Mark 9).</p>
+        <p class="info-p"><strong>Editorial outlook.</strong> The edition presents the Byzantine Textform as the tradition that most closely reflects the New Testament autograph text, citing its geographic ubiquity and coherence across centuries of decentralized transmission, and its survival as a distinct, coherent tradition under the Coherence-Based Genealogical Method (CBGM) &mdash; in contrast to Westcott&ndash;Hort&rsquo;s abandoned &ldquo;Lucianic/Syrian recension&rdquo; theory.</p>
+      </div>
+    </div>
+
+    <div class="info-section" id="g-apparatus">
+      <h2>Comparative apparatus</h2>
+      <div class="info-card">
+        <p class="info-p">A new &ldquo;edition&rdquo; apparatus was created independently by the Guardian Press Editorial Committee from the editors&rsquo; own digital collations. The main text is compared comprehensively against eleven landmark Greek New Testament editions, with an emphasis on clarity over the denser conventions of traditional critical apparatuses.</p>
+        <p class="info-p"><strong>Eleven comparison editions</strong></p>
+        <div class="editions-grid">
+          <div>
+            <h3>Byzantine family</h3>
+            <ul>
+              <li>HF &mdash; Hodges&ndash;Farstad Majority Text</li>
+              <li>PCK &mdash; Pickering, Family 35</li>
+              <li>PT &mdash; Antoniades, Ecumenical Patriarchal Text</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Critical text</h3>
+            <ul>
+              <li>ECM &mdash; Editio Critica Maior</li>
+              <li>NA27 &amp; NA28 &mdash; Nestle&ndash;Aland</li>
+              <li>SBL &mdash; Holmes</li>
+              <li>TH &mdash; Tyndale House (Jongkind/Williams)</li>
+              <li>WH &mdash; Westcott&ndash;Hort</li>
+            </ul>
+          </div>
+          <div>
+            <h3>Textus Receptus</h3>
+            <ul>
+              <li>SCR &mdash; Scrivener</li>
+              <li>ST &mdash; Stephanus / Editio Regia (1550)</li>
+            </ul>
+          </div>
+        </div>
+        <p class="info-p" style="margin-top:14px"><strong>Manuscript apparatus.</strong> A separate apparatus lists early manuscript evidence (all extant papyri and uncials, plus select minuscules dated 10th century or earlier) for 50 chosen significant variant units, showing where the Byzantine reading is also well supported among early witnesses. The full list of manuscripts and dates appears in Appendix D; a variant-unit index is included in the front matter.</p>
+        <p class="info-p">The fifty units include well-known passages such as Matt. 6:13; Mark 16:9&ndash;20; John 7:53&ndash;8:11; Acts 8:37; Rom. 16:24; 1 John 5:7&ndash;8; and Rev. 22:14 (full index in the printed edition).</p>
+      </div>
+    </div>
+
+    <div class="info-section" id="g-appendices">
+      <h2>Appendices</h2>
+      <div class="info-card">
+        <ol class="info-list">
+          <li><strong>Appendix A</strong> &mdash; Robinson&ndash;Pierpont edition changes (main-text and alternate-reading differences vs. earlier R-P printings).</li>
+          <li><strong>Appendix B</strong> &mdash; Comparison edition corrections (typographical errors in printed comparison editions, corrected to apparent editorial intent).</li>
+          <li><strong>Appendix C</strong> &mdash; Alternate readings and lengthy variants.</li>
+          <li><strong>Appendix D</strong> &mdash; List of cited manuscripts (with dates) for the manuscript apparatus.</li>
+        </ol>
+        <p class="info-p" style="margin-top:14px"><strong>Copyright notice.</strong> &copy; 2025 Guardian Press, Inc. and J. Jeffrey Dodson. Public-domain dedication: rights waived worldwide effective on the edition&rsquo;s official public release date. Subsequent reproductions should retain the editors&rsquo; names, title, and disclaimer.</p>
+      </div>
+    </div>
+
+    <div class="info-section" id="g-buy">
+      <h2>How to get a copy</h2>
+      <div class="info-card">
+        <p class="info-p">The initial 150-slot presale ($35/copy) is sold out. Books are targeted to be in hand around December 7, 2026.</p>
+        <ol class="buy-list">
+          <li>Join the waiting list at excavatingthetext.com (Resources section) to be notified when the next batch of copies becomes available.</li>
+          <li>No payment or commitment is required to join the waiting list.</li>
+          <li>Once printed, remaining copies from the run will be offered at a general price targeted around $20 plus shipping &mdash; the final price has not been set.</li>
+          <li>Shipping is estimated for U.S. addresses; international orders will require higher shipping.</li>
+        </ol>
+      </div>
+    </div>
+
+    <p class="disclaimer">This page is compiled by Stephen Hackett, who serves on the Guardian Press editorial committee, using each publisher's own published specifications. He is solely responsible for its content &mdash; not Guardian Press &mdash; and it is not sponsored, endorsed, or supported by Clearview Press. Information is provided to the best of his knowledge and is subject to change.</p>
+  </div>
+</div>
+
+<script>
+(function () {
+  // Trait-based, brand-free questions. Neither edition is named until the
+  // result screen, so the answers reflect what the reader actually wants
+  // rather than a guess at which publisher an option belongs to.
+  // g/c are point deltas toward Guardian Press / Clearview Press.
+  var questions = [
+    {
+      short: '50-variant manuscript evidence',
+      text: 'Do you prefer an edition that lays out early-manuscript evidence (papyri, uncials, early minuscules) for 50 of some of the most historically debated NT variants?',
+      note: 'A dedicated feature of one edition’s apparatus.',
+      options: [
+        { label: 'That matters to me', g: 1, c: 0, reason: 'You want the manuscript-by-manuscript evidence for 50 of some of the most-debated variants — that’s a dedicated appendix in Guardian Press’s edition.' },
+        { label: 'Not important to me', g: 0, c: 0 },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Named critic co-edited',
+      text: 'Do you prefer an edition personally co-edited by a specific, well-known textual critic?',
+      options: [
+        { label: 'That matters to me', g: 0, c: 1, reason: 'Dr. Maurice Robinson personally co-edited Clearview Press’s edition; he isn’t part of Guardian Press’s editorial team.' },
+        { label: 'Not important to me', g: 0, c: 0 },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Years of heavy use',
+      text: 'Do you prefer a binding built to hold up to years of heavy daily use?',
+      options: [
+        { label: 'Very important', g: 1, c: 0, reason: 'Years of heavy use favors Guardian Press’s Smyth-sewn binding over a glued one.' },
+        { label: 'Not a priority', g: 0, c: 0 },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Vs. Textus Receptus',
+      text: 'Do you prefer footnotes that track where this text differs from other editions, including the Textus Receptus?',
+      options: [
+        { label: 'Yes, I prefer that', g: 1, c: 0, reason: 'Guardian Press’s apparatus is built around footnoted differences against 11 Greek NT editions, including the Textus Receptus (Scrivener and Stephanus).' },
+        { label: 'Not really', g: 0, c: 0 },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Thicker or thinner',
+      text: 'Do you prefer a thicker volume or a thinner one?',
+      options: [
+        { label: 'Prefer thicker', g: 0, c: 1, reason: 'Clearview Press’s copy runs thicker (with fewer pages).' },
+        { label: 'Prefer thinner', g: 1, c: 0, reason: 'Guardian Press’s copy is the thinner of the two, at 752 pages.' },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Wide margins',
+      text: 'Do you prefer wide margins for writing your own notes?',
+      note: 'Advertised for one edition; not stated either way for the other.',
+      options: [
+        { label: 'Yes, that matters', g: 1, c: 0, reason: 'Guardian Press explicitly advertises wide margins.' },
+        { label: 'Not important', g: 0, c: 0 },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Price range',
+      text: 'What price range works best for you?',
+      options: [
+        { label: '$20–35', g: 1, c: 0, reason: 'Guardian Press is targeting your range, around $20 plus shipping (final price not yet set, and international orders will run higher).' },
+        { label: 'Up to $49', g: 0, c: 1, reason: 'You’re fine paying up to Clearview Press’s $49.' },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Sewn or glued',
+      text: 'Do you prefer a sewn binding or a glued one?',
+      options: [
+        { label: 'Prefer sewn', g: 1, c: 0, reason: 'Guardian Press is Smyth-sewn.' },
+        { label: 'Prefer glued', g: 0, c: 1, reason: 'Clearview Press uses a glued (perfect) binding.' },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Apparatus density',
+      text: 'Do you prefer a lighter footnote apparatus or a fuller one?',
+      options: [
+        { label: 'Prefer fewer footnotes', g: 0, c: 1, reason: 'Clearview Press carries a lighter footnote load per page.' },
+        { label: 'Prefer a fuller apparatus', g: 1, c: 0, reason: 'Guardian Press’s 11-edition apparatus is the fuller of the two.' },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Cover color',
+      text: 'Which cover color do you prefer?',
+      options: [
+        { label: 'Dark blue', g: 1, c: 0, reason: 'Guardian Press’s hardbound cover is dark blue cloth.' },
+        { label: 'Purple', g: 0, c: 1, reason: 'Clearview Press’s cover is purple.' },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    },
+    {
+      short: 'Font style',
+      text: 'Do you prefer an italicized Greek font or a non-italicized one?',
+      options: [
+        { label: 'Prefer italicized', g: 0, c: 1, reason: 'Clearview Press sets its Greek text in an italicized font.' },
+        { label: 'Prefer non-italicized', g: 1, c: 0, reason: 'Guardian Press sets its Greek text in a non-italicized font.' },
+        { label: 'No preference', g: 0, c: 0 }
+      ]
+    }
+  ];
+
+  var picks = []; // { qIndex, optionIndex }
+  var step = 0;
+
+  var qLabel = document.getElementById('qLabel');
+  var qText = document.getElementById('qText');
+  var qNote = document.getElementById('qNote');
+  var btnCol = document.getElementById('btnCol');
+  var trail = document.getElementById('trail');
+  var progressFill = document.getElementById('progressFill');
+  var quizCard = document.getElementById('quizCard');
+  var resultWrap = document.getElementById('resultWrap');
+  var resultCard = document.getElementById('resultCard');
+  var resultTitle = document.getElementById('resultTitle');
+  var resultSub = document.getElementById('resultSub');
+  var scoreRow = document.getElementById('scoreRow');
+  var specGrid = document.getElementById('specGrid');
+  var whyList = document.getElementById('whyList');
+
+  function renderQuestion() {
+    var q = questions[step];
+    qLabel.textContent = 'Question ' + (step + 1) + ' of ' + questions.length;
+    qText.textContent = q.text;
+    if (q.note) {
+      qNote.textContent = q.note;
+      qNote.hidden = false;
+    } else {
+      qNote.hidden = true;
+    }
+    progressFill.style.width = (step / questions.length * 100) + '%';
+
+    btnCol.innerHTML = '';
+    q.options.forEach(function (opt, i) {
+      var b = document.createElement('button');
+      b.className = 'choice' + (opt.label === 'No preference' ? ' neutral' : '');
+      b.textContent = opt.label;
+      b.addEventListener('click', function () { choose(i); });
+      btnCol.appendChild(b);
+    });
+
+    trail.innerHTML = '';
+    picks.forEach(function (p) {
+      var row = document.createElement('div');
+      var opt = questions[p.qIndex].options[p.optionIndex];
+      row.innerHTML = questions[p.qIndex].short + ': <span class="a">' + opt.label + '</span>';
+      trail.appendChild(row);
+    });
+    trail.scrollTop = trail.scrollHeight;
+  }
+
+  function choose(optionIndex) {
+    picks.push({ qIndex: step, optionIndex: optionIndex });
+    step++;
+    if (step >= questions.length) {
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function showResult() {
+    progressFill.style.width = '100%';
+    quizCard.hidden = true;
+    resultWrap.classList.add('show');
+
+    var gScore = 0, cScore = 0;
+    var reasons = [];
+    picks.forEach(function (p) {
+      var opt = questions[p.qIndex].options[p.optionIndex];
+      gScore += opt.g;
+      cScore += opt.c;
+      if (opt.reason) reasons.push(opt.reason);
+    });
+
+    var isTie = gScore === cScore;
+    var isGuardian = gScore > cScore;
+
+    resultCard.className = 'result-card ' + (isTie ? 'tie' : (isGuardian ? 'guardian' : 'clearview'));
+    scoreRow.textContent = 'Guardian Press ' + gScore + ' — Clearview Press ' + cScore;
+
+    if (isTie) {
+      resultTitle.textContent = 'Too close to call';
+      resultSub.textContent = 'Your answers split evenly between the two editions.';
+      specGrid.innerHTML =
+        '<dt>Guardian Press</dt><dd>~$20 (not finalized), Smyth-sewn, dark blue cover, wide margins, 752pp, 11-edition apparatus, non-italic font</dd>' +
+        '<dt>Clearview Press</dt><dd>$49, glued, purple cover, thicker, Robinson co-edited, ECM-aligned, italic font</dd>';
+    } else if (isGuardian) {
+      resultTitle.textContent = 'Guardian Press';
+      resultSub.textContent = 'The Robinson–Pierpont Byzantine Textform, 2026 edition';
+      specGrid.innerHTML =
+        '<dt>Price</dt><dd>~$20 + shipping (final price not yet set; higher for international orders)</dd>' +
+        '<dt>Binding</dt><dd>Smyth-sewn, dark blue cloth cover, wide margins</dd>' +
+        '<dt>Volume</dt><dd>752 pages</dd>' +
+        '<dt>Typeface</dt><dd>Non-italic</dd>' +
+        '<dt>Apparatus</dt><dd>Footnoted vs. 11 Greek NT editions (incl. Textus Receptus), plus manuscript evidence for 50 key variants</dd>';
+    } else {
+      resultTitle.textContent = 'Clearview Press';
+      resultSub.textContent = 'Robinson & Abidan Shah, 2026 edition';
+      specGrid.innerHTML =
+        '<dt>Price</dt><dd>$49</dd>' +
+        '<dt>Binding</dt><dd>Glued, purple cloth-over-board with gold foil</dd>' +
+        '<dt>Volume</dt><dd>Thicker, fewer pages</dd>' +
+        '<dt>Typeface</dt><dd>Italic</dd>' +
+        '<dt>Apparatus</dt><dd>ECM-aligned, lighter footnote load; Robinson co-edited</dd>';
+    }
+
+    whyList.innerHTML = '';
+    if (reasons.length === 0) {
+      var li = document.createElement('li');
+      li.textContent = 'None of your answers pointed strongly either way — pick on price or feel.';
+      whyList.appendChild(li);
+    } else {
+      reasons.forEach(function (r) {
+        var li = document.createElement('li');
+        li.textContent = r;
+        whyList.appendChild(li);
+      });
+    }
+  }
+
+  document.getElementById('restartBtn').addEventListener('click', function () {
+    picks = [];
+    step = 0;
+    resultWrap.classList.remove('show');
+    quizCard.hidden = false;
+    renderQuestion();
+  });
+
+  renderQuestion();
+
+  var tabCompareBtn = document.getElementById('tabCompareBtn');
+  var tabGuardianBtn = document.getElementById('tabGuardianBtn');
+  var viewCompare = document.getElementById('viewCompare');
+  var viewGuardian = document.getElementById('viewGuardian');
+
+  function showTab(name) {
+    var isCompare = name === 'compare';
+    viewCompare.hidden = !isCompare;
+    viewGuardian.hidden = isCompare;
+    tabCompareBtn.classList.toggle('active', isCompare);
+    tabGuardianBtn.classList.toggle('active', !isCompare);
+  }
+
+  tabCompareBtn.addEventListener('click', function () { showTab('compare'); });
+  tabGuardianBtn.addEventListener('click', function () { showTab('guardian'); });
+})();
+</script>
+
+</body>
+</html>
