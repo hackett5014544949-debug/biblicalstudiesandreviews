@@ -55,7 +55,7 @@ body.picker-page > .wrap {max-width:860px;background:#fff;box-shadow:none;paddin
 body.picker-page .card {background:#f7f8fa;}
 button.choice.neutral {background:#fff;color:var(--ink-soft);border-color:var(--line);}
 header .btn.secondary {color:#fff;border-color:#51565b;}
-.newsletter-box {background:#080a0c;color:#fff;}
+.newsletter-box {--ink-soft:#d8dde1;background:#080a0c;color:#fff;}
 .newsletter-box h2,.newsletter-box h3 {color:#fff;}
 .newsletter-box .section-sub,.newsletter-box .fineprint {color:#bbc5cd;}
 .newsletter-box p,.newsletter-box label {color:#d8dde1;}
