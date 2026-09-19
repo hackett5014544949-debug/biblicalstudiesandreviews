@@ -3,148 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>Courses — Biblical Studies and Reviews</title>
-<meta name="description" content="Courses from Biblical Studies and Reviews.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://excavatingthetext.com/courses/">
+<title>Foundations of the Septuagint — Biblical Studies and Reviews</title>
+<meta name="description" content="Explore Foundations of the Septuagint: learning outcomes, required reading, a free video preview, and early-bird membership and standalone pricing before the course launches.">
 <meta name="theme-color" content="#6E3929">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --paper:#e9dfca; --paper-2:#ded0b3; --paper-deep:#c9b790;
-  --ink:#29221b; --ink-soft:#5e5140; --ink-faint:#857763;
-  --rubric:#6e3929; --rubric-bg:#f1ddd2; --blue:#385168; --blue-bg:#dbe5e9;
-  --brass:#7d6430; --brass-bg:#eadcb7; --line:#c2ad85; --card:#faf3e5;
-  --shadow:0 12px 32px rgba(60,43,23,.11), 0 2px 5px rgba(60,43,23,.07);
-  --ui:'Source Sans 3', Arial, sans-serif;
-}
-*{box-sizing:border-box;}
-body{
-  margin:0;
-  background:radial-gradient(1100px 560px at 50% -110px,rgba(255,250,236,.95),transparent 68%),repeating-linear-gradient(0deg,rgba(98,72,38,.018) 0,rgba(98,72,38,.018) 1px,transparent 1px,transparent 5px),var(--paper);
-  color:var(--ink);
-  font-family:'EB Garamond', Georgia, serif;
-  font-size:19px;
-  line-height:1.6;
-}
-h1,h2,h3{font-family:'Cormorant Garamond', Georgia, serif;color:var(--ink);font-weight:600;}
-a{color:var(--blue);}
-.wrap{max-width:720px;margin:0 auto;padding:0 24px;}
-
-header.hero{
-  padding:58px 0 44px;
-  text-align:center;
-  border-bottom:1px solid rgba(125,100,48,.55);
-}
-header.hero .kicker{
-  font-family:var(--ui);font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  font-size:11px;color:var(--brass);margin-bottom:14px;
-}
-header.hero .kicker::before,header.hero .kicker::after{content:"✦";margin:0 10px;opacity:.55;}
-header.hero h1{font-size:clamp(38px,6vw,54px);line-height:1;margin:0 0 10px;letter-spacing:.01em;}
-header.hero .tagline{font-style:italic;color:var(--ink-soft);font-size:19px;max-width:480px;margin:0 auto;}
-header.hero a.back{
-  display:inline-block;margin-top:22px;font-family:var(--ui);font-size:13px;font-weight:600;
-  color:var(--ink-soft);text-decoration:none;letter-spacing:.02em;
-}
-header.hero a.back:hover{color:var(--rubric);}
-
-/* Gate */
-#gate{padding:56px 24px 80px;}
-#gate .box{max-width:400px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:32px 30px;box-shadow:var(--shadow);}
-#gate p.intro{color:var(--ink-soft);font-size:17px;margin:0 0 22px;text-align:center;}
-#gate label{
-  display:block;font-family:var(--ui);font-size:12px;font-weight:600;text-transform:uppercase;
-  letter-spacing:.06em;color:var(--brass);margin-bottom:6px;
-}
-#gate input[type="password"]{
-  width:100%;padding:12px 14px;font-size:1rem;border:1px solid var(--line);border-radius:6px;
-  margin-bottom:16px;font-family:'EB Garamond',serif;background:#fdf7ee;color:var(--ink);
-}
-#gate button{
-  width:100%;padding:12px 14px;font-family:var(--ui);font-weight:700;font-size:15px;
-  background:var(--rubric);color:#fdf7ee;border:none;border-radius:7px;cursor:pointer;
-  box-shadow:0 4px 11px rgba(110,57,41,.2);transition:transform .18s ease,box-shadow .18s ease;
-}
-#gate button:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
-#gate .error{
-  color:#a33b2a;font-family:var(--ui);font-size:14px;margin-top:12px;display:none;text-align:center;
-}
-
-/* Course list (hidden until unlocked) */
-#courses{display:none;padding:48px 0 80px;}
-.course-card{
-  background:var(--card);border:1px solid var(--line);border-radius:12px;
-  padding:26px 28px;box-shadow:var(--shadow);border-left:4px solid var(--brass);
-  transition:transform .18s ease,box-shadow .18s ease;
-}
-.course-card + .course-card{margin-top:18px;}
-.course-card:hover{transform:translateX(5px);box-shadow:0 12px 24px rgba(53,37,19,.1);}
-.course-card .meta{
-  font-family:var(--ui);font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--ink-faint);margin-bottom:6px;
-}
-.course-card h3{font-size:26px;line-height:1.1;margin:0 0 8px;}
-.course-card p{margin:0 0 16px;color:var(--ink-soft);}
-.course-card a.btn{
-  display:inline-block;font-family:var(--ui);font-weight:700;font-size:15px;
-  background:var(--ink);color:var(--paper);text-decoration:none;padding:10px 22px;
-  border-radius:7px;transition:transform .18s ease,box-shadow .18s ease;
-}
-.course-card a.btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
-.empty-note{text-align:center;color:var(--ink-faint);font-style:italic;padding:24px;}
-
-footer{text-align:center;padding:30px 0 50px;color:var(--ink-faint);font-family:var(--ui);font-size:12px;letter-spacing:.04em;}
-footer a{color:var(--ink-soft);}
-
-@media (max-width:640px){
-  header.hero{padding:44px 0 34px;}
-  #gate .box{padding:26px 22px;}
-  .course-card{padding:20px 20px;}
-}
+:root{--blue:#20a9ed;--ink:#202124;--soft:#555d65;--line:#dfe3e7;--ui:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#fff;color:var(--ink);font:18px/1.7 var(--ui)}
+a{color:#0877ab;text-underline-offset:4px}a:hover{text-decoration-thickness:2px}h1,h2,h3,p{margin-top:0}h1,h2,h3{line-height:1.12;letter-spacing:-.035em}h2{font-size:clamp(30px,4vw,44px);margin-bottom:24px}h3{font-size:23px;margin-bottom:18px}p{margin-bottom:20px}.wrap{max-width:1120px;margin:auto;padding:0 40px}.small{font-size:14px;line-height:1.7;color:var(--soft)}
+.skip{position:absolute;left:-9999px}.skip:focus{left:16px;top:16px;background:#fff;padding:12px;z-index:2}:focus-visible{outline:3px solid #20a9ed;outline-offset:5px}
+.hero{background:#050505;color:#fff;padding:40px 0 64px}.hero .kicker{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:#b7bdc3;margin-bottom:64px}.hero .eyebrow{color:var(--blue)}.hero h1{font-size:clamp(44px,7vw,86px);font-weight:900;max-width:880px;margin:20px 0 26px;text-transform:uppercase;line-height:1.03}.hero h1 span{color:var(--blue)}.hero .tagline{max-width:660px;font-size:clamp(20px,2.5vw,25px);color:#d8dde1;line-height:1.5}.hero .small{color:#b7bdc3}.hero a:not(.btn){color:#d8dde1}.hero .back{display:inline-block;font-size:13px;margin-top:16px}.eyebrow{font-size:12px;line-height:1.5;letter-spacing:.13em;font-weight:800;text-transform:uppercase;color:#0877ab;margin-bottom:18px}.actions{display:flex;flex-wrap:wrap;gap:14px;margin:32px 0 20px}.btn{display:inline-block;background:var(--blue);color:#071119;padding:14px 22px;border:2px solid var(--blue);border-radius:6px;font:700 15px/1.4 var(--ui);text-decoration:none}.btn:hover{background:#67c8fa;border-color:#67c8fa}.btn.secondary{background:transparent;color:#fff;border-color:#51565b}.btn.secondary:hover{border-color:var(--blue)}
+main{counter-reset:section}.section{position:relative;padding:64px 0;border-bottom:1px solid var(--line);scroll-margin-top:20px}.section::before{counter-increment:section;content:'0' counter(section);display:block;font-size:100px;line-height:.85;font-weight:900;letter-spacing:-.08em;color:#eef0f2;margin:0 0 26px -5px}.section>p:not(.eyebrow){max-width:850px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:30px}.panel{padding:30px;background:#f7f8fa;border:1px solid #e7eaee;border-radius:12px}.panel p:last-child{margin-bottom:0}.panel ul,.panel ol{padding-left:24px;margin-bottom:0}.panel li+li{margin-top:20px}.panel ul{list-style:none;padding-left:0}.panel ul li{position:relative;padding-left:26px}.panel ul li::before{content:'▶';position:absolute;left:0;top:3px;color:#0877ab;font-size:14px}.reading{background:white;border:0;border-left:5px solid var(--blue);border-radius:0;padding:8px 0 8px 26px}.reading h3{max-width:720px;font-size:29px}.reading h3 em{font-style:normal}
+.video{display:block;width:100%;aspect-ratio:16/9;border:3px solid #aaaeb3;border-radius:28px;background:#050505;box-shadow:0 5px 16px #0002;margin:30px 0 16px}.price{font-size:46px;line-height:1.25;font-weight:800;letter-spacing:-.04em;color:#151719}.price span{font-size:14px;font-weight:400;letter-spacing:0;color:var(--soft)}.note{border-left:4px solid var(--blue);padding:8px 0 8px 22px;margin:30px 0;font-size:16px}#interest{background:#080a0c;color:white;padding:34px;border-radius:14px;margin-top:32px}#interest h3{font-size:30px}#interest p{max-width:800px}#interest .small{color:#b7bdc3;margin-top:18px;margin-bottom:0}#interest .small a{color:#75d0ff;overflow-wrap:anywhere}
+.badge{display:inline-block;background:var(--blue);color:#071119;font:800 12px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:5px;margin-bottom:14px}.was{color:var(--soft);text-decoration:line-through;font-weight:400;font-size:28px;margin-right:8px}#interest input[type=email],#interest input[type=text]{width:100%;font:16px var(--ui);padding:13px;border:1px solid #384049;border-radius:5px;margin-bottom:14px;background:#12151a;color:#fff}#interest input::placeholder{color:#8a9099}#interest form{max-width:420px;margin-top:22px}#interest button[type=submit]{cursor:pointer;background:var(--blue);color:#071119;padding:13px 22px;border:0;border-radius:5px;font:700 15px var(--ui)}
+#gate .box{max-width:520px;padding:28px;background:#f7f8fa;border:1px solid var(--line);border-radius:12px}#gate label{display:block;font-size:13px;font-weight:700;margin-bottom:8px}#gate input{width:100%;font:18px var(--ui);padding:13px;border:1px solid #88929b;border-radius:5px;margin-bottom:16px}#gate button{cursor:pointer;background:#101316;color:white;padding:14px 20px;border:0;border-radius:5px;font:700 15px var(--ui)}#gate .error{display:none;color:#a5261c;font-size:14px;margin:16px 0 0}#courses{display:none}.course-card{padding:28px;border:1px solid var(--line);border-radius:12px}.meta{font-size:12px;text-transform:uppercase;letter-spacing:.1em}footer{padding:36px 24px;max-width:900px;margin:auto;text-align:center;font-size:13px;color:var(--soft)}footer p{margin-top:16px}
+@media(max-width:640px){.wrap{padding:0 22px}.hero{padding:28px 0 40px}.hero .kicker{margin-bottom:42px;font-size:10px}.hero h1{font-size:42px}.grid{grid-template-columns:1fr;gap:18px}.section{padding:42px 0}.section::before{font-size:76px}.actions{flex-direction:column;align-items:stretch}.actions .btn{text-align:center}.panel{padding:24px}.video{border-radius:18px}#interest{padding:26px}.reading{padding-left:20px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <div class="kicker">Biblical Studies and Reviews</div>
-    <h1>Courses</h1>
-    <p class="tagline">Guided, self-paced study to go with the channel — enter your course password to see what's available.</p>
-    <a class="back" href="/">&larr; Back to the main site</a>
-  </div>
-</header>
-
-<div id="gate">
-  <div class="wrap">
-    <div class="box">
-      <p class="intro">This area is for members. Enter the courses password to continue.</p>
-      <label for="gate-input">Courses Password</label>
-      <input type="password" id="gate-input" placeholder="Password" autocomplete="off">
-      <button id="gate-submit">Unlock Courses</button>
-      <p class="error" id="gate-error">That password isn't right — check it and try again, or reach out if you're not sure.</p>
-    </div>
-  </div>
-</div>
-
-<div id="courses">
-  <div class="wrap">
-
-    <div class="course-card">
-      <p class="meta">Companion Course · 7 Modules</p>
-      <h3>Foundations of the Septuagint</h3>
-      <p>A guided companion course to Gregory R. Lanier and William A. Ross's <em>The Septuagint: What It Is and Why It Matters</em> — chapter-by-chapter lectures, discussion questions, and short quizzes.</p>
-      <a class="btn" href="/courses/septuagint-foundations/">Go to course &rarr;</a>
-    </div>
-
-    <!-- Add more <div class="course-card">...</div> blocks here as new courses are published. -->
-
-  </div>
-</div>
-
-<footer>
-  Biblical Studies and Reviews · <a href="/">excavatingthetext.com</a>
-</footer>
+<a class="skip" href="#overview">Skip to course details</a>
+<header class="hero"><div class="wrap">
+  <div class="kicker">Biblical Studies and Reviews · Courses</div>
+  <p class="eyebrow">First cohort in preparation</p>
+  <h1>Foundations of<br><span>the Septuagint</span></h1>
+  <p class="tagline">Understand the Greek Old Testament—and bring better questions to your next Bible study.</p>
+  <div class="actions"><a class="btn" href="#join">See the early bird offer →</a><a class="btn secondary" href="#sample">Watch the free preview</a></div>
+  <p class="small">Enrollment is not open yet. Already have access? <a href="#classroom">Enter the classroom</a>.</p>
+  <a class="back" href="/">← Back to the main site</a>
+</div></header>
+<main class="wrap">
+<section class="section" id="overview" aria-labelledby="overview-title">
+<p class="eyebrow">Read · Watch · Discuss · Reflect</p>
+<h2 id="overview-title">Move beyond “the Greek translation.”</h2>
+<p>Join Stephen Hackett for a guided companion course to Gregory R. Lanier and William A. Ross’s <em>The Septuagint: What It Is and Why It Matters</em>. Work through the book with lectures, discussion questions, and short quizzes, then bring your questions to the founding cohort’s live calls.</p>
+<div class="grid"><div class="panel"><h3>What you’ll work toward</h3><ul>
+<li>Explain what “the Septuagint” refers to and why the term needs care.</li>
+<li>Describe the origins, translation, and transmission of the Greek Old Testament.</li>
+<li>Compare Greek and Hebrew readings without jumping straight from a difference to a conclusion.</li>
+<li>Evaluate how the Septuagint informs Old and New Testament interpretation.</li>
+</ul></div><div class="panel"><h3>Is this for you?</h3><p>For readers who want to understand why the Septuagint matters, follow the evidence, and discuss the questions it raises.</p><p>This is a guided reading and discussion course, rather than instruction in Greek grammar. Expect to read the assigned chapter before working through its lesson.</p><p class="small">Lectures, readings, discussion questions, and quizzes form the study sequence. The launch schedule and final lesson count will be confirmed before enrollment opens.</p></div></div>
+</section>
+<section class="section" id="reading" aria-labelledby="reading-title"><p class="eyebrow">Your companion book</p><h2 id="reading-title">Required reading</h2><div class="panel reading"><h3><em>The Septuagint: What It Is and Why It Matters</em></h3><p>Gregory R. Lanier and William A. Ross · Crossway</p><p>Each lesson follows the book’s reading sequence, and quizzes draw on the assigned reading. Plan to obtain your own copy; the course offer does not include the book.</p><a href="https://www.crossway.org/books/the-septuagint-tpb/">See the book at Crossway →</a></div></section>
+<section class="section" id="sample" aria-labelledby="sample-title"><p class="eyebrow">Try the format · Free preview</p><h2 id="sample-title">Start with a three-minute primer.</h2><p>This public video is the course’s introductory warm-up. Watch it, then try the reflection questions below for a taste of the study format.</p>
+<iframe class="video" src="https://www.youtube-nocookie.com/embed/tLUqv01BBiY" title="The Septuagint: Ultimate 3-Minute Crash-Course!" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p class="small"><a href="https://www.youtube.com/watch?v=tLUqv01BBiY">Watch the primer on YouTube →</a></p>
+<div class="panel"><h3>Pause and reflect</h3><ol><li>In your own words, what does “the Septuagint” mean?</li><li>What did the video challenge or clarify about your previous understanding?</li><li>What question would you bring to a discussion of the Greek Old Testament?</li></ol></div></section>
+<section class="section" id="join" aria-labelledby="join-title"><p class="eyebrow">Early bird offer · course start date to be announced</p><h2 id="join-title">Two ways to study with us.</h2><p>Both options include the full course and its live discussion calls. You're seeing this page before it's been publicly announced or marketed &mdash; the prices below reward that, and reward the members who've already been supporting the channel.</p>
+<div class="grid"><div class="panel"><span class="badge">Early bird &middot; ends Sept 28</span><h3>Join through membership</h3><p class="price">$3.99 <span>USD / month</span></p><p>For early visitors to this page and existing channel members. Join your YouTube membership at this tier before September 28 to lock in course access and live-call participation at this rate.</p><p class="small">Membership access terms, including what happens if you cancel, will be provided before signup. <a href="https://www.youtube.com/@BiblicalStudiesandReviews/join">Join the membership on YouTube &rarr;</a></p></div><div class="panel"><span class="badge">Early bird &middot; ends when the course launches</span><h3>Buy the course on its own</h3><p class="price">$35 <span>USD / one-time</span></p><p>A reduced one-time rate for those who found this page before the course launches publicly. Full course access and live calls, with access for as long as the course is hosted.</p><p class="small">No recurring subscription for this option. Rises to $49.99 once the course begins.</p></div></div>
+<div class="note"><strong>Why these prices?</strong> Both rates are early-bird pricing &mdash; the $3.99/mo membership rate for anyone who joins before September 28, and the $35 standalone rate for anyone who buys before the course launches publicly. They exist to reward people who found this page early and members who've already been supporting the channel, not as the ongoing public price.</div>
+<div id="interest"><h3>Hear when enrollment opens</h3><p>Leave your email to get notified as soon as full enrollment details and the live-call schedule are ready. There is no payment or reserved place at this stage.</p>
+<form action="https://outlook.us9.list-manage.com/subscribe/post?u=1b93f0f648a0ee28b86fced7b&amp;id=c54e302dc7&amp;f_id=001cc2e1f0" method="post" target="_blank" novalidate>
+  <label for="course-interest-email" class="small">Email address</label>
+  <input type="email" id="course-interest-email" name="EMAIL" placeholder="you@example.com" required>
+  <label for="course-interest-fname" class="small">First name (optional)</label>
+  <input type="text" id="course-interest-fname" name="FNAME" placeholder="First name">
+  <div aria-hidden="true" style="position:absolute;left:-5000px" tabindex="-1"><input type="text" name="b_1b93f0f648a0ee28b86fced7b_c54e302dc7" tabindex="-1" value=""></div>
+  <button type="submit">Notify me &rarr;</button>
+</form>
+<p class="small">You can also write directly to <a href="mailto:stephen.biblicalstudies@gmail.com">stephen.biblicalstudies@gmail.com</a> with the subject &ldquo;Foundations of the Septuagint &mdash; course interest.&rdquo;</p></div>
+</section>
+<section class="section" id="classroom" aria-labelledby="classroom-title"><p class="eyebrow">For existing students</p><h2 id="classroom-title">Enter the classroom</h2>
+<div id="gate"><div class="box"><p class="intro">Already have the courses password? Enter it here to continue to your course.</p><label for="gate-input">Courses password</label><input type="password" id="gate-input" placeholder="Password" autocomplete="off"><button id="gate-submit" type="button">Unlock Courses</button><p class="error" id="gate-error" role="alert">That password isn’t right. Check your access instructions or contact Stephen for help.</p></div></div>
+<div id="courses"><div class="course-card"><p class="meta">Companion course</p><h3>Foundations of the Septuagint</h3><p>Continue to your readings, lessons, discussion questions, and quizzes.</p><a class="btn" href="/courses/septuagint-foundations/">Go to course →</a></div></div>
+<noscript><p>JavaScript is needed to unlock the classroom. The course information and email interest link above work without it.</p></noscript>
+</section></main>
+<footer>Biblical Studies and Reviews · <a href="/">Home</a> · <a href="https://www.youtube.com/@BiblicalStudiesandReviews">YouTube</a><p>A companion course to the book by Gregory R. Lanier and William A. Ross. Not officially affiliated with or endorsed by the authors or publisher unless noted.</p></footer>
 
 <script>
 (function () {
@@ -162,13 +88,15 @@ footer a{color:var(--ink-soft);}
     courses.style.display = "block";
   }
 
-  if (localStorage.getItem(STORAGE_KEY) === "yes") {
+  let savedAccess = false;
+  try { savedAccess = localStorage.getItem(STORAGE_KEY) === "yes"; } catch (_) {}
+  if (savedAccess) {
     unlock();
   }
 
   function tryUnlock() {
     if (input.value === COURSES_PASSWORD) {
-      localStorage.setItem(STORAGE_KEY, "yes");
+      try { localStorage.setItem(STORAGE_KEY, "yes"); } catch (_) {}
       error.style.display = "none";
       unlock();
     } else {
