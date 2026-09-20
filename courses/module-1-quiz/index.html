@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Module 1 Quiz — Foundations of the Septuagint</title>
+<meta name="description" content="Module 1 quiz for Foundations of the Septuagint: 10 questions on what &quot;the Septuagint&quot; means.">
+<meta name="theme-color" content="#050505">
+<style>
+:root{--blue:#20a9ed;--ink:#202124;--soft:#555d65;--line:#dfe3e7;--ui:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:18px/1.7 var(--ui)}
+a{color:#0877ab;text-underline-offset:4px}a:hover{text-decoration-thickness:2px}
+h1,h2,h3,p{margin-top:0}h1,h2{line-height:1.12;letter-spacing:-.035em}
+.wrap{max-width:760px;margin:auto;padding:0 40px}
+.small{font-size:14px;line-height:1.7;color:var(--soft)}
+:focus-visible{outline:3px solid #20a9ed;outline-offset:5px}
+.hero{background:#050505;color:#fff;padding:40px 0 48px}
+.hero .kicker{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:#b7bdc3;margin-bottom:20px}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin:14px 0 14px;text-transform:uppercase}
+.hero h1 span{color:var(--blue)}
+.hero .tagline{max-width:600px;font-size:17px;color:#d8dde1;line-height:1.5}
+.hero .back{display:inline-block;font-size:13px;margin-top:16px;color:#d8dde1}
+.eyebrow{font-size:12px;line-height:1.5;letter-spacing:.13em;font-weight:800;text-transform:uppercase;color:#0877ab;margin:40px 0 14px}
+main{padding-bottom:64px}
+fieldset{border:0;margin:0 0 18px;padding:0}
+.panel{padding:22px 24px;background:#f7f8fa;border:1px solid #e7eaee;border-radius:12px;margin-bottom:16px}
+.panel legend{font-weight:700;font-size:16px;padding:0;margin-bottom:14px;float:left;width:100%}
+.opt{display:block;font-weight:400;font-size:16px;padding:10px 12px;border-radius:6px;cursor:pointer}
+.opt:hover{background:#eef0f2}
+.opt input{margin-right:10px}
+.panel.correct{border-color:#1f8a4c;background:#f0f9f3}
+.panel.incorrect{border-color:#c0392b;background:#fdf3f1}
+.opt.right-answer{font-weight:700;color:#1f6b3b}
+.badge{display:inline-block;background:var(--blue);color:#071119;font:800 12px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:5px;margin-bottom:14px}
+.btn{display:inline-block;background:var(--blue);color:#071119;padding:14px 22px;border:2px solid var(--blue);border-radius:6px;font:700 15px/1.4 var(--ui);text-decoration:none;cursor:pointer}
+.btn:hover{background:#67c8fa;border-color:#67c8fa}
+#result{margin:28px 0;padding:22px 24px;border-radius:12px;background:#080a0c;color:#fff;display:none}
+#result.show{display:block}
+#result .score{font-size:32px;font-weight:900;color:var(--blue)}
+footer{padding:36px 24px;max-width:900px;margin:auto;text-align:center;font-size:13px;color:var(--soft)}
+@media(max-width:640px){.wrap{padding:0 22px}.hero{padding:28px 0 34px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="kicker">Biblical Studies and Reviews &middot; Courses</div>
+  <h1>Module 1 <span>Quiz</span></h1>
+  <p class="tagline">Foundations of the Septuagint &mdash; check your understanding of what &ldquo;the Septuagint&rdquo; means before moving on.</p>
+  <a class="back" href="/courses/">&larr; Back to the course</a>
+</div></header>
+
+<main class="wrap">
+<p class="eyebrow">10 questions &middot; multiple choice</p>
+<p>Answer all ten, then check your answers. This quiz isn&rsquo;t timed or submitted anywhere &mdash; it&rsquo;s just for you to gauge your own understanding of Module 1.</p>
+
+<form id="quiz">
+</form>
+
+<div id="result"><div class="score" id="score-text"></div><p id="score-detail" class="small" style="color:#b7bdc3"></p></div>
+
+<button type="button" class="btn" id="check-btn">Check my answers</button>
+</main>
+
+<footer>Biblical Studies and Reviews &middot; <a href="/courses/">Course details</a> &middot; <a href="mailto:stephen.biblicalstudies@gmail.com">Ask Stephen for help</a></footer>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "In its most common, baseline sense, what does “Septuagint” refer to?",
+    options: [
+      "A specific 4th-century manuscript",
+      "A generic label for the Greek translations of the Hebrew Scriptures",
+      "The Latin Vulgate",
+      "A modern English study Bible"
+    ],
+    correct: 1
+  },
+  {
+    q: "What does the abbreviation “LXX” represent?",
+    options: [
+      "The Latin word for “law”",
+      "The Roman numeral for seventy, referencing the legendary 72 translators",
+      "A Greek publisher’s mark",
+      "The number of books in the Hebrew canon"
+    ],
+    correct: 1
+  },
+  {
+    q: "What is the second, more controversial sense in which “Septuagint” is used?",
+    options: [
+      "To refer only to the book of Genesis",
+      "To refer to a single translator’s personal notes",
+      "To denote a set of books that includes the Apocrypha/Deuterocanon, beyond the traditional Hebrew canon",
+      "To refer to the Dead Sea Scrolls"
+    ],
+    correct: 2
+  },
+  {
+    q: "What is the third, original sense of the term “Septuagint”?",
+    options: [
+      "A reference to the legendary 72 translators who produced the first Greek translation",
+      "A reference to the city of Alexandria",
+      "A reference to the Council of Nicaea",
+      "A reference to a specific printing press"
+    ],
+    correct: 0
+  },
+  {
+    q: "When an English Bible footnote says “Septuagint says…,” what is it usually indicating?",
+    options: [
+      "That the entire verse was invented by Greek scribes",
+      "That the Greek tradition differs in some way from the Hebrew text (typically the Masoretic Text) the translation is based on",
+      "That the verse does not appear in any Hebrew manuscript",
+      "That the translators consulted the Latin Vulgate instead"
+    ],
+    correct: 1
+  },
+  {
+    q: "Which modern Hebrew text tradition do translations like the ESV, CSB, and NIV primarily translate from?",
+    options: [
+      "The Septuagint",
+      "The Samaritan Pentateuch",
+      "The Masoretic Text",
+      "The Peshitta"
+    ],
+    correct: 2
+  },
+  {
+    q: "Which scholar is mentioned as being skeptical of the term “Septuagint” itself?",
+    options: [
+      "N.T. Wright",
+      "Peter Williams",
+      "Maurice Robinson",
+      "Emanuel Tov"
+    ],
+    correct: 1
+  },
+  {
+    q: "What is the view expressed on whether the term “Septuagint” should be retired?",
+    options: [
+      "It should be retired immediately in all contexts",
+      "It does not need to be retired, especially at a lay/church level, though more precise terms have value in technical scholarship",
+      "It should never be used at all",
+      "Only the term “LXX” should be used going forward"
+    ],
+    correct: 1
+  },
+  {
+    q: "What term do scholars increasingly prefer for the initial Greek translation of a given book, as a more precise alternative to “Septuagint”?",
+    options: [
+      "The Received Text",
+      "The Alexandrian Text",
+      "The Old Greek",
+      "The Proto-Masoretic Text"
+    ],
+    correct: 2
+  },
+  {
+    q: "Why is “Septuagint” described as a “broad catch-all term” in scholarship?",
+    options: [
+      "Because it refers to only one uniform, unchanging text",
+      "Because what happens after the initial translation of a book — later revision and transmission — gets more complicated, and “Septuagint” covers all of that broadly",
+      "Because it only applies to the book of Psalms",
+      "Because it was coined in the 20th century"
+    ],
+    correct: 1
+  }
+];
+
+const form = document.getElementById('quiz');
+QUESTIONS.forEach((item, i) => {
+  const fs = document.createElement('fieldset');
+  fs.className = 'panel';
+  fs.id = 'panel-' + i;
+  const legend = document.createElement('legend');
+  legend.textContent = (i + 1) + '. ' + item.q;
+  fs.appendChild(legend);
+  const letters = ['A', 'B', 'C', 'D'];
+  item.options.forEach((opt, j) => {
+    const label = document.createElement('label');
+    label.className = 'opt';
+    label.id = 'opt-' + i + '-' + j;
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'q' + i;
+    input.value = j;
+    label.appendChild(input);
+    label.append(letters[j] + '. ' + opt);
+    fs.appendChild(label);
+  });
+  form.appendChild(fs);
+});
+
+document.getElementById('check-btn').addEventListener('click', () => {
+  let score = 0;
+  let unanswered = 0;
+  QUESTIONS.forEach((item, i) => {
+    const panel = document.getElementById('panel-' + i);
+    panel.classList.remove('correct', 'incorrect');
+    const picked = form.querySelector('input[name="q' + i + '"]:checked');
+    const rightLabel = document.getElementById('opt-' + i + '-' + item.correct);
+    rightLabel.classList.add('right-answer');
+    if (!picked) { unanswered++; return; }
+    if (parseInt(picked.value, 10) === item.correct) {
+      score++;
+      panel.classList.add('correct');
+    } else {
+      panel.classList.add('incorrect');
+    }
+  });
+  const result = document.getElementById('result');
+  result.classList.add('show');
+  document.getElementById('score-text').textContent = score + ' / ' + QUESTIONS.length;
+  document.getElementById('score-detail').textContent = unanswered > 0
+    ? 'Correct answers are highlighted below. ' + unanswered + ' question' + (unanswered === 1 ? '' : 's') + ' left unanswered.'
+    : 'Correct answers are highlighted below.';
+  result.scrollIntoView({behavior: 'smooth', block: 'center'});
+});
+</script>
+</body>
+</html>
