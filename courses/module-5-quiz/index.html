@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Module 5 Quiz — Foundations of the Septuagint</title>
+<meta name="description" content="Module 5 quiz for Foundations of the Septuagint: 10 questions on the Septuagint's value as an early commentary and a tool for textual criticism.">
+<meta name="theme-color" content="#050505">
+<style>
+:root{--blue:#20a9ed;--ink:#202124;--soft:#555d65;--line:#dfe3e7;--ui:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:18px/1.7 var(--ui)}
+a{color:#0877ab;text-underline-offset:4px}a:hover{text-decoration-thickness:2px}
+h1,h2,h3,p{margin-top:0}h1,h2{line-height:1.12;letter-spacing:-.035em}
+.wrap{max-width:760px;margin:auto;padding:0 40px}
+.small{font-size:14px;line-height:1.7;color:var(--soft)}
+:focus-visible{outline:3px solid #20a9ed;outline-offset:5px}
+.hero{background:#050505;color:#fff;padding:40px 0 48px}
+.hero .kicker{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:#b7bdc3;margin-bottom:20px}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin:14px 0 14px;text-transform:uppercase}
+.hero h1 span{color:var(--blue)}
+.hero .tagline{max-width:600px;font-size:17px;color:#d8dde1;line-height:1.5}
+.hero .back{display:inline-block;font-size:13px;margin-top:16px;color:#d8dde1}
+.eyebrow{font-size:12px;line-height:1.5;letter-spacing:.13em;font-weight:800;text-transform:uppercase;color:#0877ab;margin:40px 0 14px}
+main{padding-bottom:64px}
+fieldset{border:0;margin:0 0 18px;padding:0}
+.panel{padding:22px 24px;background:#f7f8fa;border:1px solid #e7eaee;border-radius:12px;margin-bottom:16px}
+.panel legend{font-weight:700;font-size:16px;padding:0;margin-bottom:14px;float:left;width:100%}
+.opt{display:block;font-weight:400;font-size:16px;padding:10px 12px;border-radius:6px;cursor:pointer}
+.opt:hover{background:#eef0f2}
+.opt input{margin-right:10px}
+.panel.correct{border-color:#1f8a4c;background:#f0f9f3}
+.panel.incorrect{border-color:#c0392b;background:#fdf3f1}
+.opt.right-answer{font-weight:700;color:#1f6b3b}
+.badge{display:inline-block;background:var(--blue);color:#071119;font:800 12px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:5px;margin-bottom:14px}
+.btn{display:inline-block;background:var(--blue);color:#071119;padding:14px 22px;border:2px solid var(--blue);border-radius:6px;font:700 15px/1.4 var(--ui);text-decoration:none;cursor:pointer}
+.btn:hover{background:#67c8fa;border-color:#67c8fa}
+#result{margin:28px 0;padding:22px 24px;border-radius:12px;background:#080a0c;color:#fff;display:none}
+#result.show{display:block}
+#result .score{font-size:32px;font-weight:900;color:var(--blue)}
+footer{padding:36px 24px;max-width:900px;margin:auto;text-align:center;font-size:13px;color:var(--soft)}
+@media(max-width:640px){.wrap{padding:0 22px}.hero{padding:28px 0 34px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="kicker">Biblical Studies and Reviews &middot; Courses</div>
+  <h1>Module 5 <span>Quiz</span></h1>
+  <p class="tagline">Foundations of the Septuagint &mdash; check your understanding of why the Septuagint matters before moving on.</p>
+  <a class="back" href="/courses/">&larr; Back to the course</a>
+</div></header>
+
+<main class="wrap">
+<p class="eyebrow">10 questions &middot; multiple choice</p>
+<p>Answer all ten, then check your answers. This quiz isn&rsquo;t timed or submitted anywhere &mdash; it&rsquo;s just for you to gauge your own understanding of Module 5.</p>
+
+<form id="quiz">
+</form>
+
+<div id="result"><div class="score" id="score-text"></div><p id="score-detail" class="small" style="color:#b7bdc3"></p></div>
+
+<button type="button" class="btn" id="check-btn">Check my answers</button>
+</main>
+
+<footer>Biblical Studies and Reviews &middot; <a href="/courses/">Course details</a> &middot; <a href="mailto:stephen.biblicalstudies@gmail.com">Ask Stephen for help</a></footer>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "What is Dr. Lanier’s own view on whether the Septuagint should replace the Hebrew Bible as the primary text for Old Testament study?",
+    options: ["Yes, the Septuagint should replace it", "No — he holds to the centrality of the Hebrew Bible", "He is undecided", "Only for the Pentateuch"],
+    correct: 1
+  },
+  {
+    q: "According to Dr. Lanier, what does the Septuagint represent as the “earliest commentary” on the Hebrew Bible?",
+    options: ["The first English translation", "The earliest surviving interpretive choices about the Hebrew text, since translation requires interpretation", "A word-for-word transliteration with no interpretation", "A collection of rabbinic sermons"],
+    correct: 1
+  },
+  {
+    q: "In the Genesis 1:2 example, how does the Septuagint render the Hebrew phrase usually translated “formless and void”?",
+    options: ["“Dark and empty”", "“Invisible” and “unformed/unprepared”", "“Chaotic and wild”", "It leaves the phrase untranslated"],
+    correct: 1
+  },
+  {
+    q: "What is the second main reason Dr. Lanier gives for why the Septuagint matters?",
+    options: ["Textual criticism", "Its poetic beauty", "Its use in modern liturgy", "Its influence on the Latin Vulgate alone"],
+    correct: 0
+  },
+  {
+    q: "Roughly when is the medieval Masoretic Text dated, and why does that matter for the Septuagint’s text-critical value?",
+    options: ["~1000 AD; the Septuagint is far older and can shed light on earlier Hebrew readings", "~1000 BC; the Septuagint is later and less useful", "~100 AD; they are roughly the same age", "~500 AD; the Septuagint postdates it"],
+    correct: 0
+  },
+  {
+    q: "According to Dr. Lanier, roughly how does the Septuagint’s text-critical value compare to the Dead Sea Scrolls?",
+    options: ["The Septuagint has no value at all", "The Septuagint far outranks the Dead Sea Scrolls", "They are roughly equal in weight", "The Dead Sea Scrolls are irrelevant to this comparison"],
+    correct: 2
+  },
+  {
+    q: "What is the minority scholarly position Dr. Lanier describes regarding the Septuagint’s textual value?",
+    options: ["That it should replace the Masoretic Text entirely", "That it has no role at all, since only the Masoretic Text should be used", "That it is more reliable than the Dead Sea Scrolls", "That it should only be used for the Pentateuch"],
+    correct: 1
+  },
+  {
+    q: "Why does Dr. Lanier say the Septuagint “wins quantitatively” compared to the Dead Sea Scrolls, even though the two are “qualitatively neck-and-neck”?",
+    options: ["The Septuagint is written in better Greek", "The Septuagint covers the whole Old Testament, while Dead Sea Scroll coverage is uneven across books", "The Septuagint has no textual variants", "The Dead Sea Scrolls are forgeries"],
+    correct: 1
+  },
+  {
+    q: "Which witnesses does Dr. Lanier rank below the Septuagint and Dead Sea Scrolls in text-critical value?",
+    options: ["The Latin translations, the Aramaic Targums, and later witnesses like the Syriac", "The Masoretic Text itself", "The Dead Sea Scrolls", "Modern English translations"],
+    correct: 0
+  },
+  {
+    q: "What is Dr. Lanier’s “.5” reason for valuing the Septuagint, beyond commentary and textual criticism?",
+    options: ["It is required reading for ordination", "Reading familiar passages in Greek de-familiarizes them and can reveal things a native-language reader might miss", "It replaces the need to learn Hebrew", "It is shorter than the Hebrew Bible"],
+    correct: 1
+  }
+];
+
+const form = document.getElementById('quiz');
+QUESTIONS.forEach((item, i) => {
+  const fs = document.createElement('fieldset');
+  fs.className = 'panel';
+  fs.id = 'panel-' + i;
+  const legend = document.createElement('legend');
+  legend.textContent = (i + 1) + '. ' + item.q;
+  fs.appendChild(legend);
+  const letters = ['A', 'B', 'C', 'D'];
+  item.options.forEach((opt, j) => {
+    const label = document.createElement('label');
+    label.className = 'opt';
+    label.id = 'opt-' + i + '-' + j;
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'q' + i;
+    input.value = j;
+    label.appendChild(input);
+    label.append(letters[j] + '. ' + opt);
+    fs.appendChild(label);
+  });
+  form.appendChild(fs);
+});
+
+document.getElementById('check-btn').addEventListener('click', () => {
+  let score = 0;
+  let unanswered = 0;
+  QUESTIONS.forEach((item, i) => {
+    const panel = document.getElementById('panel-' + i);
+    panel.classList.remove('correct', 'incorrect');
+    const picked = form.querySelector('input[name="q' + i + '"]:checked');
+    const rightLabel = document.getElementById('opt-' + i + '-' + item.correct);
+    rightLabel.classList.add('right-answer');
+    if (!picked) { unanswered++; return; }
+    if (parseInt(picked.value, 10) === item.correct) {
+      score++;
+      panel.classList.add('correct');
+    } else {
+      panel.classList.add('incorrect');
+    }
+  });
+  const result = document.getElementById('result');
+  result.classList.add('show');
+  document.getElementById('score-text').textContent = score + ' / ' + QUESTIONS.length;
+  document.getElementById('score-detail').textContent = unanswered > 0
+    ? 'Correct answers are highlighted below. ' + unanswered + ' question' + (unanswered === 1 ? '' : 's') + ' left unanswered.'
+    : 'Correct answers are highlighted below.';
+  result.scrollIntoView({behavior: 'smooth', block: 'center'});
+});
+</script>
+</body>
+</html>
