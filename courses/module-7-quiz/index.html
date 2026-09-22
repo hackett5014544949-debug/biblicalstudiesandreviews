@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Module 7 Quiz — Foundations of the Septuagint</title>
+<meta name="description" content="Module 7 quiz for Foundations of the Septuagint: 10 questions on what authority the Septuagint has for us.">
+<meta name="theme-color" content="#050505">
+<style>
+:root{--blue:#20a9ed;--ink:#202124;--soft:#555d65;--line:#dfe3e7;--ui:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font:18px/1.7 var(--ui)}
+a{color:#0877ab;text-underline-offset:4px}a:hover{text-decoration-thickness:2px}
+h1,h2,h3,p{margin-top:0}h1,h2{line-height:1.12;letter-spacing:-.035em}
+.wrap{max-width:760px;margin:auto;padding:0 40px}
+.small{font-size:14px;line-height:1.7;color:var(--soft)}
+:focus-visible{outline:3px solid #20a9ed;outline-offset:5px}
+.hero{background:#050505;color:#fff;padding:40px 0 48px}
+.hero .kicker{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.15em;color:#b7bdc3;margin-bottom:20px}
+.hero h1{font-size:clamp(32px,5vw,52px);font-weight:900;margin:14px 0 14px;text-transform:uppercase}
+.hero h1 span{color:var(--blue)}
+.hero .tagline{max-width:600px;font-size:17px;color:#d8dde1;line-height:1.5}
+.hero .back{display:inline-block;font-size:13px;margin-top:16px;color:#d8dde1}
+.eyebrow{font-size:12px;line-height:1.5;letter-spacing:.13em;font-weight:800;text-transform:uppercase;color:#0877ab;margin:40px 0 14px}
+main{padding-bottom:64px}
+fieldset{border:0;margin:0 0 18px;padding:0}
+.panel{padding:22px 24px;background:#f7f8fa;border:1px solid #e7eaee;border-radius:12px;margin-bottom:16px}
+.panel legend{font-weight:700;font-size:16px;padding:0;margin-bottom:14px;float:left;width:100%}
+.opt{display:block;font-weight:400;font-size:16px;padding:10px 12px;border-radius:6px;cursor:pointer}
+.opt:hover{background:#eef0f2}
+.opt input{margin-right:10px}
+.panel.correct{border-color:#1f8a4c;background:#f0f9f3}
+.panel.incorrect{border-color:#c0392b;background:#fdf3f1}
+.opt.right-answer{font-weight:700;color:#1f6b3b}
+.badge{display:inline-block;background:var(--blue);color:#071119;font:800 12px/1 var(--ui);letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:5px;margin-bottom:14px}
+.btn{display:inline-block;background:var(--blue);color:#071119;padding:14px 22px;border:2px solid var(--blue);border-radius:6px;font:700 15px/1.4 var(--ui);text-decoration:none;cursor:pointer}
+.btn:hover{background:#67c8fa;border-color:#67c8fa}
+#result{margin:28px 0;padding:22px 24px;border-radius:12px;background:#080a0c;color:#fff;display:none}
+#result.show{display:block}
+#result .score{font-size:32px;font-weight:900;color:var(--blue)}
+footer{padding:36px 24px;max-width:900px;margin:auto;text-align:center;font-size:13px;color:var(--soft)}
+@media(max-width:640px){.wrap{padding:0 22px}.hero{padding:28px 0 34px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+  <div class="kicker">Biblical Studies and Reviews &middot; Courses</div>
+  <h1>Module 7 <span>Quiz</span></h1>
+  <p class="tagline">Foundations of the Septuagint &mdash; check your understanding of what authority the Septuagint has for us before moving on.</p>
+  <a class="back" href="/courses/">&larr; Back to the course</a>
+</div></header>
+
+<main class="wrap">
+<p class="eyebrow">10 questions &middot; multiple choice</p>
+<p>Answer all ten, then check your answers. This quiz isn&rsquo;t timed or submitted anywhere &mdash; it&rsquo;s just for you to gauge your own understanding of Module 7.</p>
+
+<form id="quiz">
+</form>
+
+<div id="result"><div class="score" id="score-text"></div><p id="score-detail" class="small" style="color:#b7bdc3"></p></div>
+
+<button type="button" class="btn" id="check-btn">Check my answers</button>
+</main>
+
+<footer>Biblical Studies and Reviews &middot; <a href="/courses/">Course details</a> &middot; <a href="mailto:stephen.biblicalstudies@gmail.com">Ask Stephen for help</a></footer>
+
+<script>
+const QUESTIONS = [
+  {
+    q: "What is the name of the follow-on scholarly volume Dr. Lanier co-edited with Will Ross on this specific topic?",
+    options: ["The Authority of the Septuagint", "The Origins of the Septuagint", "The Septuagint Commentary", "Reading the Kaige Revisers"],
+    correct: 0
+  },
+  {
+    q: "What popular theory does Dr. Lanier reject — that if New Testament authors quote Septuagint wording approvingly, the whole Septuagint must carry equally inspired status?",
+    options: ["The documentary hypothesis", "The Kaige theory", "The “yeast” theory — inspiration working through the whole loaf", "The “canon within a canon” theory"],
+    correct: 2
+  },
+  {
+    q: "What example does Dr. Lanier use to show that citing a non-inspired source doesn’t impute inspired status to it?",
+    options: ["Jesus quoting the Psalms", "Paul’s citation of the poet Aratus in Acts 17", "John citing Isaiah", "Matthew’s genealogy"],
+    correct: 1
+  },
+  {
+    q: "According to Dr. Lanier (channeling Karen Jobes), what does the New Testament’s use of Septuagint wording actually show?",
+    options: ["That the whole Septuagint is equally inspired", "That Jobes rejects the Septuagint’s usefulness entirely", "That the Hebrew text is unreliable", "That the wording was understood to be accurate and faithful to the sense, and happened to fit the argument being made"],
+    correct: 3
+  },
+  {
+    q: "What term does Dr. Lanier use for the primary, normative authority belonging to the originally-inspired Hebrew (and Aramaic) text?",
+    options: ["Ministerial authority", "Derived authority", "Secondary authority", "Magisterial authority"],
+    correct: 3
+  },
+  {
+    q: "What term does Dr. Lanier use for the kind of authority a translation like the Septuagint (or a modern English Bible) carries?",
+    options: ["Magisterial authority", "No authority at all", "Equal authority to the Hebrew", "Ministerial (or secondary/derived) authority"],
+    correct: 3
+  },
+  {
+    q: "Which systematic theologian did Dr. Lanier credit with giving this magisterial/ministerial framework “better legs” in the follow-on book?",
+    options: ["N.T. Wright", "Peter Williams", "Daniel Treier", "Emanuel Tov"],
+    correct: 2
+  },
+  {
+    q: "According to Dr. Lanier, what did the church fathers themselves believe they were doing when they used the Septuagint?",
+    options: ["Replacing the Hebrew text entirely", "Working their way back to the Hebrew, since the Hebrew is the main thing", "Ignoring the Hebrew text altogether", "Creating a new, separate canon"],
+    correct: 1
+  },
+  {
+    q: "What modern comparison does Dr. Lanier use to illustrate ministerial authority in preaching today?",
+    options: ["Citing a commentary instead of the Bible", "Memorizing the entire Bible in Hebrew", "Choosing between the ESV and NIV wording in a sermon without imputing inspired status to either", "Avoiding all English translations"],
+    correct: 2
+  },
+  {
+    q: "What does Dr. Lanier say lets him “sleep well at night” about the relationship between the Septuagint’s authority and the Hebrew text’s authority?",
+    options: ["Believing the Septuagint replaces the Hebrew text", "The two-tier magisterial/ministerial framework, since modern translations work the same way", "Refusing to use any translation in preaching", "Concluding the Septuagint has no value at all"],
+    correct: 1
+  }
+];
+
+const form = document.getElementById('quiz');
+QUESTIONS.forEach((item, i) => {
+  const fs = document.createElement('fieldset');
+  fs.className = 'panel';
+  fs.id = 'panel-' + i;
+  const legend = document.createElement('legend');
+  legend.textContent = (i + 1) + '. ' + item.q;
+  fs.appendChild(legend);
+  const letters = ['A', 'B', 'C', 'D'];
+  item.options.forEach((opt, j) => {
+    const label = document.createElement('label');
+    label.className = 'opt';
+    label.id = 'opt-' + i + '-' + j;
+    const input = document.createElement('input');
+    input.type = 'radio';
+    input.name = 'q' + i;
+    input.value = j;
+    label.appendChild(input);
+    label.append(letters[j] + '. ' + opt);
+    fs.appendChild(label);
+  });
+  form.appendChild(fs);
+});
+
+document.getElementById('check-btn').addEventListener('click', () => {
+  let score = 0;
+  let unanswered = 0;
+  QUESTIONS.forEach((item, i) => {
+    const panel = document.getElementById('panel-' + i);
+    panel.classList.remove('correct', 'incorrect');
+    const picked = form.querySelector('input[name="q' + i + '"]:checked');
+    const rightLabel = document.getElementById('opt-' + i + '-' + item.correct);
+    rightLabel.classList.add('right-answer');
+    if (!picked) { unanswered++; return; }
+    if (parseInt(picked.value, 10) === item.correct) {
+      score++;
+      panel.classList.add('correct');
+    } else {
+      panel.classList.add('incorrect');
+    }
+  });
+  const result = document.getElementById('result');
+  result.classList.add('show');
+  document.getElementById('score-text').textContent = score + ' / ' + QUESTIONS.length;
+  document.getElementById('score-detail').textContent = unanswered > 0
+    ? 'Correct answers are highlighted below. ' + unanswered + ' question' + (unanswered === 1 ? '' : 's') + ' left unanswered.'
+    : 'Correct answers are highlighted below.';
+  result.scrollIntoView({behavior: 'smooth', block: 'center'});
+});
+</script>
+</body>
+</html>
