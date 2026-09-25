@@ -102,6 +102,25 @@
     color:var(--ink-soft);
     font-size:20px;
   }
+  .book-hero{
+    margin:34px auto 0;
+    max-width:1100px;
+  }
+  .book-hero img{
+    display:block;
+    width:100%;
+    height:auto;
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:12px;
+    box-shadow:0 24px 60px rgba(0,0,0,.42);
+  }
+  .book-hero figcaption{
+    margin-top:12px;
+    color:#c6cbd0;
+    font-family:var(--ui);
+    font-size:13px;
+    line-height:1.45;
+  }
 
   section{
     position:relative;
@@ -280,6 +299,8 @@
   @media (max-width:640px){
     header.hero{padding:32px 0 36px;}
     header.hero .tagline{font-size:18px;}
+    .book-hero{margin-top:24px;}
+    .book-hero img{border-radius:8px;}
     section{padding:44px 0;}
     .card{padding:20px 22px;}
   }
@@ -298,6 +319,10 @@
     <div class="kicker">Excavating the Text</div>
     <h1>Hardbound Greek New Testament</h1>
     <p class="tagline">Printing update, specs, and a waitlist for when more copies become available.</p>
+    <figure class="book-hero">
+      <img src="/assets/greek-new-testament-hardbound-mockup.jpg" alt="Mockup of The Greek New Testament According to the Byzantine Text, shown as a dark navy clothbound hardcover with gold foil lettering" width="1536" height="1024" fetchpriority="high">
+      <figcaption>Design mockup shown for scale and appearance; the finished printed book may vary slightly.</figcaption>
+    </figure>
   </div>
 </header>
 

@@ -416,6 +416,29 @@
   .blog-post .meta{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
   .resource-list{gap:14px;}
   .resource-card{padding:23px 28px;border-left:4px solid var(--blue);transition:transform .18s ease,box-shadow .18s ease;}
+  .resource-card.gnt-feature{
+    display:grid;
+    grid-template-columns:minmax(260px,.9fr) minmax(0,1.1fr);
+    gap:28px;
+    align-items:center;
+    padding:0;
+    overflow:hidden;
+    border-left:0;
+  }
+  .gnt-feature .gnt-mockup-link{
+    align-self:stretch;
+    min-height:330px;
+    background:#111820;
+  }
+  .gnt-feature .gnt-mockup{
+    display:block;
+    width:100%;
+    height:100%;
+    min-height:330px;
+    object-fit:cover;
+    object-position:center;
+  }
+  .gnt-feature .gnt-copy{padding:30px 30px 30px 0;}
   .resource-card:hover{transform:translateX(5px);box-shadow:0 12px 24px rgba(53,37,19,.1);}
   .resource-card h3{font-size:27px;line-height:1.05;}
   .resource-card .meta{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-family:var(--ui);}
@@ -434,6 +457,9 @@
     section{padding:52px 0;} .about-grid .photo{margin:0 auto;}
     .video-card .thumb::after{opacity:1;width:42px;height:42px;font-size:14px;}
     .app-feature{padding:26px;}
+    .resource-card.gnt-feature{grid-template-columns:1fr;gap:0;}
+    .gnt-feature .gnt-mockup-link,.gnt-feature .gnt-mockup{min-height:0;}
+    .gnt-feature .gnt-copy{padding:24px 22px 26px;}
   }
 </style>
 <link rel="stylesheet" href="/assets/site-theme.css?v=20260919-2">
@@ -453,6 +479,7 @@
       <a href="videos.html">Videos</a>
       <a href="#blog">Blog</a>
       <a href="/greek-nt.html">Greek NT</a>
+      <a href="/hardbound-gnt.html">Hardbound Book</a>
       <a href="#app">The App</a>
       <a href="/courses/">Courses</a>
       <a href="#newsletter">Newsletter</a>
@@ -546,15 +573,20 @@
     <h2>Resources</h2>
     <p class="section-sub">Public-domain texts and reference tools worth having on hand.</p>
     <div class="resource-list">
-      <div class="resource-card">
-        <h3>Greek New Testament resources</h3>
-        <div class="meta">Robinson&ndash;Pierpont Byzantine Text (2026) &middot; Free PDF &amp; hardbound printing</div>
-        <p>A public-domain Byzantine Greek New Testament (plain PDF and hyperlinked edition), plus notes on an independent hardbound printing and a short guide for comparing editions. The full PDF description, print-your-own steps, hardbound update, and waitlist live on their own pages so this homepage stays light.</p>
-        <p style="margin:0 0 14px; color:var(--ink-soft);">Start with the free PDFs, join the waitlist for this site&rsquo;s independent hardbound printing, or take a short quiz that compares two Byzantine editions from different publishers (not options within this waitlist).</p>
-        <div style="display:flex; flex-wrap:wrap; gap:12px;">
-          <a class="btn" href="/greek-nt.html">Free PDF / Greek NT &rarr;</a>
-          <a class="btn" href="/hardbound-gnt.html" style="background:transparent; color:var(--ink); border:1px solid var(--ink);">Hardbound waitlist / printing &rarr;</a>
-          <a class="btn" href="/gnt-edition-picker.html" style="background:transparent; color:var(--ink); border:1px solid var(--ink);">Compare Byzantine editions &rarr;</a>
+      <div class="resource-card gnt-feature">
+        <a class="gnt-mockup-link" href="/hardbound-gnt.html" aria-label="See the hardbound Greek New Testament printing details and waitlist">
+          <img class="gnt-mockup" src="/assets/greek-new-testament-hardbound-mockup.jpg" alt="Mockup of the dark navy hardbound Greek New Testament with gold foil lettering" width="1536" height="1024" loading="lazy">
+        </a>
+        <div class="gnt-copy">
+          <h3>Greek New Testament resources</h3>
+          <div class="meta">Robinson&ndash;Pierpont Byzantine Text (2026) &middot; Free PDF &amp; hardbound printing</div>
+          <p>A public-domain Byzantine Greek New Testament (plain PDF and hyperlinked edition), plus notes on an independent hardbound printing and a short guide for comparing editions. The full PDF description, print-your-own steps, hardbound update, and waitlist live on their own pages so this homepage stays light.</p>
+          <p style="margin:0 0 14px; color:var(--ink-soft);">Start with the free PDFs, join the waitlist for this site&rsquo;s independent hardbound printing, or take a short quiz that compares two Byzantine editions from different publishers (not options within this waitlist).</p>
+          <div style="display:flex; flex-wrap:wrap; gap:12px;">
+            <a class="btn" href="/hardbound-gnt.html">See the hardbound book &rarr;</a>
+            <a class="btn" href="/greek-nt.html" style="background:transparent; color:var(--ink); border:1px solid var(--ink);">Free PDF / Greek NT &rarr;</a>
+            <a class="btn" href="/gnt-edition-picker.html" style="background:transparent; color:var(--ink); border:1px solid var(--ink);">Compare editions &rarr;</a>
+          </div>
         </div>
       </div>
     </div>
