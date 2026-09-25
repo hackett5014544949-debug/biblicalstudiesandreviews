@@ -158,6 +158,21 @@
   }
   .card p{color:var(--ink-soft);margin:0 0 .85em;}
   .card p:last-child{margin-bottom:0;}
+  .hardbound-preview-card{
+    padding:0;
+    overflow:hidden;
+    border-left:0;
+  }
+  .hardbound-preview{
+    display:block;
+    background:#111820;
+  }
+  .hardbound-preview img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .hardbound-preview-copy{padding:24px 28px 28px;}
 
   .btn{
     display:inline-block;
@@ -282,6 +297,8 @@
     header.hero .tagline{font-size:18px;}
     section{padding:44px 0;}
     .card{padding:20px 22px;}
+    .hardbound-preview-card{padding:0;}
+    .hardbound-preview-copy{padding:20px 22px 24px;}
   }
 
 </style>
@@ -342,11 +359,16 @@
   <div class="wrap">
     <h2>Related</h2>
     <p class="section-sub">Hardbound printing and edition comparison.</p>
-    <div class="card bar-brass">
-      <p>Looking for a bound copy instead of a PDF? See the independent hardbound printing update and waitlist. Or take a short quiz that compares two Byzantine editions from different publishers (not options within this site’s waitlist printing).</p>
-      <a class="btn" href="/hardbound-gnt.html">Hardbound waitlist / printing &rarr;</a>
-      <a class="btn ink" href="/gnt-edition-picker.html">Compare Byzantine editions &rarr;</a>
-      <a class="btn ghost" href="/#resources">Back to homepage Resources</a>
+    <div class="card bar-brass hardbound-preview-card">
+      <a class="hardbound-preview" href="/hardbound-gnt.html" aria-label="See the hardbound Greek New Testament printing details and waitlist">
+        <img src="/assets/greek-new-testament-hardbound-mockup.jpg?v=20260924-3" alt="Mockup of The Greek New Testament According to the Byzantine Text, shown as a dark navy clothbound hardcover with gold foil lettering" width="1536" height="1024" loading="lazy">
+      </a>
+      <div class="hardbound-preview-copy">
+        <p>Looking for a bound copy instead of a PDF? See the independent hardbound printing update and waitlist. Or take a short quiz that compares two Byzantine editions from different publishers (not options within this site’s waitlist printing).</p>
+        <a class="btn" href="/hardbound-gnt.html">Hardbound waitlist / printing &rarr;</a>
+        <a class="btn ink" href="/gnt-edition-picker.html">Compare Byzantine editions &rarr;</a>
+        <a class="btn ghost" href="/#resources">Back to homepage Resources</a>
+      </div>
     </div>
     <div class="card bar-blue" style="margin-top:16px;">
       <h3>How the apparatus was built</h3>
