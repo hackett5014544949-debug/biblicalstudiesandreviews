@@ -355,15 +355,48 @@
       <h3 style="margin:0 0 8px; font-size:22px;">Want to know when more copies become available?</h3>
       <p style="margin:0; color:var(--ink-soft);">I don&rsquo;t have copies in hand yet &mdash; printing hasn&rsquo;t started, so we&rsquo;re still a good ways out. Once it&rsquo;s underway, I plan to release additional copies in batches rather than all at once, so packing and shipping doesn&rsquo;t get overwhelmed.</p>
       <p style="margin:12px 0 0; color:var(--ink-soft);"><b>Joining this list doesn&rsquo;t secure a copy or charge you anything</b> &mdash; it just means you&rsquo;ll get an email when the next batch opens for order.</p>
-      <form action="https://outlook.us9.list-manage.com/subscribe/post?u=1b93f0f648a0ee28b86fced7b&amp;id=c54e302dc7&amp;f_id=0001c2e1f0" method="post" target="_blank" style="justify-content:flex-start;">
-        <div hidden><input type="hidden" name="tags" value="400"></div>
-        <input type="email" name="EMAIL" aria-label="Email address" placeholder="you@example.com" required>
-        <div style="position:absolute;left:-5000px;" aria-hidden="true">
-          <input type="text" name="b_1b93f0f648a0ee28b86fced7b_c54e302dc7" tabindex="-1" value="">
-        </div>
+      <form id="gnt-waitlist-form" style="justify-content:flex-start;">
+        <input type="email" name="email" id="gnt-waitlist-email" aria-label="Email address" placeholder="you@example.com" required autocomplete="email" maxlength="254">
         <button type="submit">Join the Waiting List</button>
       </form>
-      <div class="fineprint" style="text-align:left;">You&rsquo;ll hear from me when the next batch is ready to order. Powered by Mailchimp. Unsubscribe anytime.</div>
+      <p id="gnt-waitlist-status" role="status" style="margin:12px 0 0; color:var(--ink-soft); font-size:15px;"></p>
+      <div class="fineprint" style="text-align:left;">You&rsquo;ll hear from me when the next batch is ready to order. Unsubscribe anytime.</div>
+      <script>
+      (function () {
+        var form = document.getElementById("gnt-waitlist-form");
+        if (!form) return;
+        var status = document.getElementById("gnt-waitlist-status");
+        var emailInput = document.getElementById("gnt-waitlist-email");
+        form.addEventListener("submit", async function (e) {
+          e.preventDefault();
+          var button = form.querySelector("button");
+          var email = (emailInput.value || "").trim();
+          if (!email) return;
+          button.disabled = true;
+          status.textContent = "Adding you to the list…";
+          status.style.color = "var(--ink-soft)";
+          try {
+            var res = await fetch("https://classroom.excavatingthetext.com/api/gnt-waitlist", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: email })
+            });
+            var data = {};
+            try { data = await res.json(); } catch (_) {}
+            if (!res.ok || !data.ok) {
+              throw new Error((data && data.error) || "Unable to join the waitlist right now. Please try again later.");
+            }
+            form.hidden = true;
+            status.style.color = "var(--ink)";
+            status.textContent = "You\u2019re on the hardbound waitlist. I\u2019ll email you when more copies become available.";
+          } catch (err) {
+            status.style.color = "var(--rubric)";
+            status.textContent = (err && err.message) ? err.message : "Unable to join the waitlist right now. Please try again later.";
+            button.disabled = false;
+          }
+        });
+      })();
+      </script>
     </div>
     <div class="callout" style="margin-top:18px;">
       Prefer the free PDFs first? See <a href="/greek-nt.html">greek-nt.html</a> for the plain and hyperlinked Byzantine GNT downloads.
