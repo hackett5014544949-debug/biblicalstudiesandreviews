@@ -188,6 +188,45 @@
     display:block;
   }
   .about-grid .text{flex:1;min-width:260px;}
+  /* Featured course */
+  section.course-feature{
+    background:linear-gradient(135deg,#171b20 0%,#080a0c 100%) !important;
+    color:#f5f1e8;
+  }
+  .course-feature h2{color:#fff;font-size:42px;line-height:1.08;}
+  section.course-feature .section-sub{color:#bfc7cf;}
+  .course-feature .course-kicker{
+    font-family:'Source Sans 3',Arial,sans-serif;
+    color:#58c4f7;
+    font-size:13px;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    margin-bottom:12px;
+  }
+  .course-feature .course-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:36px;align-items:center;}
+  .course-feature .course-price{
+    background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:10px;
+    padding:24px;
+  }
+  .course-feature .course-price p{margin:0 0 10px;}
+  .course-feature .course-price p:last-child{margin-bottom:0;}
+  .course-feature .course-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
+  .course-feature .course-btn{
+    display:inline-block;
+    background:#20a9ed;
+    color:#071119;
+    text-decoration:none;
+    padding:12px 22px;
+    border:2px solid #20a9ed;
+    border-radius:6px;
+    font-family:'Source Sans 3',Arial,sans-serif;
+    font-size:16px;
+    font-weight:700;
+  }
+  .course-feature .course-btn.secondary{background:transparent;color:#fff;border-color:#8e969e;}
   /* Video grid */
   .video-cta{
     background:var(--card);
@@ -460,6 +499,10 @@
     .resource-card.gnt-feature{grid-template-columns:1fr;gap:0;}
     .gnt-feature .gnt-mockup-link,.gnt-feature .gnt-mockup{min-height:0;}
     .gnt-feature .gnt-copy{padding:24px 22px 26px;}
+    .course-feature .course-grid{grid-template-columns:1fr;gap:22px;}
+    .course-feature h2{font-size:36px;}
+    .course-feature .course-actions{flex-direction:column;}
+    .course-feature .course-btn{text-align:center;}
   }
 </style>
 <link rel="stylesheet" href="/assets/site-theme.css?v=20260919-2">
@@ -481,7 +524,7 @@
       <a href="/greek-nt.html">Greek NT</a>
       <a href="/hardbound-gnt.html">Hardbound Book</a>
       <a href="#app">The App</a>
-      <a href="/courses/">Courses</a>
+      <a href="/courses/">Septuagint Course</a>
       <a href="#newsletter">Newsletter</a>
     </nav>
   </div>
@@ -497,6 +540,27 @@
       <div class="text">
         <p>I'm Stephen Hackett, and Biblical Studies and Reviews is where I work through Scripture the slow way &mdash; textual criticism, original languages, and the questions that come up when you actually sit with a passage instead of skimming it. Some of it is verse-by-verse study, some of it is reviewing tools and resources for people doing the same kind of digging.</p>
         <p>This site is the home base for the channel: videos, a running blog for things that don't fit in a video, and a link to <a href="#app">Digging Deep: Notetaker Deluxe</a>, the Bible study notebook app that grew out of this work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="course" class="course-feature">
+  <div class="wrap">
+    <div class="course-grid">
+      <div>
+        <p class="course-kicker">Enrollment is open · First cohort</p>
+        <h2>Foundations of the Septuagint</h2>
+        <p class="section-sub">Understand the Greek Old Testament—and bring better questions to your next Bible study.</p>
+        <p>An eight-module guided course with lectures, required reading, study guides, quizzes, and live discussion calls. The course is targeting a mid-to-late October launch.</p>
+        <div class="course-actions">
+          <a class="course-btn" href="/courses/">Explore the course &amp; enroll &rarr;</a>
+          <a class="course-btn secondary" href="/courses/#sample">Watch the free preview</a>
+        </div>
+      </div>
+      <div class="course-price">
+        <p><strong>$49 once</strong> for the standalone course</p>
+        <p><strong>or $7.99/month</strong> through the YouTube <strong>Course Taker</strong> tier</p>
+        <p style="color:#bfc7cf;font-size:16px;">Both options include the complete course and live calls.</p>
       </div>
     </div>
   </div>
