@@ -55,17 +55,62 @@ footer{padding:36px 24px;max-width:900px;margin:auto;text-align:center;font-size
 <div class="grid"><div class="panel"><span class="badge">Course Taker tier</span><h3>Join through YouTube membership</h3><p class="price">$7.99 <span>USD / month</span></p><p>Choose the <strong>Course Taker</strong> membership tier to receive full course access and participate in the live calls.</p><p class="small">Membership billing and cancellation are managed through YouTube. <a href="https://www.youtube.com/@BiblicalStudiesandReviews/join">Join the $7.99 Course Taker tier &rarr;</a></p></div><div class="panel"><span class="badge">Standalone course</span><h3>Buy the course on its own</h3><p class="price">$49 <span>USD / one-time</span></p><p>Full course access and live calls, with access for as long as the course is hosted.</p><p class="small"><strong>This is a pre-order.</strong> The course itself is not available yet &mdash; we’re aiming for mid-to-late October 2026, depending on when the course is ready. This is a target, not a confirmed start date. Paying now reserves your spot; you will not get access today, and you will be notified as soon as the course opens.</p><a class="btn" href="https://buy.stripe.com/cNidR9f5G5xW9LN2kO6EU02" style="margin-top:14px">Pre-order for $49 &rarr;</a></div></div>
 <div class="note"><strong>Note:</strong> Both options include the full course and live discussion calls. Membership is billed through YouTube; the standalone option is a one-time pre-order.</div>
 <div id="interest"><h3>Get course updates</h3><p>Not ready to enroll today? Leave your email to hear when the course opens and when the live-call schedule is announced.</p>
-<form action="https://outlook.us9.list-manage.com/subscribe/post?u=1b93f0f648a0ee28b86fced7b&amp;id=c54e302dc7&amp;f_id=001cc2e1f0" method="post" target="_blank">
+<noscript>
+  <p class="small">JavaScript is needed for this form. Email <a href="mailto:stephen.hackett@outlook.com">stephen.hackett@outlook.com</a> and I&rsquo;ll add you to the course updates list.</p>
+</noscript>
+<form id="course-interest-form" action="#" method="post">
   <label for="course-interest-email" class="small">Email address</label>
-  <input type="email" id="course-interest-email" name="EMAIL" placeholder="you@example.com" required>
-  <input type="hidden" name="tags" value="403">
+  <input type="email" id="course-interest-email" name="email" placeholder="you@example.com" required autocomplete="email" maxlength="254">
   <label for="course-interest-fname" class="small">First name (optional)</label>
-  <input type="text" id="course-interest-fname" name="FNAME" placeholder="First name">
-  <div aria-hidden="true" style="position:absolute;left:-5000px" tabindex="-1"><input type="text" name="b_1b93f0f648a0ee28b86fced7b_c54e302dc7" tabindex="-1" value=""></div>
-  <label class="small"><input type="checkbox" required> Email me about enrollment and course updates.</label>
+  <input type="text" id="course-interest-fname" name="name" placeholder="First name" autocomplete="given-name" maxlength="100">
+  <label class="small"><input type="checkbox" id="course-interest-agree" required> Email me about enrollment and course updates.</label>
   <button type="submit">Join the course email list</button>
 </form>
-<p class="small">This joins the course-interest list only; it does not create classroom access or reserve a place. Powered by Mailchimp. Unsubscribe anytime.</p>
+<p id="course-interest-status" role="status" class="small" style="margin-top:14px;"></p>
+<p class="small">If this form doesn&rsquo;t work, email <a href="mailto:stephen.hackett@outlook.com">stephen.hackett@outlook.com</a> and I&rsquo;ll add you.</p>
+<p class="small">This joins the course-interest list only; it does not create classroom access or reserve a place. Unsubscribe anytime.</p>
+<script>
+(function () {
+  var form = document.getElementById("course-interest-form");
+  if (!form) return;
+  var status = document.getElementById("course-interest-status");
+  var emailInput = document.getElementById("course-interest-email");
+  var nameInput = document.getElementById("course-interest-fname");
+  var fallback = "Couldn\u2019t join the list. Please try again, or email stephen.hackett@outlook.com and I\u2019ll add you.";
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    var button = form.querySelector("button");
+    var email = (emailInput.value || "").trim();
+    var name = (nameInput.value || "").trim();
+    if (!email) return;
+    button.disabled = true;
+    status.textContent = "Adding you to the list\u2026";
+    status.style.color = "#b7bdc3";
+    try {
+      var res = await fetch("https://classroom.excavatingthetext.com/api/course-interest", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email, name: name })
+      });
+      var data = {};
+      try { data = await res.json(); } catch (_) {}
+      if (!res.ok || !data.ok) {
+        var apiMsg = (data && data.error) ? String(data.error) : "";
+        if (/valid email/i.test(apiMsg)) throw new Error(apiMsg);
+        if (/too many requests/i.test(apiMsg)) throw new Error(apiMsg);
+        throw new Error(fallback);
+      }
+      form.hidden = true;
+      status.style.color = "#fff";
+      status.textContent = "You\u2019re on the course updates list. I\u2019ll email you when enrollment and live calls are ready.";
+    } catch (err) {
+      status.style.color = "#ffb4a8";
+      status.textContent = (err && err.message) ? err.message : fallback;
+      button.disabled = false;
+    }
+  });
+})();
+</script>
 </div>
 </section>
 </main>

@@ -355,11 +355,15 @@
       <h3 style="margin:0 0 8px; font-size:22px;">Want to know when more copies become available?</h3>
       <p style="margin:0; color:var(--ink-soft);">I don&rsquo;t have copies in hand yet &mdash; printing hasn&rsquo;t started, so we&rsquo;re still a good ways out. Once it&rsquo;s underway, I plan to release additional copies in batches rather than all at once, so packing and shipping doesn&rsquo;t get overwhelmed.</p>
       <p style="margin:12px 0 0; color:var(--ink-soft);"><b>Joining this list doesn&rsquo;t secure a copy or charge you anything</b> &mdash; it just means you&rsquo;ll get an email when the next batch opens for order.</p>
-      <form id="gnt-waitlist-form" style="justify-content:flex-start;">
+      <noscript>
+        <p style="margin:18px 0 0; color:var(--ink-soft);">JavaScript is needed for this form. Email <a href="mailto:stephen.hackett@outlook.com">stephen.hackett@outlook.com</a> and I&rsquo;ll add you to the hardbound waitlist.</p>
+      </noscript>
+      <form id="gnt-waitlist-form" action="#" method="post" style="justify-content:flex-start;">
         <input type="email" name="email" id="gnt-waitlist-email" aria-label="Email address" placeholder="you@example.com" required autocomplete="email" maxlength="254">
         <button type="submit">Join the Waiting List</button>
       </form>
       <p id="gnt-waitlist-status" role="status" style="margin:12px 0 0; color:var(--ink-soft); font-size:15px;"></p>
+      <p class="fineprint" style="text-align:left; margin-top:10px;">If this form doesn&rsquo;t work, email <a href="mailto:stephen.hackett@outlook.com">stephen.hackett@outlook.com</a> and I&rsquo;ll add you.</p>
       <div class="fineprint" style="text-align:left;">You&rsquo;ll hear from me when the next batch is ready to order. Unsubscribe anytime.</div>
       <script>
       (function () {
@@ -367,13 +371,14 @@
         if (!form) return;
         var status = document.getElementById("gnt-waitlist-status");
         var emailInput = document.getElementById("gnt-waitlist-email");
+        var fallback = "Couldn\u2019t join the waitlist. Please try again, or email stephen.hackett@outlook.com and I\u2019ll add you.";
         form.addEventListener("submit", async function (e) {
           e.preventDefault();
           var button = form.querySelector("button");
           var email = (emailInput.value || "").trim();
           if (!email) return;
           button.disabled = true;
-          status.textContent = "Adding you to the list…";
+          status.textContent = "Adding you to the list\u2026";
           status.style.color = "var(--ink-soft)";
           try {
             var res = await fetch("https://classroom.excavatingthetext.com/api/gnt-waitlist", {
@@ -384,14 +389,17 @@
             var data = {};
             try { data = await res.json(); } catch (_) {}
             if (!res.ok || !data.ok) {
-              throw new Error((data && data.error) || "Unable to join the waitlist right now. Please try again later.");
+              var apiMsg = (data && data.error) ? String(data.error) : "";
+              if (/valid email/i.test(apiMsg)) throw new Error(apiMsg);
+              if (/too many requests/i.test(apiMsg)) throw new Error(apiMsg);
+              throw new Error(fallback);
             }
             form.hidden = true;
             status.style.color = "var(--ink)";
             status.textContent = "You\u2019re on the hardbound waitlist. I\u2019ll email you when more copies become available.";
           } catch (err) {
             status.style.color = "var(--rubric)";
-            status.textContent = (err && err.message) ? err.message : "Unable to join the waitlist right now. Please try again later.";
+            status.textContent = (err && err.message) ? err.message : fallback;
             button.disabled = false;
           }
         });
