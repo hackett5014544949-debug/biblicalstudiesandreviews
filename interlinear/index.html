@@ -21,6 +21,7 @@ button:focus-visible,select:focus-visible,.w:focus-visible,a:focus-visible{outli
 .wip{background:var(--red-soft);border:2px solid var(--red);border-radius:6px;padding:12px 14px;margin-top:12px;font-size:14px}.wip b{display:block;margin-bottom:2px}.wip a{color:var(--accent);font-weight:600}
 .legend{font-size:12px;color:var(--muted);margin:10px 0 0}
 .k-g{color:var(--muted)}.k-gr{color:var(--green)}.k-r{color:var(--red)}
+.front h2{font:700 22px var(--greek);margin:8px 0}.front h3{font:600 13px var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:18px 0 4px}.front p{font:400 15px/1.6 var(--greek);max-width:68ch;margin:8px 0}.front p.ft{font-size:20px;font-weight:700;margin-bottom:0}
 .verse{padding:14px 0;border-bottom:1px solid var(--rule)}
 .vn{font:600 12px var(--ui);color:var(--accent);margin-right:6px;vertical-align:top}
 .line{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start}
@@ -133,6 +134,7 @@ async function showWord(b,v,w,k){
 async function render(){
   var main=$("main"),y=window.scrollY,b=await book(st.book);
   main.innerHTML="";
+  if(b.front){var fs=b.front[st.ch-1],fb=el("section","verse front");fb.appendChild(el("h2",null,fs.t));fs.p.forEach(function(h){var d=document.createElement("div");d.innerHTML=h;while(d.firstChild)fb.appendChild(d.firstChild)});main.appendChild(fb);window.scrollTo(0,0);return}
   b.verses.filter(function(v){return v.c===st.ch}).forEach(function(v){
     var box=el("section","verse");box.id="v"+v.v;
     var line=el("div","line");line.appendChild(el("span","vn",st.ch+":"+v.v));
@@ -149,7 +151,7 @@ async function render(){
   });
   window.scrollTo(0,y);
 }
-function fillChap(){var b=bookInfo(st.book),s=$("chap");s.innerHTML="";for(var i=1;i<=b.ch;i++){var o=el("option",null,"Chapter "+i);o.value=i;s.appendChild(o)}s.value=st.ch}
+function fillChap(){var b=bookInfo(st.book),s=$("chap");s.innerHTML="";for(var i=1;i<=b.ch;i++){var o=el("option",null,b.sec?b.sec[i-1]:"Chapter "+i);o.value=i;s.appendChild(o)}s.value=st.ch}
 function go(){pref("rb",st.book);pref("rc",st.ch);try{history.replaceState(null,"","#"+st.book+"."+st.ch)}catch(e){}st.open=null;st.same=null;$("sheet").hidden=true;fillChap();render();window.scrollTo(0,0)}
 $("book").onchange=function(){st.book=this.value;st.ch=1;go()};
 $("chap").onchange=function(){st.ch=+this.value;go()};
@@ -159,7 +161,7 @@ document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("sheet")
 window.__start=async function(){
   BOOKS=await jget("data/index.json");
   var sb=$("book");BOOKS.forEach(function(b){var o=el("option",null,b.name);o.value=b.code;sb.appendChild(o)});
-  var h=(location.hash||"").slice(1).split("."),pb=h[0]&&bookInfo(h[0])?h[0]:pref("rb"),pc=h[0]&&bookInfo(h[0])?+h[1]:+pref("rc");
+  var h=(location.hash||"").slice(1).split("."),pb=h[0]&&bookInfo(h[0])?h[0]:"FRONT",pc=h[0]&&bookInfo(h[0])?+h[1]:1;
   if(pb&&bookInfo(pb)){st.book=pb;st.ch=pc>0&&pc<=bookInfo(pb).ch?pc:1}
   sb.value=st.book;fillChap();render();
 };
@@ -168,7 +170,7 @@ window.__setKey=function(k){KEY=k};
 </script>
 <script>
 (function(){
-var SALT="6ortoOyjoeeaIJd7k4lgxw==",GUM="https://hackettwave.gumroad.com/l/tkqypc",EP="https://classroom.excavatingthetext.com/api/interlinear-interest",LK="obi-pw";
+var SALT="2fEf/4G56Yy+cg/Lxh8h9w==",GUM="https://hackettwave.gumroad.com/l/tkqypc",EP="https://classroom.excavatingthetext.com/api/interlinear-interest",LK="obi-pw";
 function d(x){var r=atob(x),u=new Uint8Array(r.length);for(var i=0;i<r.length;i++)u[i]=r.charCodeAt(i);return u}
 var $=function(i){return document.getElementById(i)};
 if(GUM){$("get").hidden=false;$("getlink").href=GUM}
