@@ -1,0 +1,196 @@
+<meta name="robots" content="noindex">
+<title>Open Byzantine Interlinear Reader</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gentium+Plus:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky navigation over a single reading column; a word panel slides up from the bottom when a word is tapped. */
+:root{--bg:#F6F7F9;--panel:#FFFFFF;--fg:#1A2230;--muted:#5B6678;--rule:#D9DDE5;--accent:#1D5C73;--accent-soft:#E3EEF2;--red:#C0392B;--red-soft:#FBE9E7;--green:#2E7D32;--hit:#FFF3C4;
+--greek:"Gentium Plus","Palatino Linotype",Georgia,serif;--ui:"IBM Plex Sans","Segoe UI",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#10151D;--panel:#182029;--fg:#E4E8EE;--muted:#98A3B5;--rule:#2A3441;--accent:#6CB6CF;--accent-soft:#1B3039;--red:#F0766A;--red-soft:#3A1E1B;--green:#6CC28C;--hit:#4A3F14;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#10151D;--panel:#182029;--fg:#E4E8EE;--muted:#98A3B5;--rule:#2A3441;--accent:#6CB6CF;--accent-soft:#1B3039;--red:#F0766A;--red-soft:#3A1E1B;--green:#6CC28C;--hit:#4A3F14;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:15px/1.5 var(--ui);padding-inline:16px}
+.wrap{max-width:980px;margin:0 auto;padding-block:0 340px}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--rule);padding-block:12px;display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+h1{font:700 19px/1.2 var(--greek);margin:0 auto 0 0}
+.beta{font:600 11px var(--ui);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:1px 6px;margin-left:8px;vertical-align:2px}
+select,button{font:inherit;color:var(--fg)}
+select{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:6px 8px;min-width:0}
+button{background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:6px 12px;cursor:pointer}
+button:focus-visible,select:focus-visible,.w:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.note{background:var(--accent-soft);border-radius:6px;padding:10px 12px;margin-top:12px;font-size:13px}
+.wip{background:var(--red-soft);border:2px solid var(--red);border-radius:6px;padding:12px 14px;margin-top:12px;font-size:14px}.wip b{display:block;margin-bottom:2px}.wip a{color:var(--accent);font-weight:600}
+.legend{font-size:12px;color:var(--muted);margin:10px 0 0}
+.k-g{color:var(--muted)}.k-gr{color:var(--green)}.k-r{color:var(--red)}
+.verse{padding:14px 0;border-bottom:1px solid var(--rule)}
+.vn{font:600 12px var(--ui);color:var(--accent);margin-right:6px;vertical-align:top}
+.line{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:flex-start}
+.w{display:flex;flex-direction:column;align-items:flex-start;border:0;background:none;padding:2px 3px;border-radius:4px;cursor:pointer;text-align:left}
+.w:hover{background:var(--accent-soft)}
+.w .g{font:400 20px/1.25 var(--greek)}
+.w .e{font:400 12px/1.25 var(--ui);color:var(--muted);max-width:11em;overflow-wrap:anywhere}
+.w.red .e{color:var(--red)}.w.grn .e{color:var(--green)}
+.w.same{background:var(--hit)}
+.w.open{outline:2px solid var(--accent)}
+.en{margin:10px 0 0;font:400 15px/1.55 var(--greek);max-width:65ch}
+.fn{margin:8px 0 0;padding:8px 10px;background:var(--panel);border:1px solid var(--rule);border-radius:6px;font-size:13px;color:var(--muted)}
+.fn b{color:var(--accent)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:10;background:var(--panel);border-top:2px solid var(--accent);padding:14px 16px calc(14px + env(safe-area-inset-bottom,0px));max-height:46%;overflow-y:auto;box-shadow:0 -6px 20px rgba(0,0,0,.12)}
+.sheet-in{max-width:980px;margin:0 auto;display:grid;gap:8px}
+.sh-top{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline}
+.sh-top .g{font:700 28px var(--greek)}
+.sh-top .gl{font:600 17px var(--ui)}
+.badge{font:600 11px var(--ui);border:1px solid currentColor;border-radius:10px;padding:1px 8px}
+.sh-row{font-size:13px;color:var(--muted);min-width:0;overflow-wrap:anywhere}
+.sh-row b{color:var(--fg);font-weight:600}
+.sh-def{font:400 15px/1.5 var(--greek);max-width:70ch}
+.sh-btns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.sh-btns a{color:var(--accent)}.sh-btns a.rep{border:1px solid var(--accent);border-radius:6px;padding:4px 10px}
+.sh-x{margin-left:auto}
+.gl-list{display:flex;flex-wrap:wrap;gap:4px 8px}
+.gl-list span{background:var(--accent-soft);border-radius:10px;padding:1px 8px;font-size:12px;color:var(--fg)}
+footer{margin-top:28px;font-size:12px;color:var(--muted);max-width:75ch}
+.gate{max-width:520px;margin:0 auto;padding-block:48px 64px}
+.gate h1{margin:0 0 8px}.gate p{margin:8px 0}.gate form#pwf{display:flex;gap:8px;margin:16px 0 4px;flex-wrap:wrap}
+.gate input,.interest-form input{flex:1 1 200px;min-width:0;font:inherit;color:var(--fg);background:var(--panel);border:1px solid var(--rule);border-radius:6px;padding:8px 10px}
+.gate button[type=submit],.interest-form button{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
+#pwmsg{color:var(--red);min-height:1.4em;margin:4px 0}
+.interest-form{margin-top:28px;padding:14px;border:1px solid var(--rule);border-radius:8px;background:var(--panel)}
+.interest-form label{display:block;font-weight:600;margin-bottom:8px}.irow{display:flex;gap:8px;flex-wrap:wrap}
+.istat{min-height:1.2em;margin:8px 0 0;font-size:13px}.ifine{margin:4px 0 0;font-size:12px;color:var(--muted)}
+.gate a{color:var(--accent)}
+</style>
+<div class="gate" id="gate"><h1>The Open Byzantine Interlinear <span class="beta">Beta</span></h1>
+<p>The Greek New Testament, with every gloss traced to its source. This is an early draft, open for feedback, and not ready for publication.</p>
+<p>Enter the free password to open the reader.</p>
+<form id="pwf" autocomplete="off"><input id="pw" type="password" autocapitalize="off" autocorrect="off" aria-label="Password" placeholder="Password"><button type="submit">Open</button></form>
+<p id="pwmsg" role="alert"></p>
+<p id="get" hidden>No password yet? <a id="getlink" href="#" target="_blank" rel="noopener">Get your free password</a></p>
+<form class="interest-form" novalidate><label>Would you like to see this in print? Leave your email and I will let you know if it goes to press.</label><div class="irow"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" required maxlength="254" autocomplete="email"><button type="submit">Notify me</button></div><p class="istat" role="status"></p><p class="ifine">I will only email you about the printed interlinear.</p></form>
+<p class="ifine"><a href="https://excavatingthetext.com">Back to excavatingthetext.com</a></p></div>
+<div class="wrap" id="app" hidden>
+<header class="bar">
+ <h1>The Open Byzantine Interlinear <span class="beta">Beta</span></h1>
+ <select id="book" aria-label="Book"></select>
+ <select id="chap" aria-label="Chapter"></select>
+ <button id="prev" aria-label="Previous chapter">&larr;</button>
+ <button id="next" aria-label="Next chapter">&rarr;</button>
+</header>
+<div class="wip" role="note"><b>Work in progress. Not ready for publication.</b>This reader is an unfinished draft that I am opening up for feedback. The Greek, glosses, parsing and notes may contain errors and will change. Please do not cite or redistribute it as a finished work. Found a problem? Tap any word and use &ldquo;Report a problem with this word,&rdquo; or <a href="https://airtable.com/appV6NUir1zrCWimu/shrGCT5IlSOsiOLca" target="_blank" rel="noopener">send general feedback</a>.</div>
+<div class="note">This is a test version. Tap any word to see its Strong's number, the full Dodson entry, how the word is parsed, and where its English gloss came from. The glosses were made by rules and an AI, then checked in part, so expect errors.</div>
+<p class="legend"><span class="k-g">Grey</span> gloss: Dodson's, found in the ASV verse. <span class="k-gr">Green</span>: follows the ASV Byzantine Text. <span class="k-r">Red</span>: not found in the ASV verse, or the AI's own judgment.</p>
+<main id="main"></main>
+<form class="interest-form" novalidate><label>Would you like to see this in print? Leave your email and I will let you know if it goes to press.</label><div class="irow"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" required maxlength="254" autocomplete="email"><button type="submit">Notify me</button></div><p class="istat" role="status"></p><p class="ifine">I will only email you about the printed interlinear.</p></form>
+<footer>Greek: Robinson-Pierpont Byzantine Textform 2018 with the six main-text changes of the 2026 Guardian Press edition (public domain). English column: American Standard Version Byzantine Text by Robert Adam Boyd (public domain). Lexicon: Dodson Greek Lexicon (public domain). Strong's numbers and parsing: Byzantine Text Project data. Manuscript percentages in the notes: Robert Adam Boyd, <i>The Text-Critical English New Testament</i>, CC BY 4.0; the A to D grades are this book's own and are not Boyd's.</footer>
+</div>
+<aside class="sheet" id="sheet" hidden aria-live="polite"><div class="sheet-in" id="sheetin"></div></aside>
+<script>
+(function(){
+var BOOKS=[],cache={},LEX=null,st={book:"MAT",ch:1,open:null,same:null};
+var $=function(i){return document.getElementById(i)};
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+var KEY=null;
+function jget(u){return fetch(u.replace(/\.json$/,".bin")).then(function(r){if(!r.ok)throw new Error("fetch");return r.arrayBuffer()}).then(function(b){var u8=new Uint8Array(b);return crypto.subtle.decrypt({name:"AES-GCM",iv:u8.slice(0,12)},KEY,u8.slice(12))}).then(function(p){return new Response(new Blob([p]).stream().pipeThrough(new DecompressionStream("gzip"))).json()})}
+function pref(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){}return null}
+var WHY={"":"Dodson's gloss, found in the ASV verse (or no ASV check applies).",
+"CONN-ASV":"A connective that follows the word the ASV uses at the same place in the verse.",
+"CONN-DEFAULT":"A connective given a default gloss because the ASV verse had no matching word.",
+"LEMMA-ASV":"The ASV Byzantine Text's wording for this word, used because it appears in this verse.",
+"LEMMA-ASV-REVERTED":"Dodson's gloss, put back because the ASV wording for this word is not in this verse.",
+"PREP-ASV":"A preposition changed to follow the ASV verse.",
+"DATIVE-JUDGMENT":"A dative gloss chosen by judgment.",
+"DEPONENT-FLAG":"Flagged for review: a verb whose form and meaning may differ.",
+"LEMMA-OWN":"The AI's own gloss for this word.",
+"HAND-SET":"Set by hand.","OVERRIDE":"Set by hand.",
+"ASV-ABSENT":"The gloss does not appear in the ASV verse beside it."};
+function bookInfo(c){return BOOKS.filter(function(b){return b.code===c})[0]}
+function book(c){if(!cache[c])cache[c]=jget("data/"+c+".json");return cache[c]}
+function lex(){if(!LEX)LEX=jget("data/lex.json");return LEX}
+function closeSheet(){st.open=null;st.same=null;$("sheet").hidden=true;render()}
+async function showWord(b,v,w,k){
+  st.open=k;st.same=w[4];
+  var L=await lex(),e=L[String(w[4])]||{};
+  var box=$("sheetin");box.innerHTML="";
+  var top=el("div","sh-top");top.appendChild(el("span","g",w[1].replace(/[,.;·∙?!]+$/,"")));
+  top.appendChild(el("span","gl",w[2]));
+  var cls=w[3]===2?"k-gr":w[3]?"k-r":"k-g",lab=w[3]===2?"follows the ASV":w[3]?"not in the ASV verse":"Dodson";
+  var bd=el("span","badge "+cls,lab);top.appendChild(bd);
+  var x=el("button","sh-x","Close");x.onclick=closeSheet;top.appendChild(x);box.appendChild(top);
+  box.appendChild(el("div","sh-row",WHY[w[6]]||WHY[""]));
+  var p=el("div","sh-row");p.appendChild(document.createTextNode("Parsing: "));p.appendChild(el("b",null,w[5]));box.appendChild(p);
+  var s=el("div","sh-row");s.appendChild(document.createTextNode("Strong's number: "));s.appendChild(el("b",null,"G"+w[4]));
+  if(e.n){s.appendChild(document.createTextNode(" (used "+e.n+" time"+(e.n===1?"":"s")+" in the New Testament; the same word is highlighted on this page)"))}
+  box.appendChild(s);
+  if(e.sh){var d=el("div","sh-def");d.appendChild(el("b",null,e.sh));if(e.lg&&e.lg.replace(/\.$/,"")!==e.sh)d.appendChild(document.createTextNode(". "+e.lg));box.appendChild(d)}
+  if(e.g&&e.g.length){var gr=el("div","sh-row");gr.appendChild(document.createTextNode("Glosses used for this word in the book: "));box.appendChild(gr);
+    var ls=el("div","gl-list");e.g.forEach(function(q){ls.appendChild(el("span",null,q[0]+" ("+q[1]+")"))});box.appendChild(ls)}
+  var bt=el("div","sh-btns");var a=document.createElement("a");a.href="https://www.blueletterbible.org/lexicon/g"+w[4]+"/kjv/tr/0-1/";a.target="_blank";a.rel="noopener";a.textContent="See this word on Blue Letter Bible";bt.appendChild(a);
+  var bk=BOOKS.filter(function(x){return x.code===b.code})[0],bn=bk?bk.name:b.code;
+  var rp=document.createElement("a");rp.target="_blank";rp.rel="noopener";rp.className="rep";rp.textContent="Report a problem with this word";
+  rp.href="https://airtable.com/appV6NUir1zrCWimu/shrGCT5IlSOsiOLca?prefill_Reference="+encodeURIComponent(bn+" "+v.c+":"+v.v+" word "+w[0])+"&prefill_Greek%20word="+encodeURIComponent(w[1].replace(/[,.;·∙?!]+$/,""))+"&prefill_Gloss%20shown="+encodeURIComponent(w[2])+"&prefill_Strong%27s%20number="+encodeURIComponent("G"+w[4]);
+  bt.appendChild(rp);box.appendChild(bt);
+  $("sheet").hidden=false;render();
+}
+async function render(){
+  var main=$("main"),y=window.scrollY,b=await book(st.book);
+  main.innerHTML="";
+  b.verses.filter(function(v){return v.c===st.ch}).forEach(function(v){
+    var box=el("section","verse");box.id="v"+v.v;
+    var line=el("div","line");line.appendChild(el("span","vn",st.ch+":"+v.v));
+    v.w.forEach(function(w){
+      var k=b.code+"_"+v.c+"_"+v.v+"_"+w[0];
+      var btn=el("button","w"+(w[3]===2?" grn":w[3]?" red":"")+(st.same===w[4]?" same":"")+(st.open===k?" open":""));
+      btn.type="button";btn.appendChild(el("span","g",w[1]));btn.appendChild(el("span","e",w[2]));
+      btn.onclick=function(){showWord(b,v,w,k)};line.appendChild(btn);
+    });
+    box.appendChild(line);
+    if(v.en)box.appendChild(el("p","en",v.en));
+    b.notes.filter(function(n){return n.c===v.c&&n.v===v.v}).forEach(function(n){var f=el("div","fn");var bb=el("b",null,n.c+":"+n.v);f.appendChild(bb);f.appendChild(document.createTextNode(" "+n.t));box.appendChild(f)});
+    main.appendChild(box);
+  });
+  window.scrollTo(0,y);
+}
+function fillChap(){var b=bookInfo(st.book),s=$("chap");s.innerHTML="";for(var i=1;i<=b.ch;i++){var o=el("option",null,"Chapter "+i);o.value=i;s.appendChild(o)}s.value=st.ch}
+function go(){pref("rb",st.book);pref("rc",st.ch);try{history.replaceState(null,"","#"+st.book+"."+st.ch)}catch(e){}st.open=null;st.same=null;$("sheet").hidden=true;fillChap();render();window.scrollTo(0,0)}
+$("book").onchange=function(){st.book=this.value;st.ch=1;go()};
+$("chap").onchange=function(){st.ch=+this.value;go()};
+$("prev").onclick=function(){if(st.ch>1)st.ch--;else{var i=BOOKS.findIndex(function(b){return b.code===st.book});if(i>0){st.book=BOOKS[i-1].code;st.ch=BOOKS[i-1].ch;$("book").value=st.book}else return}go()};
+$("next").onclick=function(){var b=bookInfo(st.book);if(st.ch<b.ch)st.ch++;else{var i=BOOKS.findIndex(function(x){return x.code===st.book});if(i<BOOKS.length-1){st.book=BOOKS[i+1].code;st.ch=1;$("book").value=st.book}else return}go()};
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&!$("sheet").hidden)closeSheet()});
+window.__start=async function(){
+  BOOKS=await jget("data/index.json");
+  var sb=$("book");BOOKS.forEach(function(b){var o=el("option",null,b.name);o.value=b.code;sb.appendChild(o)});
+  var h=(location.hash||"").slice(1).split("."),pb=h[0]&&bookInfo(h[0])?h[0]:pref("rb"),pc=h[0]&&bookInfo(h[0])?+h[1]:+pref("rc");
+  if(pb&&bookInfo(pb)){st.book=pb;st.ch=pc>0&&pc<=bookInfo(pb).ch?pc:1}
+  sb.value=st.book;fillChap();render();
+};
+window.__setKey=function(k){KEY=k};
+})();
+</script>
+<script>
+(function(){
+var SALT="6ortoOyjoeeaIJd7k4lgxw==",GUM="https://hackettwave.gumroad.com/l/tkqypc",EP="https://classroom.excavatingthetext.com/api/interlinear-interest",LK="obi-pw";
+function d(x){var r=atob(x),u=new Uint8Array(r.length);for(var i=0;i<r.length;i++)u[i]=r.charCodeAt(i);return u}
+var $=function(i){return document.getElementById(i)};
+if(GUM){$("get").hidden=false;$("getlink").href=GUM}
+async function derive(pw){var km=await crypto.subtle.importKey("raw",new TextEncoder().encode(pw),"PBKDF2",false,["deriveKey"]);return crypto.subtle.deriveKey({name:"PBKDF2",salt:d(SALT),iterations:200000,hash:"SHA-256"},km,{name:"AES-GCM",length:256},false,["decrypt"])}
+async function tryOpen(pw,quiet){
+  try{var k=await derive(pw);window.__setKey(k);
+    var r=await fetch("data/index.bin");var u8=new Uint8Array(await r.arrayBuffer());
+    await crypto.subtle.decrypt({name:"AES-GCM",iv:u8.slice(0,12)},k,u8.slice(12));
+  }catch(e){if(!quiet)$("pwmsg").textContent="That password did not work.";return false}
+  try{localStorage.setItem(LK,pw)}catch(e){}
+  $("gate").hidden=true;$("app").hidden=false;window.__start();return true}
+$("pwf").addEventListener("submit",function(e){e.preventDefault();$("pwmsg").textContent="";tryOpen($("pw").value.trim(),false)});
+try{var sv=localStorage.getItem(LK);if(sv)tryOpen(sv,true)}catch(e){}
+Array.prototype.forEach.call(document.querySelectorAll(".interest-form"),function(f){
+  f.addEventListener("submit",async function(e){e.preventDefault();
+    var st=f.querySelector(".istat"),b=f.querySelector("button"),em=(f.email.value||"").trim();
+    if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){st.textContent="Please enter a valid email address.";return}
+    b.disabled=true;st.textContent="Adding you\u2026";
+    try{var r=await fetch(EP,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:em,source:"interlinear-print"})});
+      var j={};try{j=await r.json()}catch(x){}
+      if(!r.ok||!j.ok)throw new Error(j&&j.error?String(j.error):"fail");
+      f.querySelector(".irow").hidden=true;st.textContent="Thank you. You are on the list for the printed edition."}
+    catch(err){b.disabled=false;st.textContent=/valid email|too many/i.test(err.message)?err.message:"That did not go through. Please try again in a moment."}})});
+})();
+</script>
