@@ -49,6 +49,11 @@ h2.ch{margin:0 0 4px;font-size:30px;font-weight:800;letter-spacing:-.01em}
 .v.hl{background:var(--callout);box-shadow:0 0 0 4px var(--callout)}
 .vn{font-family:Arial,Helvetica,sans-serif;font-size:.5em;font-weight:700;color:var(--blue);margin:0 .35em 0 .1em;vertical-align:.55em;cursor:pointer;text-decoration:none;user-select:none}
 .vn:hover{color:var(--cyan)}
+/*W*/.w{cursor:pointer;border-radius:3px}.w:hover,.w.act{background:var(--callout);box-shadow:0 0 0 2px var(--callout)}
+#panel .pv{font-size:13px;color:var(--pale);margin:2px 0 6px}
+#panel .def{margin-top:8px;color:var(--pale);font-size:15px}
+#panel .big{font-family:'Gentium Plus',Georgia,serif;font-size:26px;line-height:1.2}
+#panel .chip{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;color:#001a2a;background:var(--cyan);border-radius:4px;padding:1px 7px;margin-right:6px}
 sup.fn{font-family:Arial,Helvetica,sans-serif;font-size:.62em;font-weight:700;color:var(--cyan);cursor:pointer;padding:0 3px;margin:0 1px;border-radius:3px;user-select:none}
 sup.fn:hover,sup.fn.act{background:var(--cyan);color:#001a2a}
 .clean sup.fn{display:none}
@@ -91,7 +96,7 @@ footer p{margin:0 0 10px}
     <div class="kicker"><a href="https://excavatingthetext.com/">Excavating the Text</a></div>
     <h1>The Greek New Testament</h1>
     <div class="rule"></div>
-    <p class="tag">According to the Byzantine Text. Guardian Press, 2026. Free to read, with the full apparatus one tap away.</p>
+    <p class="tag">According to the Byzantine Text. Guardian Press, 2026. Free to read. Tap any word for its parsing; tap a dagger for the apparatus.</p>
   </div>
 </header>
 
@@ -117,7 +122,8 @@ footer p{margin:0 0 10px}
 <footer>
   <div class="wrap">
     <p><b>The Greek New Testament According to the Byzantine Text</b>, edited and prepared by J. Jeffrey Dodson &amp; Dwayne Green for the Guardian Press Editorial Committee (Robinson&ndash;Pierpont 2026 base text). Dedicated to the public domain.</p>
-    <p>Text and apparatus are reproduced from the Guardian Press edition. Tap a <span style="color:var(--cyan);font-weight:700">&dagger;</span> to read the edition apparatus (and manuscript evidence where the edition gives it) for that word.</p>
+    <p>Text and apparatus are reproduced from the Guardian Press edition. Tap any Greek word for its parsing and definition. Tap a <span style="color:var(--cyan);font-weight:700">&dagger;</span> to read the edition apparatus (and manuscript evidence where the edition gives it) for that word.</p>
+    <p>Parsing and Strong&rsquo;s numbers come from the Robinson&ndash;Pierpont Byzantine Textform (byztxt project, public domain), matched automatically to each word of this edition; definitions are from the Dodson Greek Lexicon (public domain). They are study aids, not part of the Guardian Press edition.</p>
     <p><a href="https://excavatingthetext.com/greek-nt.html">PDF downloads</a> &middot; <a href="https://excavatingthetext.com/hardbound-gnt.html">Hardbound edition</a> &middot; <a href="https://excavatingthetext.com/">excavatingthetext.com</a></p>
   </div>
 </footer>
@@ -143,7 +149,7 @@ function versesOf(b,c){return Object.keys(TEXT[b][c]).map(Number).sort(function(
 ORDER.forEach(function(b){var o=document.createElement('option');o.value=b;o.textContent=b;bookSel.appendChild(o)});
 function fillChaps(){chapSel.innerHTML='';chaptersOf(cur.b).forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent='Chapter '+c;chapSel.appendChild(o)});chapSel.value=cur.c}
 
-function closePanel(){panel.classList.remove('open');var a=document.querySelector('sup.fn.act');if(a)a.classList.remove('act')}
+function closePanel(){panel.classList.remove('open');Array.prototype.forEach.call(document.querySelectorAll('.act'),function(a){a.classList.remove('act')})}
 function fnHtml(n,isbr){
   var parts=String(n.note||'').split(/\s*‖\s*/);
   var h='<button class="x" aria-label="Close" id="px">&times;</button><div class="ref">'+esc(n.ref)+' &middot; apparatus</div>';
@@ -161,11 +167,148 @@ function openFn(el){
   $('px').addEventListener('click',closePanel);
 }
 
+var GREEK_RE=/[\u0370-\u03ff\u1f00-\u1fff]/;
 function renderVerse(vn,t){
-  var out='',last=0,re=/†(\d+)⁠/g,m;
-  while((m=re.exec(t))){out+=esc(t.slice(last,m.index));out+='<sup class="fn" role="button" tabindex="0" data-i="'+(m[1]-1)+'" title="Apparatus">†</sup>';last=re.lastIndex}
-  out+=esc(t.slice(last));
+  var out='',re=/(\u2020(\d+)\u2060)|(\s+)|(\u2014)|([^\s\u2020\u2014]+)/g,m,wi=0;
+  while((m=re.exec(t))){
+    if(m[1])out+='<sup class="fn" role="button" tabindex="0" data-i="'+(m[2]-1)+'" title="Apparatus">\u2020</sup>';
+    else if(m[3]||m[4])out+=esc(m[0]);
+    else{
+      var tok=m[5];
+      if(GREEK_RE.test(tok)){var p=/^([^\u0370-\u03ff\u1f00-\u1fff]*)(.*?)([^\u0370-\u03ff\u1f00-\u1fff]*)$/.exec(tok);out+=esc(p[1])+'<span class="w" data-w="'+(wi++)+'">'+esc(p[2])+'</span>'+esc(p[3])}
+      else out+=esc(tok);
+    }
+  }
   return out;
+}
+/* parsing: data loads on first word tap */
+  var MORPH_UNDECLINED = {ADV:'Adverb',CONJ:'Conjunction',COND:'Conditional particle',PRT:'Particle',
+    PREP:'Preposition',INJ:'Interjection',ARAM:'Aramaic word',HEB:'Hebrew word'};
+  var MORPH_POS = {N:'Noun',A:'Adjective',R:'Relative pronoun',C:'Reciprocal pronoun',
+    D:'Demonstrative pronoun',T:'Article',K:'Correlative pronoun',I:'Interrogative pronoun',
+    X:'Indefinite pronoun',Q:'Correlative/interrogative pronoun',F:'Reflexive pronoun',
+    S:'Possessive pronoun',P:'Personal pronoun'};
+  var MORPH_CASE = {N:'nominative',V:'vocative',G:'genitive',D:'dative',A:'accusative'};
+  var MORPH_NUM  = {S:'singular',P:'plural'};
+  var MORPH_GEN  = {M:'masculine',F:'feminine',N:'neuter'};
+  var MORPH_SUFFIX = {S:'superlative',C:'comparative',ABB:'abbreviated form',I:'interrogative',
+    N:'negative',K:'crasis',ATT:'Attic form'};
+  var MORPH_SPECIAL_INDECL = {PRI:'indeclinable proper noun',NUI:'indeclinable numeral',
+    LI:'indeclinable letter',OI:'indeclinable'};
+  var MORPH_TENSE = {P:'present',I:'imperfect',F:'future',A:'aorist',R:'perfect',L:'pluperfect'};
+  var MORPH_VOICE = {A:'active',M:'middle',P:'passive',E:'middle or passive',D:'middle deponent',
+    O:'passive deponent',N:'middle or passive deponent'};
+  var MORPH_MOOD  = {I:'indicative',S:'subjunctive',O:'optative',M:'imperative',N:'infinitive',P:'participle'};
+  var MORPH_PERSON = {'1':'1st person','2':'2nd person','3':'3rd person'};
+  function morphCaseNumberGender(token){
+    if(token.length === 3 && MORPH_CASE[token[0]] && MORPH_NUM[token[1]] && MORPH_GEN[token[2]]){
+      return MORPH_CASE[token[0]]+' '+MORPH_NUM[token[1]]+' '+MORPH_GEN[token[2]];
+    }
+    if(token.length === 2 && MORPH_CASE[token[0]] && MORPH_NUM[token[1]]){
+      return MORPH_CASE[token[0]]+' '+MORPH_NUM[token[1]];
+    }
+    return null;
+  }
+  function decodeMorph(tag){
+    if(!tag) return null;
+    var parts = tag.split('-');
+    var first = parts[0];
+
+    if(MORPH_UNDECLINED[first]){
+      var pieces0 = [MORPH_UNDECLINED[first]];
+      for(var k=1;k<parts.length;k++) pieces0.push(MORPH_SUFFIX[parts[k]] || parts[k]);
+      return pieces0.join(', ');
+    }
+
+    if(first === 'V'){
+      var tvm = parts[1], rest = parts.slice(2);
+      if(!tvm) return null;
+      var second = '';
+      if(tvm.charAt(0) === '2'){ second = 'second '; tvm = tvm.slice(1); }
+      if(tvm.length !== 3) return null;
+      var tense = tvm[0], voice = tvm[1], mood = tvm[2];
+      if(!MORPH_TENSE[tense] || !MORPH_VOICE[voice] || !MORPH_MOOD[mood]) return null;
+      var pieces = ['Verb', second+MORPH_TENSE[tense], MORPH_VOICE[voice], MORPH_MOOD[mood]];
+      for(var i=0;i<rest.length;i++){
+        var token = rest[i];
+        if(MORPH_SUFFIX[token]){ pieces.push(MORPH_SUFFIX[token]); continue; }
+        if(token.length === 2 && MORPH_PERSON[token[0]] && MORPH_NUM[token[1]]){
+          pieces.push(MORPH_PERSON[token[0]]+' '+MORPH_NUM[token[1]]); continue;
+        }
+        var cng = morphCaseNumberGender(token);
+        if(cng){ pieces.push(cng); continue; }
+        return null;
+      }
+      return pieces.join(', ');
+    }
+
+    var posName = MORPH_POS[first];
+    if(!posName) return null;
+    var rest2 = parts.slice(1);
+    if(!rest2.length) return posName;
+    if(MORPH_SPECIAL_INDECL[rest2[0]]){
+      var piecesI = [posName+' ('+MORPH_SPECIAL_INDECL[rest2[0]]+')'];
+      for(var j=1;j<rest2.length;j++) piecesI.push(MORPH_SUFFIX[rest2[j]] || rest2[j]);
+      return piecesI.join(', ');
+    }
+
+    var token0 = rest2[0];
+    var piecesD = [posName];
+    if(first === 'F' || first === 'S' || first === 'P'){
+      if(!/^[0-9]/.test(token0)){
+        // 3rd-person personal pronoun has no explicit person digit (gender disambiguates it)
+        var cng3 = morphCaseNumberGender(token0);
+        if(!cng3) return null;
+        piecesD.push('3rd person'); piecesD.push(cng3);
+        for(var m=1;m<rest2.length;m++) piecesD.push(MORPH_SUFFIX[rest2[m]] || rest2[m]);
+        return piecesD.join(', ');
+      }
+      var person = MORPH_PERSON[token0[0]];
+      if(!person) return null;
+      var remainder = token0.slice(1);
+      if(remainder.length === 4 && MORPH_NUM[remainder[0]] && morphCaseNumberGender(remainder.slice(1))){
+        piecesD.push(MORPH_NUM[remainder[0]]+' '+person+' possessor');
+        piecesD.push(morphCaseNumberGender(remainder.slice(1)));
+      } else {
+        var cngP = morphCaseNumberGender(remainder);
+        if(!cngP) return null;
+        piecesD.push(person); piecesD.push(cngP);
+      }
+    } else {
+      var cng0 = morphCaseNumberGender(token0);
+      if(!cng0) return null;
+      piecesD.push(cng0);
+    }
+    for(var n=1;n<rest2.length;n++) piecesD.push(MORPH_SUFFIX[rest2[n]] || rest2[n]);
+    return piecesD.join(', ');
+  }
+
+var PARSE=null,LEX=null,PLOAD=null;
+function loadParse(){
+  if(PLOAD)return PLOAD;
+  PLOAD=Promise.all([fetch('parse.json').then(function(r){return r.json()}),fetch('lexicon.json').then(function(r){return r.json()})]).then(function(a){PARSE=a[0];LEX=a[1]}).catch(function(){PLOAD=null;throw 0});
+  return PLOAD;
+}
+function wordHtml(word,ref,ent){
+  var h='<button class="x" aria-label="Close" id="px">&times;</button><div class="ref">'+esc(ref)+' &middot; word</div><div class="big">'+esc(word)+'</div>';
+  if(!ent){return h+'<div class="pv">No parsing is available for this word.</div>'}
+  var sp=ent.split(' '),num=sp[0],tag=sp.slice(1).join(' '),L=LEX[num],dm=decodeMorph(tag);
+  h+='<div class="pv"><span class="chip">G'+esc(num)+'</span>'+(dm?esc(dm):esc(tag))+(dm?' <span style="opacity:.7">('+esc(tag)+')</span>':'')+'</div>';
+  if(L){h+='<div class="lemma"><small>Lexical form</small>'+esc(L[0])+'</div>';if(L[1])h+='<div class="g">'+esc(L[1])+'</div>';if(L[2]&&L[2]!==L[1]+'.')h+='<div class="def">'+esc(L[2])+'</div>'}
+  h+='<div class="src">Parsing: Robinson&ndash;Pierpont Byzantine Textform (byztxt, public domain), matched word for word to this edition. Definitions: Dodson Greek Lexicon (public domain).</div>';
+  return h;
+}
+function openWord(el){
+  var v=el.closest('.v');if(!v)return;
+  var vn=v.getAttribute('data-v'),wi=+el.getAttribute('data-w'),word=el.textContent,ref=cur.b+' '+cur.c+':'+vn;
+  closePanel();el.classList.add('act');
+  pbox.innerHTML='<button class="x" aria-label="Close" id="px">&times;</button><div class="ref">'+esc(ref)+'</div><div class="big">'+esc(word)+'</div><div class="pv">Loading parsing&hellip;</div>';
+  panel.classList.add('open');$('px').addEventListener('click',closePanel);
+  loadParse().then(function(){
+    if(!el.classList.contains('act'))return;
+    var s=(PARSE[cur.b]&&PARSE[cur.b][cur.c]&&PARSE[cur.b][cur.c][vn])||'';var ent=s.split(';')[wi]||'';
+    pbox.innerHTML=wordHtml(word,ref,ent);panel.classList.add('open');$('px').addEventListener('click',closePanel);
+  },function(){pbox.innerHTML='<button class="x" aria-label="Close" id="px">&times;</button><div class="ref">'+esc(ref)+'</div><div class="big">'+esc(word)+'</div><div class="pv">Parsing data could not be loaded. Check your connection and try again.</div>';$('px').addEventListener('click',closePanel)});
 }
 function renderRead(){
   closePanel();
@@ -252,11 +395,12 @@ chapSel.addEventListener('change',function(){cur.c=+chapSel.value;cur.v=null;go(
 $('prev').addEventListener('click',function(){step(-1)});$('next').addEventListener('click',function(){step(1)});
 $('sf').addEventListener('submit',function(e){e.preventDefault();doSearch($('q').value)});
 $('frontbtn').addEventListener('click',function(){if(cur.mode==='front')go();else renderFront()});
-$('clean').addEventListener('click',function(){var t=$('txt');var hidden=store('gnt-clean')==='1';hidden=!hidden;store('gnt-clean',hidden?'1':'0');this.classList.toggle('on',!hidden);this.setAttribute('aria-pressed',String(!hidden));if(t)t.classList.toggle('clean',hidden);closePanel()});
+$('clean').addEventListener('click',function(){var t=$('txt');var on=store('gnt-clean')==='1';store('gnt-clean',on?'0':'1');this.classList.toggle('on',!on);this.setAttribute('aria-pressed',String(!on));if(t)t.classList.toggle('clean',!on);closePanel()});
 function fsz(d){var f=parseFloat(store('gnt-fs')||'1');f=Math.min(1.8,Math.max(.8,Math.round((f+d)*100)/100));store('gnt-fs',String(f));document.documentElement.style.setProperty('--fs',f)}
 $('smaller').addEventListener('click',function(){fsz(-.1)});$('bigger').addEventListener('click',function(){fsz(.1)});
 view.addEventListener('click',function(e){
   var fn=e.target.closest&&e.target.closest('sup.fn');if(fn){openFn(fn);return}
+  var wd=e.target.closest&&e.target.closest('.w');if(wd){openWord(wd);return}
   var vn=e.target.closest&&e.target.closest('.vn');if(vn){cur.v=+vn.getAttribute('data-vn');history.replaceState(null,'',hashFor());Array.prototype.forEach.call(document.querySelectorAll('.v.hl'),function(x){x.classList.remove('hl')});$('v'+cur.v).classList.add('hl');return}
 });
 view.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.matches&&e.target.matches('sup.fn'))openFn(e.target)});
@@ -265,7 +409,7 @@ document.addEventListener('keydown',function(e){
   var tg=(e.target.tagName||'').toLowerCase();if(tg==='input'||tg==='select'||tg==='textarea')return;
   if(cur.mode==='read'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)}
 });
-document.addEventListener('click',function(e){if(panel.classList.contains('open')&&!e.target.closest('#panel')&&!e.target.closest('sup.fn'))closePanel()});
+document.addEventListener('click',function(e){if(panel.classList.contains('open')&&!e.target.closest('#panel')&&!e.target.closest('sup.fn')&&!e.target.closest('.w'))closePanel()});
 
 function fromHash(){
   var h=decodeURIComponent((location.hash||'').replace(/^#/,'')).split('/');
@@ -276,7 +420,7 @@ window.addEventListener('popstate',function(){if(fromHash()){cur.mode='read';fil
 
 /* init */
 fsz(0);
-$('clean').classList.toggle('on',store('gnt-clean')!=='1');$('clean').setAttribute('aria-pressed',String(store('gnt-clean')!=='1'));
+$('clean').classList.toggle('on',store('gnt-clean')==='1');
 if(!fromHash()){var p=(store('gnt-pos')||'').split('|');if(p[0]&&TEXT[p[0]]&&TEXT[p[0]][p[1]]){cur.b=p[0];cur.c=+p[1]}}
 fillChaps();bookSel.value=cur.b;chapSel.value=cur.c;
 history.replaceState(null,'',hashFor());
