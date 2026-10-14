@@ -243,8 +243,8 @@ var FV=1;
 function saveSel(){store('gnt-eds',JSON.stringify(ALLIDS.filter(function(k){return !SEL[k]})))}
 function selCount(){return ALLIDS.filter(function(k){return SEL[k]}).length}
 function edFiltered(){return selCount()!==ALLIDS.length}
-var NOSPELL=store('gnt-nospell')==='1';
-function filtered(){return edFiltered()||NOSPELL}
+var VL=(function(){var v=store('gnt-vlevel');if(v==='1'||v==='2')return +v;return store('gnt-nospell')==='1'?1:0})();
+function filtered(){return edFiltered()||VL>0}
 /* spelling-only detection: a reading counts as a spelling variant when, word for word, it differs from the base text only by
    accents/breathings, final sigma, movable nu, ei/i, eu/hu, doubled or assimilated consonants, ou/ouk/ouch, outos/outo, ek/ex */
 function spWord(w){
@@ -272,8 +272,21 @@ function isSpelling(quote,text){
   }
   return true;
 }
+var MINOR_W={};'ο το του της των τω τη τοις ταις τον την τους τας οι αι τα και δε τε γαρ ουν μεν δη'.split(' ').forEach(function(w){MINOR_W[w]=1});
+function sigToks(t){return String(t).replace(/\([^)]*\)/g,' ').replace(/[\[\]«»]/g,'').trim().split(/\s+/).map(spWord).filter(Boolean)}
+function cnt(a){var o={};a.forEach(function(w){o[w]=(o[w]||0)+1});return o}
+/* a reading is exegetically insignificant when, apart from spelling, it differs from the text only by word order, by brackets,
+   or by adding, dropping or swapping minor words (articles, kai, de, te, gar, oun, men, de) */
+function isMinorDiff(quote,text){
+  var tx=String(text).trim(),A=cnt(sigToks(quote)),B;
+  if(/^om\b/i.test(tx))B={};else if(!tx)B=A;else B=cnt(sigToks(tx));
+  var bad=false;
+  Object.keys(A).forEach(function(w){if(!MINOR_W[w]&&(A[w]||0)!==(B[w]||0))bad=true});
+  Object.keys(B).forEach(function(w){if(!MINOR_W[w]&&(A[w]||0)!==(B[w]||0))bad=true});
+  return !bad;
+}
 function filterDesc(){
-  var p=[];if(edFiltered())p.push(selCount()+' of '+ALLIDS.length+' sources');if(NOSPELL)p.push('spelling-only variants hidden');
+  var p=[];if(edFiltered())p.push(selCount()+' of '+ALLIDS.length+' sources');if(VL===1)p.push('spelling-only variants hidden');if(VL===2)p.push('only exegetically significant variants');
   return p.join(', ');
 }
 
@@ -335,7 +348,7 @@ function noteView(n,book){
     });
     if(labs.length)out.push({labels:labelStr(labs),text:g.text});
   });
-  if(NOSPELL&&out.length&&!p.ms&&out.every(function(g){return isSpelling(n.quote,g.text)}))out=[];
+  if(VL>0&&out.length&&!p.ms&&out.every(function(g){return isSpelling(n.quote,g.text)||(VL===2&&isMinorDiff(n.quote,g.text))}))out=[];
   var nv=out.length?{groups:out,ms:p.ms,hasMs:!!p.ms}:null;
   n._fv=FV;n._bk=book;n._nv=nv;return nv;
 }
@@ -652,7 +665,7 @@ function closeModal(){
 }
 modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
 function head(kicker,title){return '<div class="mhead"><div class="k">'+kicker+'</div><h3>'+title+'</h3><button class="x" id="mx" aria-label="Close">&times;</button></div>'}
-function updateEdBtn(){var b=$('edbtn');b.classList.toggle('on',filtered());b.innerHTML='Editions'+(filtered()?' <span class="cnt">('+(edFiltered()?selCount()+'/'+ALLIDS.length:'')+(edFiltered()&&NOSPELL?', ':'')+(NOSPELL?'no spelling':'')+')</span>':'')}
+function updateEdBtn(){var b=$('edbtn');b.classList.toggle('on',filtered());b.innerHTML='Editions'+(filtered()?' <span class="cnt">('+(edFiltered()?selCount()+'/'+ALLIDS.length:'')+(edFiltered()&&VL?', ':'')+(VL===1?'no spelling':VL===2?'significant':'')+')</span>':'')}
 function applySel(){
   FV++;saveSel();updateEdBtn();
   if(cur.mode==='read'){var y=window.scrollY;renderRead(true);window.scrollTo(0,y)}
@@ -666,7 +679,8 @@ function edDialog(after){
     g.items.forEach(function(it){h+='<label><input type="checkbox" data-ed="'+it[0]+'" data-g="'+g.k+'"><span><b class="sc">'+DISP[it[0]]+'</b> '+esc(it[1])+'</span></label>'});
     h+='</div>';
   });
-  h+='<fieldset class="fs"><legend>Spelling</legend><label class="sp"><input type="checkbox" id="nospell"><span><b>Hide spelling-only variants</b><br><small>Hides readings that differ from the text only in spelling: accents and breathings, ει/ι, ευ/ηυ, movable ν, ου/ουκ/ουχ, doubled or assimilated consonants (ιωαννης/ιωανης, γινεσθε/γεινεσθε, εγκαινια/ενκαινια). A note that also has manuscript data stays visible.</small></span></label></fieldset><div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
+  h+='<fieldset class="fs"><legend>Kind of variant</legend>'+
+    [['0','Show all variants','Every difference in the apparatus, including spelling.'],['1','Hide spelling-only variants','Hides readings that differ from the text only in spelling: accents and breathings, ει/ι, ευ/ηυ, movable ν, ου/ουκ/ουχ, doubled or assimilated consonants (ιωαννης/ιωανης, εγκαινια/ενκαινια).'],['2','Show only exegetically significant variants','Also hides differences of word order and of minor words (the article, και, δε, τε, γαρ, ουν, μεν) and bracket-only readings. What stays: different words, forms, tenses and moods, additions and omissions of substantive words.']].map(function(r){return '<label class="sp"><input type="radio" name="vl" value="'+r[0]+'"><span><b>'+r[1]+'</b><br><small>'+r[2]+'</small></span></label>'}).join('')+'<p class="mnote" style="margin:6px 0 0;font-size:13px">A note that also has manuscript data always stays visible. These are automatic rules, so a borderline reading may be classed either way.</p></fieldset><div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
   openModal(h);
   function sync(){
     Array.prototype.forEach.call(mbox.querySelectorAll('input[data-ed]'),function(i){i.checked=!!SEL[i.getAttribute('data-ed')]});
@@ -684,8 +698,10 @@ function edDialog(after){
       sync();
     });
   });
-  $('nospell').checked=NOSPELL;
-  $('nospell').addEventListener('change',function(){NOSPELL=this.checked;store('gnt-nospell',NOSPELL?'1':'0')});
+  Array.prototype.forEach.call(mbox.querySelectorAll('input[name=vl]'),function(r){
+    r.checked=(+r.value===VL);
+    r.addEventListener('change',function(){VL=+this.value;store('gnt-vlevel',String(VL))});
+  });
   $('edall').addEventListener('click',function(){ALLIDS.forEach(function(k){SEL[k]=true});sync()});
   $('ednone').addEventListener('click',function(){ALLIDS.forEach(function(k){SEL[k]=false});sync()});
   $('eddone').addEventListener('click',closeModal);
@@ -715,7 +731,7 @@ function reportData(o){
   var eds=ALLIDS.filter(function(k){return SEL[k]}).map(function(k){return plainOrNot(DISP[k],o.plain)});
   var meta=['Range: '+o.desc,
     'Editions: '+(edFiltered()?eds.join(', ')+' ('+selCount()+' of '+ALLIDS.length+' sources)':'all comparison editions and RPmg'),
-    (NOSPELL?'Spelling-only variants are hidden.':'Spelling variants are included.'),
+    (VL===2?'Only exegetically significant variants are shown (spelling, word order and minor-word differences are hidden).':VL===1?'Spelling-only variants are hidden.':'Spelling variants are included.'),
     'Variants: '+items.length+(o.ms?' ('+withMs+' with manuscript data)':''),
     (o.ms?'‡ marks variants that include manuscript data.':'Manuscript data is not included.')];
   return {items:items,meta:meta};
