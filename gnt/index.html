@@ -309,7 +309,7 @@ function isOrthographic(quote,text){
 var MINOR_W={};'ο το του της των τω τη τοις ταις τον την τους τας οι αι τα και δε τε γαρ ουν μεν δη'.split(' ').forEach(function(w){MINOR_W[w]=1});
 function sigToks(t){return String(t).replace(/\([^)]*\)/g,' ').replace(/[\[\]«»]/g,'').trim().split(/\s+/).map(spWord).filter(Boolean)}
 function cnt(a){var o={};a.forEach(function(w){o[w]=(o[w]||0)+1});return o}
-/* a reading is exegetically insignificant when, apart from spelling, it differs from the text only by word order, by brackets,
+/* a reading is minor when, apart from spelling, it differs from the text only by word order, by brackets,
    or by adding, dropping or swapping minor words (articles, kai, de, te, gar, oun, men, de) */
 function isMinorDiff(quote,text){
   var tx=String(text).trim(),A=cnt(sigToks(quote)),B;
@@ -320,7 +320,7 @@ function isMinorDiff(quote,text){
   return !bad;
 }
 function filterDesc(){
-  var p=[];if(edFiltered())p.push(selCount()+' of '+ALLIDS.length+' sources');if(VL===1)p.push('orthographic variants hidden');if(VL===2)p.push('only exegetically significant variants');
+  var p=[];if(edFiltered())p.push(selCount()+' of '+ALLIDS.length+' sources');if(VL===1)p.push('orthographic variants hidden');if(VL===2)p.push('orthographic, word-order and minor-word variants hidden');
   return p.join(', ');
 }
 
@@ -713,7 +713,7 @@ function closeModal(){
 }
 modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
 function head(kicker,title){return '<div class="mhead"><div class="k">'+kicker+'</div><h3>'+title+'</h3><button class="x" id="mx" aria-label="Close">&times;</button></div>'}
-function updateEdBtn(){var b=$('edbtn');b.classList.toggle('on',filtered());b.innerHTML='Editions'+(filtered()?' <span class="cnt">('+(edFiltered()?selCount()+'/'+ALLIDS.length:'')+(edFiltered()&&VL?', ':'')+(VL===1?'no orthographic':VL===2?'significant':'')+')</span>':'')}
+function updateEdBtn(){var b=$('edbtn');b.classList.toggle('on',filtered());b.innerHTML='Editions'+(filtered()?' <span class="cnt">('+(edFiltered()?selCount()+'/'+ALLIDS.length:'')+(edFiltered()&&VL?', ':'')+(VL===1?'no orthographic':VL===2?'no minor':'')+')</span>':'')}
 function applySel(){
   FV++;saveSel();updateEdBtn();
   if(cur.mode==='read'){var y=window.scrollY;renderRead(true);window.scrollTo(0,y)}
@@ -728,7 +728,7 @@ function edDialog(after){
     h+='</div>';
   });
   h+='<fieldset class="fs"><legend>Kind of variant</legend>'+
-    [['0','Show all variants','Every difference in the apparatus, including spelling.'],['1','Hide orthographic variants','Hides readings that differ from the text only in spelling: ει/ι, ττ/σσ, ρρ/ρσ (Δαυιδ/Δαυειδ), elision (αλλα/αλλ᾽), movable ν or ς, and words divided differently (ο τι/οτι). In a note with several readings, only the orthographic ones are removed.'],['2','Show only exegetically significant variants','Also hides differences of word order and of minor words (the article, και, δε, τε, γαρ, ουν, μεν) and bracket-only readings. What stays: different words, forms, tenses and moods, additions and omissions of substantive words.']].map(function(r){return '<label class="sp"><input type="radio" name="vl" value="'+r[0]+'"><span><b>'+r[1]+'</b><br><small>'+r[2]+'</small></span></label>'}).join('')+'<p class="mnote" style="margin:6px 0 0;font-size:13px">A note that also has manuscript data always stays visible. These are automatic rules, so a borderline reading may be classed either way.</p></fieldset><div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
+    [['0','Show all variants','Every difference in the apparatus, including spelling.'],['1','Hide orthographic variants','Hides readings that differ from the text only in spelling: ει/ι, ττ/σσ, ρρ/ρσ (Δαυιδ/Δαυειδ), elision (αλλα/αλλ᾽), movable ν or ς, and words divided differently (ο τι/οτι). In a note with several readings, only the orthographic ones are removed.'],['2','Hide orthographic, word-order and minor-word variants','Also hides differences of word order and of minor words (the article, και, δε, τε, γαρ, ουν, μεν) and bracket-only readings. What stays: different words, forms, tenses and moods, additions and omissions of substantive words.']].map(function(r){return '<label class="sp"><input type="radio" name="vl" value="'+r[0]+'"><span><b>'+r[1]+'</b><br><small>'+r[2]+'</small></span></label>'}).join('')+'<p class="mnote" style="margin:6px 0 0;font-size:13px">A note that also has manuscript data always stays visible. These are automatic rules, so a borderline reading may be classed either way.</p></fieldset><div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
   openModal(h);
   function sync(){
     Array.prototype.forEach.call(mbox.querySelectorAll('input[data-ed]'),function(i){i.checked=!!SEL[i.getAttribute('data-ed')]});
@@ -779,7 +779,7 @@ function reportData(o){
   var eds=ALLIDS.filter(function(k){return SEL[k]}).map(function(k){return plainOrNot(DISP[k],o.plain)});
   var meta=['Range: '+o.desc,
     'Editions: '+(edFiltered()?eds.join(', ')+' ('+selCount()+' of '+ALLIDS.length+' sources)':'all comparison editions and RPmg'),
-    (VL===2?'Only exegetically significant variants are shown (orthographic, word order and minor-word differences are hidden).':VL===1?'Orthographic variants are hidden.':'Orthographic variants are included.'),
+    (VL===2?'Orthographic, word-order and minor-word variants are hidden.':VL===1?'Orthographic variants are hidden.':'Orthographic variants are included.'),
     'Variants: '+items.length+(o.ms?' ('+withMs+' with manuscript data)':''),
     (o.ms?'‡ marks variants that include manuscript data.':'Manuscript data is not included.')];
   return {items:items,meta:meta};
