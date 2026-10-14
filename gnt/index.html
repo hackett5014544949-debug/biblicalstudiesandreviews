@@ -86,8 +86,65 @@ mark{background:#bfe8fb;color:inherit;border-radius:2px}
 footer{background:var(--black);color:var(--pale);padding:34px 0;font-size:15px}
 footer a{color:var(--cyan)}
 footer p{margin:0 0 10px}
-@media(max-width:560px){body{font-size:17px}.bar .wrap{gap:6px}.hide-s{display:none}}
+@media(max-width:560px){body{font-size:17px}.bar{position:static}.bar .wrap{gap:6px}.hide-s{display:none}}
 @media print{.bar,#panel,header.mast .tag,.pager,footer{display:none}sup.fn{display:none}.text{font-size:13pt}}
+sup.fn.ms{color:var(--blue);font-weight:900;font-size:.7em}
+sup.fn.ms:hover,sup.fn.ms.act{background:var(--blue);color:#fff}
+.legend{margin:-12px 0 20px;font-size:13px;color:var(--muted)}
+.legend .k{font-family:Arial,Helvetica,sans-serif;font-weight:900;color:var(--cyan);font-size:15px}
+.legend .k2{font-family:Arial,Helvetica,sans-serif;font-weight:900;color:var(--blue);font-size:15px}
+.legend a{color:var(--blue);font-weight:700}
+#panel .msflag{color:#fff;background:var(--blue);border-radius:4px;padding:1px 7px;margin-left:6px;letter-spacing:.06em}
+#panel .stepper{display:flex;align-items:center;gap:8px;margin:10px 0 4px;flex-wrap:wrap}
+#panel .stepper button{background:transparent;border:1px solid #3a424a;color:#fff;font-size:14px;padding:7px 12px}
+#panel .stepper button:hover:not(:disabled){border-color:var(--cyan);color:var(--cyan)}
+#panel .stepper .pos{font-size:13px;color:var(--pale);letter-spacing:.04em}
+#panel .lab{font-family:'Gentium Plus',Georgia,serif;font-weight:700;color:var(--cyan);margin-right:.25em}
+button.on .cnt,.cnt{font-weight:700}
+/* dialogs */
+body.mopen{overflow:hidden}
+.modal{position:fixed;inset:0;z-index:60;background:rgba(5,5,5,.62);display:flex;align-items:flex-start;justify-content:center;padding:4vh 14px;overflow:auto}
+.modal[hidden]{display:none}
+.mbox{background:#fff;color:var(--text);width:100%;max-width:740px;border-radius:6px;box-shadow:0 20px 60px rgba(0,0,0,.4);overflow:hidden;font-size:16px;line-height:1.5}
+.mhead{background:var(--black);color:#fff;padding:16px 56px 14px 20px;position:relative}
+.mhead .k{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.mhead h3{margin:2px 0 0;font-size:22px;font-weight:800;line-height:1.2}
+.mhead .x{position:absolute;right:10px;top:10px;background:transparent;border:0;color:#fff;font-size:26px;padding:4px 10px}
+.mbody{padding:18px 20px}
+.mfoot{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--line);background:var(--card)}
+.mnote{margin:0 0 14px;color:var(--slate);font-size:15px}
+.mnote a{font-weight:700}
+.ed{border:1px solid var(--line);border-radius:6px;margin:0 0 12px;background:var(--card)}
+.ed label{display:flex;gap:10px;align-items:flex-start;padding:7px 14px;cursor:pointer;font-size:15px;line-height:1.4}
+.ed label.eh{font-weight:800;font-size:16px;border-bottom:1px solid var(--line);padding:10px 14px}
+.ed input,.fs input[type=checkbox],.fs input[type=radio]{margin:3px 0 0;width:18px;height:18px;accent-color:var(--blue);flex:none}
+.sc{font-family:'Gentium Plus',Georgia,serif;font-weight:700;color:var(--blue);font-size:17px;margin-right:4px}
+.sum{font-size:14px;color:var(--muted);font-weight:700}
+fieldset.fs{border:1px solid var(--line);border-radius:6px;margin:0 0 14px;padding:8px 14px 12px;background:var(--card)}
+fieldset.fs legend{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);padding:0 6px}
+.fs label{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:5px 0;font-size:15px;cursor:pointer}
+.fs .row2{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:2px 0 6px 28px;font-size:14px}
+.fs input[type=number]{width:72px;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:7px 8px}
+.err{color:#a21d1d;font-weight:700;font-size:14px;margin:0 0 10px}
+.rmeta{font-size:14px;color:var(--slate);margin:0 0 12px;padding:10px 12px;background:var(--callout);border-left:4px solid var(--cyan);border-radius:6px}
+.rlist{max-height:52vh;overflow:auto;border:1px solid var(--line);border-radius:6px}
+.rv{padding:9px 12px;border-bottom:1px solid var(--line)}
+.rv:last-child{border-bottom:0}
+.rv .rr{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.rv .rt{font-family:'Gentium Plus',Georgia,serif;font-size:19px;line-height:1.55}
+.rv .rg{font-family:'Gentium Plus',Georgia,serif;font-size:18px;line-height:1.5;padding-left:14px}
+.rv .rm{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.rv .rl{font-weight:700;color:var(--blue)}
+.rmore{padding:10px 12px;font-size:14px;color:var(--muted)}
+#printarea{display:none}
+@media print{
+  body.printing>*{display:none!important}
+  body.printing>#printarea{display:block!important;font-size:10.5pt;line-height:1.4;color:#000}
+  #printarea h1{font-size:16pt;margin:0 0 4pt;text-transform:none;letter-spacing:0}
+  #printarea .rv{break-inside:avoid;padding:5pt 0;border-bottom:.5pt solid #bbb}
+  #printarea .rv .rt,#printarea .rv .rg{font-size:11pt}
+  #printarea .rmeta{background:none;border:0;border-left:2pt solid #999;font-size:9.5pt}
+}
 </style>
 </head>
 <body>
@@ -96,7 +153,7 @@ footer p{margin:0 0 10px}
     <div class="kicker"><a href="https://excavatingthetext.com/">Excavating the Text</a></div>
     <h1>The Greek New Testament</h1>
     <div class="rule"></div>
-    <p class="tag">According to the Byzantine Text. Guardian Press, 2026. Free to read. Tap any word for its parsing; tap a dagger for the apparatus.</p>
+    <p class="tag">According to the Byzantine Text. Guardian Press, 2026. Free to read. Tap any word for its parsing; tap a dagger for the apparatus. A double dagger marks variants with manuscript data.</p>
   </div>
 </header>
 
@@ -109,6 +166,8 @@ footer p{margin:0 0 10px}
     <form class="search" id="sf" role="search"><input id="q" type="search" placeholder="Search the Greek" aria-label="Search the Greek text" autocomplete="off"><button class="primary" type="submit">Search</button></form>
     <span class="spacer"></span>
     <button id="clean" title="Hide or show the apparatus marks" aria-pressed="false">Apparatus</button>
+    <button id="edbtn" title="Choose which editions appear in the apparatus">Editions</button>
+    <button id="rptbtn" title="List the variants for a passage; copy or print">Report</button>
     <button id="smaller" aria-label="Smaller text">A&minus;</button>
     <button id="bigger" aria-label="Larger text">A+</button>
     <button id="frontbtn" class="hide-s">Preface &amp; Appendices</button>
@@ -118,11 +177,13 @@ footer p{margin:0 0 10px}
 <main><div class="wrap" id="view"></div></main>
 
 <div id="panel" aria-live="polite"><div class="wrapbox"><div class="box" id="pbox"></div></div></div>
+<div class="modal" id="modal" hidden><div class="mbox" id="mbox" role="dialog" aria-modal="true"></div></div>
+<div id="printarea" aria-hidden="true"></div>
 
 <footer>
   <div class="wrap">
     <p><b>The Greek New Testament According to the Byzantine Text</b>, edited and prepared by J. Jeffrey Dodson &amp; Dwayne Green for the Guardian Press Editorial Committee (Robinson&ndash;Pierpont 2026 base text). Dedicated to the public domain.</p>
-    <p>Text and apparatus are reproduced from the Guardian Press edition. Tap any Greek word for its parsing and definition. Tap a <span style="color:var(--cyan);font-weight:700">&dagger;</span> to read the edition apparatus (and manuscript evidence where the edition gives it) for that word.</p>
+    <p>Text and apparatus are reproduced from the Guardian Press edition. Tap any Greek word for its parsing and definition. Tap a <span style="color:var(--cyan);font-weight:700">&dagger;</span> to read the edition apparatus for that word. A <span style="color:var(--blue);font-weight:700">&Dagger;</span> means the note also includes manuscript evidence. In the apparatus panel, use the Previous and Next variant buttons (or the left and right arrow keys) to step through the variants in a chapter. The <b>Editions</b> button filters the apparatus to the editions you choose, and <b>Report</b> lists the variants for any passage so you can copy or print them.</p>
     <p>Parsing and Strong&rsquo;s numbers come from the Robinson&ndash;Pierpont Byzantine Textform (byztxt project, public domain), matched automatically to each word of this edition; definitions are from the Dodson Greek Lexicon (public domain). They are study aids, not part of the Guardian Press edition.</p>
     <p><a href="https://excavatingthetext.com/greek-nt.html">PDF downloads</a> &middot; <a href="https://excavatingthetext.com/hardbound-gnt.html">Hardbound edition</a> &middot; <a href="https://excavatingthetext.com/">excavatingthetext.com</a></p>
   </div>
@@ -150,32 +211,169 @@ ORDER.forEach(function(b){var o=document.createElement('option');o.value=b;o.tex
 function fillChaps(){chapSel.innerHTML='';chaptersOf(cur.b).forEach(function(c){var o=document.createElement('option');o.value=c;o.textContent='Chapter '+c;chapSel.appendChild(o)});chapSel.value=cur.c}
 
 function closePanel(){panel.classList.remove('open');Array.prototype.forEach.call(document.querySelectorAll('.act'),function(a){a.classList.remove('act')})}
-function fnHtml(n,isbr){
-  var parts=String(n.note||'').split(/\s*‖\s*/);
-  var h='<button class="x" aria-label="Close" id="px">&times;</button><div class="ref">'+esc(n.ref)+' &middot; apparatus</div>';
+
+/* ---------- apparatus model: parse each note, expand group labels, filter by edition ---------- */
+var SC2L={'ᴀ':'A','ʙ':'B','ᴄ':'C','ᴅ':'D','ᴇ':'E','ꜰ':'F','ɢ':'G','ʜ':'H','ɪ':'I','ᴊ':'J','ᴋ':'K','ʟ':'L','ᴍ':'M','ɴ':'N','ᴏ':'O','ᴘ':'P','ǫ':'Q','ʀ':'R','ꜱ':'S','ᴛ':'T','ᴜ':'U','ᴠ':'V','ᴡ':'W','ʏ':'Y','ᴢ':'Z','ᵐ':'m','ᵍ':'g','ᵗ':'t','ˢ':'s','⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9'};
+var LABEL_RE=/^[ᴀʙᴄᴅᴇꜰɢʜɪᴊᴋʟᴍɴᴏᴘǫʀꜱᴛᴜᴠᴡʏᴢ]+(?:[ᵐᵍᵗˢ]+|[⁰¹²³⁴⁵⁶⁷⁸⁹]+|†)*$/;
+var DISP={HF:'ʜꜰ',PCK:'ᴘᴄᴋ',PT:'ᴘᴛ',ECM:'ᴇᴄᴍ','ECM†':'ᴇᴄᴍ†',NA27:'ɴᴀ²⁷',NA28:'ɴᴀ²⁸',NA:'ɴᴀ',SBL:'ꜱʙʟ',TH:'ᴛʜ',WH:'ᴡʜ',SCR:'ꜱᴄʀ',ST:'ꜱᴛ',TR:'ᴛʀ',RPmg:'ʀᴘᵐᵍ'};
+var ALLIDS=['HF','PCK','PT','ECM','NA27','NA28','SBL','TH','WH','SCR','ST','RPmg'];
+var EDS=[
+ {k:'byz',name:'Byzantine family',items:[['HF','Hodges and Farstad, Majority Text, 2nd ed. (1985)'],['PCK','Pickering, Family 35, 3rd ed. (2020)'],['PT','Ecumenical Patriarchal Text (1912)']]},
+ {k:'ct',name:'Critical text',items:[['ECM','Editio Critica Maior (Mark, Acts, Catholic Epistles, Revelation only)'],['NA27','Nestle-Aland, 27th ed. (1993)'],['NA28','Nestle-Aland, 28th ed. (2012)'],['SBL','SBL Greek New Testament (2010)'],['TH','Tyndale House Greek New Testament (2017)'],['WH','Westcott and Hort (1881)']]},
+ {k:'tr',name:'Textus Receptus',items:[['SCR','Scrivener (1894)'],['ST','Stephanus (1550)']]},
+ {k:'rp',name:'RPmg',items:[['RPmg','Robinson and Pierpont alternate Byzantine readings (margin)']]}
+];
+var ECM_BOOKS={'Mark':1,'Acts':1,'James':1,'1 Peter':1,'2 Peter':1,'1 John':1,'2 John':1,'3 John':1,'Jude':1,'Revelation':1};
+function members(id,book){
+  if(id==='CT'||id==='CT†')return ECM_BOOKS[book]?['ECM','NA27','NA28','SBL','TH','WH']:['NA27','NA28','SBL','TH','WH'];
+  if(id==='NA')return ['NA27','NA28'];
+  if(id==='TR')return ['SCR','ST'];
+  if(id==='ECM†')return ['ECM'];
+  return [id];
+}
+function coreToId(core){return core.replace(/./g,function(ch){return SC2L[ch]||ch})}
+function plainify(s){return String(s).replace(/./g,function(ch){return SC2L[ch]||ch})}
+var SEL={};
+(function(){ALLIDS.forEach(function(k){SEL[k]=true});try{var d=JSON.parse(store('gnt-eds')||'[]');d.forEach(function(k){if(k in SEL)SEL[k]=false})}catch(e){}})();
+var FV=1;
+function saveSel(){store('gnt-eds',JSON.stringify(ALLIDS.filter(function(k){return !SEL[k]})))}
+function selCount(){return ALLIDS.filter(function(k){return SEL[k]}).length}
+function filtered(){return selCount()!==ALLIDS.length}
+
+function parseNote(n){
+  if(n._p)return n._p;
+  var parts=String(n.note||'').split(/\s*‖\s*/),gs=[],gid=0;
+  parts[0].split(/\s*¦\s*/).forEach(function(g){
+    g=g.trim();if(!g)return;
+    var toks=g.split(/\s+/),k=0,labs=[],stack=[];
+    while(k<toks.length){
+      var m=/^([\[«]*)(.+?)([\]»]*)$/.exec(toks[k]);
+      if(!m||!LABEL_RE.test(m[2]))break;
+      for(var a=0;a<m[1].length;a++){var o=m[1].charAt(a);stack.push({id:++gid,o:o,c:o==='['?']':'»'})}
+      labs.push({id:coreToId(m[2]),raw:m[2],br:stack.slice()});
+      for(var z=0;z<m[3].length;z++)stack.pop();
+      k++;
+    }
+    gs.push({labs:labs,text:toks.slice(k).join(' ')});
+  });
+  var ms=parts.length>1?parts.slice(1).join(' ‖ ').replace(/^Manuscript Evidence:\s*/i,'').trim():'';
+  n._p={groups:gs,ms:ms};return n._p;
+}
+function compress(inter,orig){
+  var has={};inter.forEach(function(x){has[x]=1});var out=[],done={};
+  ALLIDS.forEach(function(x){
+    if(!has[x])return;
+    if(x==='NA27'||x==='NA28'){if(has.NA27&&has.NA28){if(!done.NA){out.push('NA');done.NA=1}return}}
+    if(x==='SCR'||x==='ST'){if(has.SCR&&has.ST){if(!done.TR){out.push('TR');done.TR=1}return}}
+    if(x==='ECM'&&orig==='CT†'){out.push('ECM†');return}
+    out.push(x);
+  });
+  return out;
+}
+function labelStr(labs){
+  var toks=[],stack=[];
+  labs.forEach(function(l){
+    var ids=l.br.map(function(b){return b.id}),pre='';
+    while(stack.length&&ids.indexOf(stack[stack.length-1].id)<0)toks[toks.length-1]+=stack.pop().c;
+    l.br.forEach(function(b){if(!stack.some(function(s){return s.id===b.id})){pre+=b.o;stack.push(b)}});
+    toks.push(pre+l.disp);
+  });
+  while(stack.length)toks[toks.length-1]+=stack.pop().c;
+  return toks.join(' ');
+}
+/* the note as it should appear with the current edition selection, or null when nothing is left to show */
+function noteView(n,book){
+  if(n._fv===FV&&n._bk===book)return n._nv;
+  var p=parseNote(n),out=[];
+  p.groups.forEach(function(g){
+    var labs=[],seen={};
+    g.labs.forEach(function(l){
+      var M=members(l.id,book),inter=M.filter(function(x){return SEL[x]});
+      if(!inter.length)return;
+      var ids=inter.length===M.length?[{disp:l.raw,key:l.id}]:compress(inter,l.id).map(function(d){return{disp:DISP[d],key:d}});
+      ids.forEach(function(x){
+        var sig=x.key+'|'+l.br.map(function(b){return b.id}).join(',');
+        if(seen[sig])return;seen[sig]=1;labs.push({disp:x.disp,br:l.br});
+      });
+    });
+    if(labs.length)out.push({labels:labelStr(labs),text:g.text});
+  });
+  var nv=out.length?{groups:out,ms:p.ms,hasMs:!!p.ms}:null;
+  n._fv=FV;n._bk=book;n._nv=nv;return nv;
+}
+function chapterNotes(b,c){
+  var out=[],nb=NOTES[b]&&NOTES[b][c];if(!nb)return out;
+  Object.keys(nb).map(Number).sort(function(x,y){return x-y}).forEach(function(v){
+    nb[v].forEach(function(n,i){var nv=noteView(n,b);if(nv)out.push({b:b,c:c,v:v,i:i,n:n,nv:nv})});
+  });
+  return out;
+}
+function chapterTotal(b,c){var t=0,nb=NOTES[b]&&NOTES[b][c];if(nb)Object.keys(nb).forEach(function(v){t+=nb[v].length});return t}
+/* nearest chapter (before or after) that still has a visible variant */
+function adjChapter(d){
+  var bi=ORDER.indexOf(cur.b),cs=chaptersOf(cur.b),ci=cs.indexOf(cur.c);
+  for(;;){
+    ci+=d;
+    if(ci<0){bi--;if(bi<0)return null;cs=chaptersOf(ORDER[bi]);ci=cs.length-1}
+    else if(ci>=cs.length){bi++;if(bi>=ORDER.length)return null;cs=chaptersOf(ORDER[bi]);ci=0}
+    if(chapterNotes(ORDER[bi],cs[ci]).length)return{b:ORDER[bi],c:cs[ci]};
+  }
+}
+
+/* ---------- apparatus panel with variant stepper ---------- */
+function visFns(){return Array.prototype.slice.call(view.querySelectorAll('sup.fn'))}
+function fnHtml(n,pos,total){
+  var nv=noteView(n,cur.b)||{groups:[],ms:'',hasMs:false};
+  var h='<button class="x" aria-label="Close" id="px">&times;</button><div class="ref">'+esc(n.ref)+' &middot; apparatus'+(nv.hasMs?'<span class="msflag">&Dagger; manuscript data</span>':'')+'</div>';
+  h+='<div class="stepper"><button id="vprev" title="Previous variant (left arrow key)" aria-label="Previous variant">&lsaquo; Prev</button><span class="pos">'+pos+' of '+total+'<span class="hide-s"> variants in this chapter</span></span><button id="vnext" title="Next variant (right arrow key)" aria-label="Next variant">Next &rsaquo;</button></div>';
   if(n.quote)h+='<div class="lemma"><small>Text</small>'+esc(n.quote)+'</div>';
-  parts[0].split(/\s*¦\s*/).filter(Boolean).forEach(function(x){h+='<div class="g">'+esc(x)+'</div>'});
-  if(parts.length>1){h+='<div class="ms"><b>Manuscript evidence</b>';parts.slice(1).join(' ‖ ').replace(/^Manuscript Evidence:\s*/i,'').split(/\s*¦\s*/).filter(Boolean).forEach(function(x){h+='<div class="g">'+esc(x)+'</div>'});h+='</div>'}
+  nv.groups.forEach(function(g){h+='<div class="g"><span class="lab">'+esc(g.labels)+'</span> '+esc(g.text)+'</div>'});
+  if(nv.ms){h+='<div class="ms"><b>Manuscript evidence</b>';nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(x){h+='<div class="g">'+esc(x)+'</div>'});h+='</div>'}
+  if(filtered())h+='<div class="src">Showing '+selCount()+' of '+ALLIDS.length+' sources. Use the Editions button to change this.</div>';
   h+='<div class="src">Guardian Press, 2026 (public domain)</div>';
   return h;
 }
-function openFn(el){
+function scrollToFn(el){
+  var bar=document.querySelector('.bar'),bh=bar&&getComputedStyle(bar).position==='sticky'?bar.offsetHeight:0,r=el.getBoundingClientRect();
+  var visBottom=window.innerHeight-(pbox.offsetHeight+20);
+  if(r.top>bh+12&&r.bottom<visBottom-8)return;
+  window.scrollTo({top:Math.max(0,window.scrollY+r.top-bh-70),behavior:'smooth'});
+}
+function openFn(el,doScroll){
   var v=el.closest('.v');if(!v)return;
   var vn=v.getAttribute('data-v'),i=+el.getAttribute('data-i');
   var list=(NOTES[cur.b]&&NOTES[cur.b][cur.c]&&NOTES[cur.b][cur.c][vn])||[];var n=list[i];if(!n)return;
-  closePanel();el.classList.add('act');pbox.innerHTML=fnHtml(n);panel.classList.add('open');
+  closePanel();el.classList.add('act');
+  var fns=visFns(),pos=fns.indexOf(el)+1;
+  pbox.innerHTML=fnHtml(n,pos,fns.length);panel.classList.add('open');
   $('px').addEventListener('click',closePanel);
+  var pv=$('vprev'),nx=$('vnext');
+  pv.disabled=pos<=1&&!adjChapter(-1);nx.disabled=pos>=fns.length&&!adjChapter(1);
+  pv.addEventListener('click',function(){stepVariant(-1)});nx.addEventListener('click',function(){stepVariant(1)});
+  if(doScroll)scrollToFn(el);
 }
+var pendingOpen=null;
+function stepVariant(d){
+  var fns=visFns(),i=-1;fns.forEach(function(el,k){if(el.classList.contains('act'))i=k});
+  var j=i+d;
+  if(i>-1&&j>=0&&j<fns.length){openFn(fns[j],true);return}
+  var t=adjChapter(d);if(!t)return;
+  pendingOpen=d>0?'first':'last';cur.b=t.b;cur.c=t.c;cur.v=null;go();
+}
+function noteOpen(){return panel.classList.contains('open')&&!!$('vnext')}
 
-var GREEK_RE=/[\u0370-\u03ff\u1f00-\u1fff]/;
-function renderVerse(vn,t){
-  var out='',re=/(\u2020(\d+)\u2060)|(\s+)|(\u2014)|([^\s\u2020\u2014]+)/g,m,wi=0;
+var GREEK_RE=/[Ͱ-Ͽἀ-῿]/;
+function renderVerse(vn,t,list){
+  var out='',re=/(†(\d+)⁠)|(\s+)|(—)|([^\s†—]+)/g,m,wi=0;
   while((m=re.exec(t))){
-    if(m[1])out+='<sup class="fn" role="button" tabindex="0" data-i="'+(m[2]-1)+'" title="Apparatus">\u2020</sup>';
+    if(m[1]){
+      var n=list&&list[m[2]-1],nv=n&&noteView(n,cur.b);
+      if(nv)out+='<sup class="fn'+(nv.hasMs?' ms':'')+'" role="button" tabindex="0" data-i="'+(m[2]-1)+'" title="'+(nv.hasMs?'Apparatus with manuscript data':'Apparatus')+'">'+(nv.hasMs?'‡':'†')+'</sup>';
+    }
     else if(m[3]||m[4])out+=esc(m[0]);
     else{
       var tok=m[5];
-      if(GREEK_RE.test(tok)){var p=/^([^\u0370-\u03ff\u1f00-\u1fff]*)(.*?)([^\u0370-\u03ff\u1f00-\u1fff]*)$/.exec(tok);out+=esc(p[1])+'<span class="w" data-w="'+(wi++)+'">'+esc(p[2])+'</span>'+esc(p[3])}
+      if(GREEK_RE.test(tok)){var p=/^([^Ͱ-Ͽἀ-῿]*)(.*?)([^Ͱ-Ͽἀ-῿]*)$/.exec(tok);out+=esc(p[1])+'<span class="w" data-w="'+(wi++)+'">'+esc(p[2])+'</span>'+esc(p[3])}
       else out+=esc(tok);
     }
   }
@@ -310,15 +508,24 @@ function openWord(el){
     pbox.innerHTML=wordHtml(word,ref,ent);panel.classList.add('open');$('px').addEventListener('click',closePanel);
   },function(){pbox.innerHTML='<button class="x" aria-label="Close" id="px">&times;</button><div class="ref">'+esc(ref)+'</div><div class="big">'+esc(word)+'</div><div class="pv">Parsing data could not be loaded. Check your connection and try again.</div>';$('px').addEventListener('click',closePanel)});
 }
-function renderRead(){
+function legendHtml(cn,total){
+  var h='<span class="k">&dagger;</span> edition apparatus &nbsp;&middot;&nbsp; <span class="k2">&Dagger;</span> also has manuscript data &nbsp;&middot;&nbsp; ';
+  h+=(filtered()?cn.length+' of '+total:cn.length)+' variant'+(cn.length===1?'':'s')+' shown';
+  if(filtered())h+=' &nbsp;&middot;&nbsp; <a href="#" id="lg-ed">edition filter on ('+selCount()+' of '+ALLIDS.length+' sources)</a>';
+  return h;
+}
+function renderRead(keep){
   closePanel();
   var ch=TEXT[cur.b][cur.c],vs=versesOf(cur.b,cur.c),h='';
-  h+='<h2 class="ch">'+esc(cur.b)+' '+cur.c+'</h2><p class="sub">Byzantine Text &middot; Guardian Press 2026</p><div class="text'+(store('gnt-clean')==='1'?' clean':'')+'" id="txt"><p>';
+  var cn=chapterNotes(cur.b,cur.c),total=chapterTotal(cur.b,cur.c);
+  h+='<h2 class="ch">'+esc(cur.b)+' '+cur.c+'</h2><p class="sub">Byzantine Text &middot; Guardian Press 2026</p>';
+  h+='<p class="legend">'+legendHtml(cn,total)+'</p>';
+  h+='<div class="text'+(store('gnt-clean')==='1'?' clean':'')+'" id="txt"><p>';
   vs.forEach(function(v,i){
     var t=ch[v],newp=false;
     if(t.charAt(0)==='¶'){t=t.slice(1);newp=true}
     if(newp&&i>0)h+='</p><p>';
-    h+='<span class="v" data-v="'+v+'" id="v'+v+'"><a class="vn" data-vn="'+v+'" title="Link to this verse">'+v+'</a>'+renderVerse(v,t)+'</span> ';
+    h+='<span class="v" data-v="'+v+'" id="v'+v+'"><a class="vn" data-vn="'+v+'" title="Link to this verse">'+v+'</a>'+renderVerse(v,t,NOTES[cur.b]&&NOTES[cur.b][cur.c]&&NOTES[cur.b][cur.c][v])+'</span> ';
   });
   h+='</p></div>';
   var bi=ORDER.indexOf(cur.b),cs=chaptersOf(cur.b),ci=cs.indexOf(cur.c);
@@ -328,8 +535,10 @@ function renderRead(){
   $('p2').addEventListener('click',function(){step(-1)});$('n2').addEventListener('click',function(){step(1)});
   $('prev').disabled=!hasPrev;$('next').disabled=!hasNext;
   document.title=cur.b+' '+cur.c+' | Greek New Testament Reader | Excavating the Text';
+  if(keep)return;
   if(cur.v){var el=$('v'+cur.v);if(el){el.classList.add('hl');setTimeout(function(){el.scrollIntoView({block:'center'})},30)}}
   else window.scrollTo(0,0);
+  if(pendingOpen){var f=visFns(),t0=pendingOpen==='first'?f[0]:f[f.length-1];pendingOpen=null;if(t0)setTimeout(function(){openFn(t0,true)},40)}
 }
 function step(d){
   var cs=chaptersOf(cur.b),ci=cs.indexOf(cur.c)+d,bi=ORDER.indexOf(cur.b);
@@ -389,6 +598,181 @@ function renderFront(){
   h+='</div>';view.innerHTML=h;window.scrollTo(0,0);document.title='Preface & Appendices | Greek New Testament Reader | Excavating the Text';
 }
 
+/* ---------- dialogs ---------- */
+var modal=$('modal'),mbox=$('mbox'),mOnClose=null,mLastFocus=null;
+function openModal(html){
+  closePanel();mLastFocus=document.activeElement;
+  mbox.innerHTML=html;modal.hidden=false;document.body.classList.add('mopen');modal.scrollTop=0;
+  var x=$('mx');if(x)x.addEventListener('click',closeModal);
+  var f=mbox.querySelector('.mfoot .primary')||mbox.querySelector('button,input');if(f)f.focus();
+}
+function closeModal(){
+  if(modal.hidden)return;
+  modal.hidden=true;document.body.classList.remove('mopen');mbox.innerHTML='';
+  var f=mOnClose;mOnClose=null;if(f)f();
+  else if(mLastFocus&&mLastFocus.focus)try{mLastFocus.focus()}catch(e){}
+}
+modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
+function head(kicker,title){return '<div class="mhead"><div class="k">'+kicker+'</div><h3>'+title+'</h3><button class="x" id="mx" aria-label="Close">&times;</button></div>'}
+function updateEdBtn(){var b=$('edbtn');b.classList.toggle('on',filtered());b.innerHTML='Editions'+(filtered()?' <span class="cnt">('+selCount()+'/'+ALLIDS.length+')</span>':'')}
+function applySel(){
+  FV++;saveSel();updateEdBtn();
+  if(cur.mode==='read'){var y=window.scrollY;renderRead(true);window.scrollTo(0,y)}
+}
+
+/* edition filter */
+function edDialog(after){
+  var h=head('Apparatus','Choose editions')+'<div class="mbody"><p class="mnote">Choose which comparison editions you want to see in the apparatus. Group labels such as <b class="sc">ᴄᴛ</b>, <b class="sc">ɴᴀ</b> and <b class="sc">ᴛʀ</b> are split up automatically: a note disappears when none of your editions is left in it, and a reading shows only the editions you picked. The same selection is used by the Report.</p>';
+  EDS.forEach(function(g){
+    h+='<div class="ed"><label class="eh"><input type="checkbox" data-master="'+g.k+'"><span>'+esc(g.name)+'</span></label>';
+    g.items.forEach(function(it){h+='<label><input type="checkbox" data-ed="'+it[0]+'" data-g="'+g.k+'"><span><b class="sc">'+DISP[it[0]]+'</b> '+esc(it[1])+'</span></label>'});
+    h+='</div>';
+  });
+  h+='<div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
+  openModal(h);
+  function sync(){
+    Array.prototype.forEach.call(mbox.querySelectorAll('input[data-ed]'),function(i){i.checked=!!SEL[i.getAttribute('data-ed')]});
+    Array.prototype.forEach.call(mbox.querySelectorAll('input[data-master]'),function(m){
+      var k=m.getAttribute('data-master'),kids=mbox.querySelectorAll('input[data-g="'+k+'"]'),on=0;
+      Array.prototype.forEach.call(kids,function(i){if(i.checked)on++});
+      m.checked=on===kids.length;m.indeterminate=on>0&&on<kids.length;
+    });
+    $('edsum').textContent=selCount()+' of '+ALLIDS.length+' sources selected'+(selCount()===0?'. With nothing selected, no variants are shown.':'.');
+  }
+  Array.prototype.forEach.call(mbox.querySelectorAll('input[type=checkbox]'),function(t){
+    t.addEventListener('change',function(){
+      if(t.hasAttribute('data-ed'))SEL[t.getAttribute('data-ed')]=t.checked;
+      else{var k=t.getAttribute('data-master');EDS.forEach(function(g){if(g.k===k)g.items.forEach(function(it){SEL[it[0]]=t.checked})})}
+      sync();
+    });
+  });
+  $('edall').addEventListener('click',function(){ALLIDS.forEach(function(k){SEL[k]=true});sync()});
+  $('ednone').addEventListener('click',function(){ALLIDS.forEach(function(k){SEL[k]=false});sync()});
+  $('eddone').addEventListener('click',closeModal);
+  mOnClose=function(){applySel();if(after)after();else if(mLastFocus&&mLastFocus.focus)try{mLastFocus.focus()}catch(e){}};
+  sync();
+}
+
+/* variant report */
+function plainOrNot(s,plain){return plain?plainify(s):s}
+function vkey(b,c,v){return ORDER.indexOf(b)*1e6+c*1e3+v}
+function rangeNotes(k1,k2){
+  var out=[];
+  ORDER.forEach(function(b,bi){
+    var nb=NOTES[b];if(!nb)return;
+    if(bi*1e6+999999<k1||bi*1e6>k2)return;
+    Object.keys(nb).map(Number).sort(function(x,y){return x-y}).forEach(function(c){
+      Object.keys(nb[c]).map(Number).sort(function(x,y){return x-y}).forEach(function(v){
+        var key=bi*1e6+c*1e3+v;if(key<k1||key>k2)return;
+        nb[c][v].forEach(function(n,i){var nv=noteView(n,b);if(nv)out.push({b:b,c:c,v:v,i:i,n:n,nv:nv})});
+      });
+    });
+  });
+  return out;
+}
+function reportData(o){
+  var items=rangeNotes(o.k1,o.k2),withMs=items.filter(function(x){return x.nv.hasMs}).length;
+  var eds=ALLIDS.filter(function(k){return SEL[k]}).map(function(k){return plainOrNot(DISP[k],o.plain)});
+  var meta=['Range: '+o.desc,
+    'Editions: '+(filtered()?eds.join(', ')+' ('+selCount()+' of '+ALLIDS.length+' sources)':'all comparison editions and RPmg'),
+    'Variants: '+items.length+(o.ms?' ('+withMs+' with manuscript data)':''),
+    (o.ms?'‡ marks variants that include manuscript data.':'Manuscript data is not included.')];
+  return {items:items,meta:meta};
+}
+function reportText(o){
+  var d=reportData(o),t=['Greek New Testament (Byzantine Text), Guardian Press 2026','Variant report',''].concat(d.meta,['']);
+  d.items.forEach(function(x){
+    t.push(x.n.ref+(o.ms&&x.nv.hasMs?' ‡':''));
+    if(x.n.quote)t.push('Text: '+x.n.quote);
+    x.nv.groups.forEach(function(g){t.push('¦ '+plainOrNot(g.labels,o.plain)+(g.text?' '+g.text:''))});
+    if(o.ms&&x.nv.ms){t.push('Manuscript evidence:');x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){t.push('¦ '+m)})}
+    t.push('');
+  });
+  return t.join('\n');
+}
+function reportRows(o,limit){
+  var d=reportData(o),h='';
+  d.items.slice(0,limit||d.items.length).forEach(function(x){
+    h+='<div class="rv"><div class="rr">'+esc(x.n.ref)+(o.ms&&x.nv.hasMs?' &Dagger;':'')+'</div>';
+    if(x.n.quote)h+='<div class="rt">'+esc(x.n.quote)+'</div>';
+    x.nv.groups.forEach(function(g){h+='<div class="rg">&brvbar; <span class="rl">'+esc(plainOrNot(g.labels,o.plain))+'</span> '+esc(g.text)+'</div>'});
+    if(o.ms&&x.nv.ms){h+='<div class="rm">Manuscript evidence</div>';x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){h+='<div class="rg">&brvbar; '+esc(m)+'</div>'})}
+    h+='</div>';
+  });
+  return {html:h,d:d};
+}
+function copyText(s){
+  function fallback(){var ta=document.createElement('textarea');ta.value=s;ta.setAttribute('readonly','');ta.style.cssText='position:fixed;top:0;left:0;opacity:0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);return Promise.resolve(ok)}
+  if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(s).then(function(){return true},fallback);
+  return fallback();
+}
+function printReport(o){
+  var r=reportRows(o);
+  var pa=$('printarea');
+  pa.innerHTML='<h1>Greek New Testament (Byzantine Text), Guardian Press 2026</h1><div class="rmeta"><b>Variant report</b><br>'+r.d.meta.map(esc).join('<br>')+'</div>'+r.html;
+  document.body.classList.add('printing');
+  var done=function(){document.body.classList.remove('printing');pa.innerHTML='';window.removeEventListener('afterprint',done)};
+  window.addEventListener('afterprint',done);
+  setTimeout(function(){window.print()},60);
+}
+var RPT={scope:'chapter',book:null,fb:'Matthew',fc:1,fv:1,tb:'Matthew',tc:1,tv:999,ms:true,plain:false};
+function bookOpts(sel){return ORDER.map(function(b){return '<option'+(b===sel?' selected':'')+'>'+esc(b)+'</option>'}).join('')}
+function reportDialog(){
+  if(!RPT.book)RPT.book=cur.b;
+  if(!RPT.init){RPT.init=1;RPT.fb=cur.b;RPT.fc=cur.c;RPT.fv=1;RPT.tb=cur.b;RPT.tc=cur.c;RPT.tv=versesOf(cur.b,cur.c).slice(-1)[0]}
+  var h=head('Apparatus','Variant report')+'<div class="mbody"><form id="rf"><fieldset class="fs"><legend>Passage</legend>';
+  function radio(v,label,extra){return '<label><input type="radio" name="sc" value="'+v+'"'+(RPT.scope===v?' checked':'')+'><span>'+label+'</span>'+(extra||'')+'</label>'}
+  h+=radio('chapter','Current chapter ('+esc(cur.b)+' '+cur.c+')');
+  h+=radio('book','Current book ('+esc(cur.b)+')');
+  h+=radio('other','A different book',' <select id="rbook" aria-label="Book">'+bookOpts(RPT.book)+'</select>');
+  h+=radio('nt','The entire New Testament');
+  h+=radio('custom','A custom range');
+  h+='<div class="row2">From <select id="fb" aria-label="From book">'+bookOpts(RPT.fb)+'</select> chapter <input type="number" min="1" id="fc" value="'+RPT.fc+'" aria-label="From chapter"> verse <input type="number" min="1" id="fv" value="'+RPT.fv+'" aria-label="From verse"></div>';
+  h+='<div class="row2">To <select id="tb" aria-label="To book">'+bookOpts(RPT.tb)+'</select> chapter <input type="number" min="1" id="tc" value="'+RPT.tc+'" aria-label="To chapter"> verse <input type="number" min="1" id="tv" value="'+RPT.tv+'" aria-label="To verse"></div>';
+  h+='</fieldset><fieldset class="fs"><legend>Options</legend>';
+  h+='<label><input type="checkbox" id="rms"'+(RPT.ms?' checked':'')+'><span>Include manuscript data where the edition gives it (&Dagger;)</span></label>';
+  h+='<label><input type="checkbox" id="rplain"'+(RPT.plain?' checked':'')+'><span>Write edition labels in plain capitals (CT, NA28) instead of small capitals</span></label>';
+  h+='</fieldset><p class="mnote">The report lists the variants for your selected editions: '+(filtered()?selCount()+' of '+ALLIDS.length+' sources are selected.':'all sources are selected.')+' <a href="#" id="rped">Change editions</a></p><div class="err" id="rerr" hidden></div></form></div>';
+  h+='<div class="mfoot"><button id="rcancel">Cancel</button><button class="primary" id="rgo">Create report</button></div>';
+  openModal(h);
+  Array.prototype.forEach.call(mbox.querySelectorAll('.row2 select,.row2 input'),function(el){el.addEventListener('focus',function(){mbox.querySelector('input[value="custom"]').checked=true})});
+  $('rbook').addEventListener('focus',function(){mbox.querySelector('input[value="other"]').checked=true});
+  $('rbook').addEventListener('change',function(){mbox.querySelector('input[value="other"]').checked=true});
+  $('rped').addEventListener('click',function(e){e.preventDefault();saveRpt();mOnClose=null;modal.hidden=true;document.body.classList.remove('mopen');edDialog(reportDialog)});
+  $('rcancel').addEventListener('click',closeModal);
+  function saveRpt(){
+    var sc=mbox.querySelector('input[name=sc]:checked');RPT.scope=sc?sc.value:'chapter';
+    RPT.book=$('rbook').value;RPT.fb=$('fb').value;RPT.tb=$('tb').value;
+    RPT.fc=Math.max(1,parseInt($('fc').value,10)||1);RPT.fv=Math.max(1,parseInt($('fv').value,10)||1);
+    RPT.tc=Math.max(1,parseInt($('tc').value,10)||1);RPT.tv=Math.max(1,parseInt($('tv').value,10)||1);
+    RPT.ms=$('rms').checked;RPT.plain=$('rplain').checked;
+  }
+  $('rgo').addEventListener('click',function(){
+    saveRpt();var o={ms:RPT.ms,plain:RPT.plain},er=$('rerr');
+    if(RPT.scope==='chapter'){o.k1=vkey(cur.b,cur.c,0);o.k2=vkey(cur.b,cur.c,999);o.desc=cur.b+' '+cur.c}
+    else if(RPT.scope==='book'){o.k1=vkey(cur.b,0,0);o.k2=vkey(cur.b,999,999);o.desc=cur.b}
+    else if(RPT.scope==='other'){o.k1=vkey(RPT.book,0,0);o.k2=vkey(RPT.book,999,999);o.desc=RPT.book}
+    else if(RPT.scope==='nt'){o.k1=0;o.k2=1e9;o.desc='The entire New Testament'}
+    else{
+      o.k1=vkey(RPT.fb,RPT.fc,RPT.fv);o.k2=vkey(RPT.tb,RPT.tc,RPT.tv);
+      o.desc=RPT.fb+' '+RPT.fc+':'+RPT.fv+' to '+RPT.tb+' '+RPT.tc+':'+RPT.tv;
+      if(o.k1>o.k2){er.textContent='The start of the range must come before its end.';er.hidden=false;return}
+    }
+    reportResult(o);
+  });
+}
+function reportResult(o){
+  var LIMIT=250,r=reportRows(o,LIMIT),d=r.d;
+  var h=head('Apparatus','Variant report')+'<div class="mbody"><div class="rmeta">'+d.meta.map(esc).join('<br>')+'</div>';
+  if(!d.items.length)h+='<p class="mnote">No variants were found for this passage with the editions you have selected.</p>';
+  else{h+='<div class="rlist">'+r.html+(d.items.length>LIMIT?'<div class="rmore">Showing the first '+LIMIT+' of '+d.items.length+' variants. Copy and Print include all of them.</div>':'')+'</div>'}
+  h+='<div class="err" id="rerr" hidden></div></div><div class="mfoot"><button id="rback">Back</button><button id="rcopy"'+(d.items.length?'':' disabled')+'>Copy to clipboard</button><button class="primary" id="rprint"'+(d.items.length?'':' disabled')+'>Print</button></div>';
+  openModal(h);
+  $('rback').addEventListener('click',reportDialog);
+  $('rcopy').addEventListener('click',function(){var b=this;copyText(reportText(o)).then(function(ok){b.textContent=ok?'Copied':'Copy failed';setTimeout(function(){b.textContent='Copy to clipboard'},1800)})});
+  $('rprint').addEventListener('click',function(){printReport(o)});
+}
+
 /* events */
 bookSel.addEventListener('change',function(){cur.b=bookSel.value;cur.c=1;cur.v=null;go()});
 chapSel.addEventListener('change',function(){cur.c=+chapSel.value;cur.v=null;go()});
@@ -399,17 +783,24 @@ $('clean').addEventListener('click',function(){var t=$('txt');var on=store('gnt-
 function fsz(d){var f=parseFloat(store('gnt-fs')||'1');f=Math.min(1.8,Math.max(.8,Math.round((f+d)*100)/100));store('gnt-fs',String(f));document.documentElement.style.setProperty('--fs',f)}
 $('smaller').addEventListener('click',function(){fsz(-.1)});$('bigger').addEventListener('click',function(){fsz(.1)});
 view.addEventListener('click',function(e){
-  var fn=e.target.closest&&e.target.closest('sup.fn');if(fn){openFn(fn);return}
+  var lg=e.target.closest&&e.target.closest('#lg-ed');if(lg){e.preventDefault();edDialog();return}
+  var fn=e.target.closest&&e.target.closest('sup.fn');if(fn){openFn(fn,false);return}
   var wd=e.target.closest&&e.target.closest('.w');if(wd){openWord(wd);return}
   var vn=e.target.closest&&e.target.closest('.vn');if(vn){cur.v=+vn.getAttribute('data-vn');history.replaceState(null,'',hashFor());Array.prototype.forEach.call(document.querySelectorAll('.v.hl'),function(x){x.classList.remove('hl')});$('v'+cur.v).classList.add('hl');return}
 });
-view.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.matches&&e.target.matches('sup.fn'))openFn(e.target)});
+view.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.matches&&e.target.matches('sup.fn'))openFn(e.target,false)});
 document.addEventListener('keydown',function(e){
+  if(!modal.hidden){if(e.key==='Escape')closeModal();return}
   if(e.key==='Escape')closePanel();
   var tg=(e.target.tagName||'').toLowerCase();if(tg==='input'||tg==='select'||tg==='textarea')return;
-  if(cur.mode==='read'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)}
+  if(cur.mode==='read'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){
+    if(noteOpen()){if(e.key==='ArrowRight'){e.preventDefault();stepVariant(1)}if(e.key==='ArrowLeft'){e.preventDefault();stepVariant(-1)}}
+    else{if(e.key==='ArrowRight')step(1);if(e.key==='ArrowLeft')step(-1)}
+  }
 });
-document.addEventListener('click',function(e){if(panel.classList.contains('open')&&!e.target.closest('#panel')&&!e.target.closest('sup.fn')&&!e.target.closest('.w'))closePanel()});
+document.addEventListener('click',function(e){if(!document.body.contains(e.target))return;if(panel.classList.contains('open')&&!e.target.closest('#panel')&&!e.target.closest('#modal')&&!e.target.closest('sup.fn')&&!e.target.closest('.w'))closePanel()});
+$('edbtn').addEventListener('click',function(){edDialog()});
+$('rptbtn').addEventListener('click',reportDialog);
 
 function fromHash(){
   var h=decodeURIComponent((location.hash||'').replace(/^#/,'')).split('/');
@@ -424,6 +815,7 @@ $('clean').classList.toggle('on',store('gnt-clean')==='1');
 if(!fromHash()){var p=(store('gnt-pos')||'').split('|');if(p[0]&&TEXT[p[0]]&&TEXT[p[0]][p[1]]){cur.b=p[0];cur.c=+p[1]}}
 fillChaps();bookSel.value=cur.b;chapSel.value=cur.c;
 history.replaceState(null,'',hashFor());
+updateEdBtn();
 renderRead();
 })();
 </script>
