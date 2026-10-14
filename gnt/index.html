@@ -132,7 +132,9 @@ fieldset.fs legend{font-size:12px;font-weight:800;letter-spacing:.12em;text-tran
 .rv:last-child{border-bottom:0}
 .rv .rr{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
 .rv .rt{font-family:'Gentium Plus',Georgia,serif;font-size:19px;line-height:1.55}
-.rv .rg{font-family:'Gentium Plus',Georgia,serif;font-size:18px;line-height:1.5;padding-left:14px}
+.rv .rg{font-family:'Gentium Plus',Georgia,serif;font-size:18px;line-height:1.5;padding-left:0}
+.rv .rt small{font-family:Arial,sans-serif;font-size:12px;color:var(--muted);margin-right:8px;letter-spacing:.06em;text-transform:uppercase}
+.rv .rl{margin-right:.25em}
 .rv .rm{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:4px}
 .rv .rl{font-weight:700;color:var(--blue)}
 .rmore{padding:10px 12px;font-size:14px;color:var(--muted)}
@@ -683,9 +685,9 @@ function reportText(o){
   var d=reportData(o),t=['Greek New Testament (Byzantine Text), Guardian Press 2026','Variant report',''].concat(d.meta,['']);
   d.items.forEach(function(x){
     t.push(x.n.ref+(o.ms&&x.nv.hasMs?' ‡':''));
-    if(x.n.quote)t.push('Text: '+x.n.quote);
-    x.nv.groups.forEach(function(g){t.push('¦ '+plainOrNot(g.labels,o.plain)+(g.text?' '+g.text:''))});
-    if(o.ms&&x.nv.ms){t.push('Manuscript evidence:');x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){t.push('¦ '+m)})}
+    if(x.n.quote)t.push('TEXT '+x.n.quote);
+    x.nv.groups.forEach(function(g){t.push(plainOrNot(g.labels,o.plain)+(g.text?' '+g.text:''))});
+    if(o.ms&&x.nv.ms){t.push('MANUSCRIPT EVIDENCE');x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){t.push(m)})}
     t.push('');
   });
   return t.join('\n');
@@ -694,9 +696,9 @@ function reportRows(o,limit){
   var d=reportData(o),h='';
   d.items.slice(0,limit||d.items.length).forEach(function(x){
     h+='<div class="rv"><div class="rr">'+esc(x.n.ref)+(o.ms&&x.nv.hasMs?' &Dagger;':'')+'</div>';
-    if(x.n.quote)h+='<div class="rt">'+esc(x.n.quote)+'</div>';
-    x.nv.groups.forEach(function(g){h+='<div class="rg">&brvbar; <span class="rl">'+esc(plainOrNot(g.labels,o.plain))+'</span> '+esc(g.text)+'</div>'});
-    if(o.ms&&x.nv.ms){h+='<div class="rm">Manuscript evidence</div>';x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){h+='<div class="rg">&brvbar; '+esc(m)+'</div>'})}
+    if(x.n.quote)h+='<div class="rt"><small>Text</small>'+esc(x.n.quote)+'</div>';
+    x.nv.groups.forEach(function(g){h+='<div class="rg"><span class="rl">'+esc(plainOrNot(g.labels,o.plain))+'</span> '+esc(g.text)+'</div>'});
+    if(o.ms&&x.nv.ms){h+='<div class="rm">Manuscript evidence</div>';x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){h+='<div class="rg">'+esc(m)+'</div>'})}
     h+='</div>';
   });
   return {html:h,d:d};
