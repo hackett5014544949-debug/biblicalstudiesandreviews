@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>User Guide | Greek New Testament Reader | Excavating the Text</title>
+<meta name="description" content="How to use the free online Greek New Testament Reader: tap-a-word parsing, the edition apparatus, variant stepping, edition and variant filters, reports, and the parallel English view.">
+<link rel="canonical" href="https://excavatingthetext.com/gnt/guide.html">
+<style>
+:root{--black:#050505;--cyan:#20A9ED;--blue:#0877AB;--white:#fff;--card:#F7F8FA;--callout:#EDF8FF;--text:#202124;--slate:#555D65;--muted:#616B75;--line:#DFE3E7;--pale:#D8DDE1}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:#fff;color:var(--text);font-family:Arial,Helvetica,sans-serif;font-size:18px;line-height:1.65}
+a{color:var(--blue)}
+.wrap{max-width:860px;margin:0 auto;padding:0 20px}
+header.mast{background:var(--black);color:#fff;padding:34px 0 30px}
+.kicker{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan)}
+.kicker a{color:inherit;text-decoration:none}
+h1{margin:10px 0 6px;font-size:clamp(30px,6vw,50px);line-height:1.04;font-weight:900;text-transform:uppercase;letter-spacing:-.025em}
+.rule{width:56px;height:4px;background:var(--cyan);margin:14px 0}
+.lede{margin:0;color:var(--pale);font-size:18px;max-width:660px}
+.cta{display:inline-block;margin-top:20px;background:var(--cyan);color:#001a2a;font-weight:700;text-decoration:none;padding:12px 18px;border-radius:6px}
+.cta:hover{background:#1596d6}
+nav.toc{background:var(--card);border-bottom:1px solid var(--line)}
+nav.toc .wrap{padding-top:16px;padding-bottom:16px}
+nav.toc b{display:block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+nav.toc ol{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:6px 8px}
+nav.toc a{display:inline-block;font-size:14px;font-weight:700;text-decoration:none;color:var(--text);background:#fff;border:1px solid var(--line);border-radius:6px;padding:6px 10px}
+nav.toc a:hover{border-color:var(--cyan);color:var(--blue)}
+main{padding:10px 0 60px}
+section{padding-top:34px}
+h2{margin:0 0 10px;font-size:28px;line-height:1.15;font-weight:800;letter-spacing:-.01em}
+h2 .n{display:inline-block;min-width:34px;color:var(--cyan)}
+h3{margin:22px 0 6px;font-size:19px;font-weight:800}
+p{margin:0 0 14px}
+ul,ol.steps{margin:0 0 16px;padding-left:22px}
+li{margin:0 0 6px}
+.gr{font-family:'Gentium Plus','Gentium',Cardo,'Palatino Linotype',Georgia,serif;font-size:1.12em}
+.sc{font-family:'Gentium Plus',Georgia,serif;font-weight:700;color:var(--blue)}
+.callout{background:var(--callout);border-left:4px solid var(--cyan);border-radius:6px;padding:12px 16px;margin:16px 0;font-size:16px}
+.callout b{color:var(--blue)}
+.btn{display:inline-block;font-size:14px;font-weight:700;border:1px solid var(--line);border-radius:6px;background:#fff;padding:2px 9px;line-height:1.5;white-space:nowrap}
+.btn.p{background:var(--cyan);border-color:var(--cyan);color:#001a2a}
+.k{font-family:Arial,Helvetica,sans-serif;font-weight:900;color:var(--cyan)}
+.k2{font-family:Arial,Helvetica,sans-serif;font-weight:900;color:var(--blue)}
+kbd{font:inherit;font-size:14px;font-weight:700;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;background:#fff;padding:1px 7px}
+figure{margin:18px 0 22px}
+figure img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:6px;box-shadow:0 6px 22px rgba(0,0,0,.08)}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+table{width:100%;border-collapse:collapse;margin:8px 0 18px;font-size:16px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);border-bottom:2px solid var(--cyan)}
+.tw{overflow-x:auto}
+.ex{font-family:'Gentium Plus',Georgia,serif;font-size:19px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:10px 14px;margin:0 0 14px;line-height:1.6}
+.ex small{font-family:Arial,sans-serif;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:8px}
+.faq h3{margin-top:18px}
+footer{background:var(--black);color:var(--pale);padding:28px 0;font-size:15px}
+footer a{color:var(--cyan)}
+footer p{margin:0 0 10px}
+@media(max-width:560px){body{font-size:17px}h2{font-size:25px}}
+</style>
+</head>
+<body>
+
+<header class="mast">
+  <div class="wrap">
+    <div class="kicker"><a href="https://excavatingthetext.com/">Excavating the Text</a></div>
+    <h1>Reader User Guide</h1>
+    <div class="rule"></div>
+    <p class="lede">Everything the free online Greek New Testament Reader can do: read the Byzantine Text, tap any word for its parsing, follow the edition apparatus, filter variants, print a report, and read the English alongside the Greek.</p>
+    <a class="cta" href="./">Open the Reader</a>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Guide sections">
+  <div class="wrap">
+    <b>In this guide</b>
+    <ol>
+      <li><a href="#start">Quick start</a></li>
+      <li><a href="#navigate">Finding your place</a></li>
+      <li><a href="#words">Parsing a word</a></li>
+      <li><a href="#apparatus">The apparatus</a></li>
+      <li><a href="#step">Stepping through variants</a></li>
+      <li><a href="#labels">Reading the labels</a></li>
+      <li><a href="#editions">Choosing editions</a></li>
+      <li><a href="#kinds">Kinds of variants</a></li>
+      <li><a href="#report">Variant reports</a></li>
+      <li><a href="#parallel">Parallel English</a></li>
+      <li><a href="#search">Searching</a></li>
+      <li><a href="#settings">Settings and phones</a></li>
+      <li><a href="#keys">Keyboard</a></li>
+      <li><a href="#sources">Sources</a></li>
+      <li><a href="#faq">Questions</a></li>
+    </ol>
+  </div>
+</nav>
+
+<main>
+<div class="wrap">
+
+<section id="start">
+  <h2><span class="n">1</span>Quick start</h2>
+  <p>The reader shows <i>The Greek New Testament According to the Byzantine Text</i> (Guardian Press, 2026), one chapter at a time. Nothing to install and nothing to sign in to. It works on a computer, tablet or phone.</p>
+  <ul>
+    <li><b>Read.</b> Pick a book and chapter at the top, or use the arrow buttons.</li>
+    <li><b>Tap a Greek word</b> to see its parsing, lexical form, Strong&rsquo;s number and definition.</li>
+    <li><b>Tap a <span class="k">&dagger;</span></b> to see how eleven other Greek editions read at that spot. A <span class="k2">&Dagger;</span> means the note also lists manuscript evidence.</li>
+    <li><b>Use the toolbar</b> to filter the apparatus, print a variant report, or turn on the English.</li>
+  </ul>
+  <figure>
+    <img src="guide/read.jpg" width="1100" height="760" alt="The reader showing John 1 with the toolbar across the top and a tapped word highlighted" loading="lazy">
+    <figcaption>The reading view. The toolbar holds the book and chapter menus, search, and the Parallel, Apparatus, Editions and Report buttons.</figcaption>
+  </figure>
+</section>
+
+<section id="navigate">
+  <h2><span class="n">2</span>Finding your place</h2>
+  <ul>
+    <li><b>Book and Chapter menus</b> jump anywhere. The <span class="btn">&larr;</span> and <span class="btn">&rarr;</span> buttons (and the Previous and Next chapter buttons under each chapter) move one chapter at a time and cross from one book to the next.</li>
+    <li><b>Verse links.</b> Tap a small verse number to highlight that verse and put its address in the browser&rsquo;s address bar. Copy the address to send someone straight to that verse.</li>
+    <li><b>Your place is remembered.</b> When you come back, the reader reopens where you left off.</li>
+    <li><b>Preface &amp; Appendices</b> opens the edition&rsquo;s preface, introduction, list of abbreviations and appendices. On a phone, this button appears on wider screens only.</li>
+  </ul>
+</section>
+
+<section id="words">
+  <h2><span class="n">3</span>Parsing a word</h2>
+  <p>Tap or click any Greek word. A panel opens at the bottom of the screen with:</p>
+  <ul>
+    <li>the Strong&rsquo;s number (for example <b>G1510</b>);</li>
+    <li>the part of speech and full parsing, with the short code in brackets (for example <span class="gr">V-IAI-3S</span>, a verb, imperfect active indicative, 3rd person singular);</li>
+    <li>the lexical form (<span class="gr">εἰμί</span>) and a short English gloss;</li>
+    <li>a fuller definition when the lexicon has one.</li>
+  </ul>
+  <figure>
+    <img src="guide/word.jpg" width="1100" height="760" alt="The word panel open for the first word of John 1:1 showing G1510 and its parsing" loading="lazy">
+    <figcaption>Tapping <span class="gr">ἦν</span> in John 1:1. Close the panel with the &times; or the <kbd>Esc</kbd> key.</figcaption>
+  </figure>
+  <div class="callout"><b>Good to know.</b> The parsing and definitions are study aids. They come from the public domain Robinson&ndash;Pierpont Byzantine Textform and the Dodson Greek Lexicon, and are matched by computer to each word of this edition. Where this edition reads differently from the Robinson&ndash;Pierpont text, a few words may have no parsing, and the panel says &ldquo;No parsing is available for this word.&rdquo;</div>
+</section>
+
+<section id="apparatus">
+  <h2><span class="n">4</span>The apparatus</h2>
+  <p>The Guardian Press edition compares its text with eleven other Greek editions. The reader puts that apparatus right in the line of text.</p>
+  <ul>
+    <li>A <span class="k">&dagger;</span> (dagger) sits before the word or phrase in question. Tap it to open the note.</li>
+    <li>A <span class="k2">&Dagger;</span> (double dagger) means that note also carries <b>manuscript evidence</b>: which manuscripts, versions or fathers support each reading.</li>
+    <li>The note starts with <b>TEXT</b>, the reading of this edition. Each competing reading then appears on its own line, with the editions that support it in small capitals first.</li>
+    <li>The chapter heading counts the variants in the chapter.</li>
+    <li>The <span class="btn">Apparatus</span> button hides or shows all the daggers if you want a clean page for reading.</li>
+  </ul>
+  <figure>
+    <img src="guide/variant.jpg" width="1100" height="760" alt="An apparatus note open in Acts 24:4 showing the TEXT reading and the PCK reading" loading="lazy">
+    <figcaption>A note in Acts 24:4. The edition reads <span class="gr">πλειον</span>; Pickering&rsquo;s text (<span class="sc">ᴘᴄᴋ</span>) reads <span class="gr">πλεον</span>.</figcaption>
+  </figure>
+</section>
+
+<section id="step">
+  <h2><span class="n">5</span>Stepping through variants</h2>
+  <p>With a note open, the <span class="btn">&lsaquo; Prev</span> and <span class="btn">Next &rsaquo;</span> buttons in the note jump to the previous or next variant. The page scrolls so that the variant is in view, and the note stays open. It shows your position, such as &ldquo;4 of 48 variants in this chapter&rdquo;.</p>
+  <ul>
+    <li>At the end of a chapter, Next carries on into the next chapter that has a variant to show, and Prev does the same going back. You can step through the whole New Testament this way.</li>
+    <li>On a keyboard, the <kbd>&larr;</kbd> and <kbd>&rarr;</kbd> keys do the same thing while a note is open.</li>
+    <li>Stepping respects your filters (sections 7 and 8). It visits only the variants you have chosen to see.</li>
+  </ul>
+</section>
+
+<section id="labels">
+  <h2><span class="n">6</span>Reading the labels</h2>
+  <p>Editions are named in small capitals. Several editions that agree are often joined under one label.</p>
+  <div class="tw"><table>
+    <tr><th>Label</th><th>Meaning</th></tr>
+    <tr><td><span class="sc">ʜꜰ</span>, <span class="sc">ᴘᴄᴋ</span>, <span class="sc">ᴘᴛ</span></td><td>Byzantine family: Hodges &amp; Farstad Majority Text (1985), Pickering Family 35 (2020), Ecumenical Patriarchal Text (1912).</td></tr>
+    <tr><td><span class="sc">ᴇᴄᴍ</span>, <span class="sc">ɴᴀ²⁷</span>, <span class="sc">ɴᴀ²⁸</span>, <span class="sc">ꜱʙʟ</span>, <span class="sc">ᴛʜ</span>, <span class="sc">ᴡʜ</span></td><td>Critical editions: Editio Critica Maior (Mark, Acts, Catholic Epistles and Revelation only), Nestle&ndash;Aland 27th and 28th, SBL Greek New Testament, Tyndale House, Westcott&ndash;Hort.</td></tr>
+    <tr><td><span class="sc">ꜱᴄʀ</span>, <span class="sc">ꜱᴛ</span></td><td>Textus Receptus: Scrivener (1894) and Stephanus (1550).</td></tr>
+    <tr><td><span class="sc">ʀᴘᵐᵍ</span></td><td>The alternate Byzantine readings in the margin of the Robinson&ndash;Pierpont text.</td></tr>
+    <tr><td><span class="sc">ᴄᴛ</span></td><td>All the critical editions agree (including <span class="sc">ᴇᴄᴍ</span> where it exists).</td></tr>
+    <tr><td><span class="sc">ɴᴀ</span></td><td>Both Nestle&ndash;Aland editions agree.</td></tr>
+    <tr><td><span class="sc">ᴛʀ</span></td><td>Both Textus Receptus editions agree.</td></tr>
+    <tr><td>[ &nbsp;] &nbsp;[[ &nbsp;]] &nbsp;« &nbsp;»</td><td>Brackets around a label mean that edition has the same wording as the text but brackets it as doubtful, for example <span class="sc">[ᴡʜ]</span>. Brackets inside a reading are that edition&rsquo;s own brackets.</td></tr>
+    <tr><td><b>om.</b></td><td>The listed editions omit the words.</td></tr>
+    <tr><td><span class="sc">…</span> (ellipsis)</td><td>The variant has two or more separate places in the same verse.</td></tr>
+  </table></div>
+  <p>The full explanation, with worked examples, is in the edition&rsquo;s own <b>Preface &amp; Appendices</b>, under <i>Special Abbreviations in the Edition Apparatus</i>.</p>
+</section>
+
+<section id="editions">
+  <h2><span class="n">7</span>Choosing editions</h2>
+  <p>The <span class="btn">Editions</span> button lets you decide which editions you want to see. This is for the student who only cares how the Textus Receptus differs, or only what the critical text does.</p>
+  <ul>
+    <li>Tick a whole group (Byzantine family, Critical text, Textus Receptus, RPmg) or pick individual editions.</li>
+    <li>The reader splits grouped labels for you. If you keep <span class="sc">ɴᴀ²⁸</span> but not <span class="sc">ɴᴀ²⁷</span>, a note labelled <span class="sc">ᴄᴛ</span> is shown as <span class="sc">ɴᴀ²⁸ ꜱʙʟ ᴛʜ ᴡʜ</span> (only the editions you kept).</li>
+    <li>A note disappears when none of your editions is left in it. A reading disappears when none of its editions is selected. A label disappears when you have unticked that edition.</li>
+    <li>When a filter is on, the Editions button shows a count such as (3/12), and the line under the chapter heading tells you how many variants are showing out of the total.</li>
+    <li><b>Select all</b> and <b>Clear all</b> do what they say. Your choice is remembered.</li>
+  </ul>
+  <figure>
+    <img src="guide/editions.jpg" width="1100" height="760" alt="The Choose editions dialog with the Byzantine family and Critical text groups ticked" loading="lazy">
+    <figcaption>The Editions dialog. A group box ticks or clears all its editions at once.</figcaption>
+  </figure>
+</section>
+
+<section id="kinds">
+  <h2><span class="n">8</span>Kinds of variants</h2>
+  <p>At the bottom of the Editions dialog is a choice of how much of the apparatus you want:</p>
+  <table>
+    <tr><th>Choice</th><th>What you see</th></tr>
+    <tr><td><b>Show all variants</b></td><td>Every note in the edition, including spelling differences.</td></tr>
+    <tr><td><b>Hide spelling-only variants</b></td><td>Hides readings that differ from the text only in spelling: accents and breathings, <span class="gr">ει</span>/<span class="gr">ι</span>, <span class="gr">ευ</span>/<span class="gr">ηυ</span>, movable <span class="gr">ν</span>, <span class="gr">ου</span>/<span class="gr">ουκ</span>/<span class="gr">ουχ</span>, and doubled or assimilated consonants (<span class="gr">ιωαννης</span>/<span class="gr">ιωανης</span>, <span class="gr">εγκαινια</span>/<span class="gr">ενκαινια</span>).</td></tr>
+    <tr><td><b>Show only exegetically significant variants</b></td><td>Also hides differences of word order and of minor words (the article, <span class="gr">και</span>, <span class="gr">δε</span>, <span class="gr">τε</span>, <span class="gr">γαρ</span>, <span class="gr">ουν</span>, <span class="gr">μεν</span>) and readings that differ only by brackets. What stays: different words, different forms, tenses and moods, and the addition or omission of substantive words.</td></tr>
+  </table>
+  <figure>
+    <img src="guide/kinds.jpg" width="1100" height="760" alt="The bottom of the Editions dialog showing the three kinds of variant choices" loading="lazy">
+    <figcaption>The &ldquo;Kind of variant&rdquo; choices at the bottom of the Editions dialog.</figcaption>
+  </figure>
+  <div class="callout"><b>A note on judgement.</b> These filters are automatic rules, not an editor&rsquo;s verdict, so a borderline reading can fall either way. A note that also carries manuscript evidence (<span class="k2">&Dagger;</span>) is never hidden by the kind-of-variant choice. Roughly 7 in 100 notes are pure spelling, and about 3 in 10 are spelling, word order or minor-word differences.</div>
+</section>
+
+<section id="report">
+  <h2><span class="n">9</span>Variant reports</h2>
+  <p>The <span class="btn">Report</span> button builds a list of variants you can read, copy or print. It uses the same edition and kind-of-variant choices you have set.</p>
+  <ol class="steps">
+    <li>Choose the <b>passage</b>: the current chapter, the current book, a different book, the entire New Testament, or a custom range (for example Matthew 24:1 to Romans 2:4).</li>
+    <li>Choose options: include manuscript data, and write labels in plain capitals (CT, NA28) instead of small capitals if you plan to paste the report somewhere that does not show small capitals.</li>
+    <li>Press <span class="btn p">Create report</span>. The first lines say what the report covers and how many variants it lists.</li>
+    <li>Press <span class="btn">Copy to clipboard</span> to paste it as plain text, or <span class="btn p">Print</span> for a clean printed page.</li>
+  </ol>
+  <figure>
+    <img src="guide/report2.jpg" width="1100" height="760" alt="A variant report for Acts 24 with TEXT and one reading per line" loading="lazy">
+    <figcaption>A report for Acts 24. Each variant gives the reference, then <b>TEXT</b>, then one reading per line with its editions first, the same layout as the note.</figcaption>
+  </figure>
+  <p>The whole New Testament has more than ten thousand notes, so a full report can be long. Narrow it with the edition and kind-of-variant filters first. Long reports show the first part on screen; Copy and Print always include all of it.</p>
+</section>
+
+<section id="parallel">
+  <h2><span class="n">10</span>Parallel English</h2>
+  <p>Press <span class="btn">Parallel</span> to put the English beside the Greek, verse by verse. The Greek stays on the left and keeps everything it had: tap-a-word parsing and the apparatus. The English is on the right.</p>
+  <ul>
+    <li>The English is the <b>American Standard Version adapted to the Byzantine text</b> (ASV-BT), so it follows the same text as the Greek. Adam Boyd&rsquo;s changes to the ASV were dedicated to the public domain in 2021.</li>
+    <li>A few verses that the Byzantine text omits or moves show a short note instead of English. These are Luke 17:36, Acts 8:37, Acts 15:34, Acts 24:7 and Romans 16:25&ndash;27.</li>
+    <li>On a narrow screen the English moves under each Greek verse, marked with a light blue bar on its left.</li>
+    <li>The English file loads the first time you use Parallel, so allow a moment. Press the button again to go back to the Greek only. Your choice is remembered.</li>
+  </ul>
+  <figure>
+    <img src="guide/parallel.jpg" width="1100" height="760" alt="John 3 with Greek in the left column and the ASV Byzantine Text in the right column" loading="lazy">
+    <figcaption>Parallel view of John 3.</figcaption>
+  </figure>
+</section>
+
+<section id="search">
+  <h2><span class="n">11</span>Searching</h2>
+  <p>Type in the search box and press <span class="btn p">Search</span>. The reader finds every verse that contains what you typed and highlights it.</p>
+  <ul>
+    <li>Accents, breathing marks and final sigma are ignored, so plain letters work: type <span class="gr">λογος</span> to find <span class="gr">λόγος</span> and <span class="gr">λόγον</span>.</li>
+    <li>The search matches part of a word, so <span class="gr">αγαπ</span> finds every form of the word from that stem.</li>
+    <li>Each result is a verse. Tap one to open it in its chapter, highlighted.</li>
+    <li>The first 150 results are shown. Make the search more specific to narrow a long list.</li>
+    <li>Search looks at the Greek text of this edition. It does not search the English.</li>
+  </ul>
+</section>
+
+<section id="settings">
+  <h2><span class="n">12</span>Settings and phones</h2>
+  <ul>
+    <li><b>Text size.</b> <span class="btn">A&minus;</span> and <span class="btn">A+</span> change the size of the Greek (and the English in parallel view).</li>
+    <li><b>Remembered settings.</b> Text size, your place, your edition choices, the kind of variant, Parallel, and the Apparatus on or off are all saved in your own browser. Nothing is sent to a server, and nothing is saved if your browser blocks storage; the reader still works, it just starts fresh each visit.</li>
+    <li><b>Phones and tablets.</b> The toolbar wraps to fit, the apparatus and word panels open at the bottom of the screen, and the parallel English stacks under the Greek.</li>
+    <li><b>Printing a chapter.</b> Use the Report for variants. To have the Greek text itself on paper, download the free PDF editions from the Greek New Testament page.</li>
+  </ul>
+</section>
+
+<section id="keys">
+  <h2><span class="n">13</span>Keyboard</h2>
+  <div class="tw"><table>
+    <tr><th>Keys</th><th>What they do</th></tr>
+    <tr><td><kbd>&larr;</kbd> <kbd>&rarr;</kbd></td><td>Previous or next chapter. While an apparatus note is open, previous or next variant instead.</td></tr>
+    <tr><td><kbd>Esc</kbd></td><td>Close the open panel or dialog.</td></tr>
+    <tr><td><kbd>Tab</kbd> then <kbd>Enter</kbd></td><td>Open a dagger or a search result from the keyboard.</td></tr>
+  </table></div>
+</section>
+
+<section id="sources">
+  <h2><span class="n">14</span>Where it all comes from</h2>
+  <ul>
+    <li><b>Text and apparatus:</b> <i>The Greek New Testament According to the Byzantine Text</i>, edited and prepared by J. Jeffrey Dodson and Dwayne Green for the Guardian Press Editorial Committee (Robinson&ndash;Pierpont 2026 base text). Dedicated to the public domain.</li>
+    <li><b>Parsing and Strong&rsquo;s numbers:</b> the Robinson&ndash;Pierpont Byzantine Textform from the byztxt project (public domain), matched to each word of this edition.</li>
+    <li><b>Definitions:</b> the Dodson Greek Lexicon (public domain).</li>
+    <li><b>English:</b> the ASV Byzantine Text, adapted from the public domain American Standard Version by Adam Boyd (changes dedicated to the public domain, 2021).</li>
+  </ul>
+  <p>The printed edition, with the full manuscript apparatus, is available from the <a href="https://excavatingthetext.com/hardbound-gnt.html">Hardbound edition</a> page, and the free <a href="https://excavatingthetext.com/greek-nt.html">PDF downloads</a> are on the Greek New Testament page.</p>
+</section>
+
+<section id="faq" class="faq">
+  <h2><span class="n">15</span>Questions</h2>
+  <h3>Why does a word have no parsing?</h3>
+  <p>The parsing data belongs to the Robinson&ndash;Pierpont text, and the matching is done by computer. In the few places where this edition reads differently, a word can lack a match, and the word panel says so.</p>
+  <h3>The reader looks different from the printed book. Why?</h3>
+  <p>The apparatus is the same content as the book&rsquo;s edition apparatus, shown in notes on the screen instead of at the foot of the page. Paragraph breaks follow the edition.</p>
+  <h3>Does it work offline?</h3>
+  <p>Not fully. Once the page has loaded, the Greek text and apparatus are already in your browser. The parsing data and the English are fetched the first time you use them, so those need a connection.</p>
+  <h3>Can I link to a verse?</h3>
+  <p>Yes. Tap the verse number, then copy the address from your browser. It looks like <span class="gr">excavatingthetext.com/gnt/#Acts/24:2</span>.</p>
+</section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p><a href="./">Open the Reader</a> &middot; <a href="https://excavatingthetext.com/greek-nt.html">PDF downloads</a> &middot; <a href="https://excavatingthetext.com/hardbound-gnt.html">Hardbound edition</a> &middot; <a href="https://excavatingthetext.com/">excavatingthetext.com</a></p>
+    <p>The Greek New Testament According to the Byzantine Text is dedicated to the public domain.</p>
+  </div>
+</footer>
+</body>
+</html>
