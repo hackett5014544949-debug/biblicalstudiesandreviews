@@ -123,6 +123,8 @@ body.mopen{overflow:hidden}
 fieldset.fs{border:1px solid var(--line);border-radius:6px;margin:0 0 14px;padding:8px 14px 12px;background:var(--card)}
 fieldset.fs legend{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);padding:0 6px}
 .fs label{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:5px 0;font-size:15px;cursor:pointer}
+.fs label.sp{flex-wrap:nowrap;align-items:flex-start}
+.fs label.sp small{font-size:13px;color:var(--slate);line-height:1.45;display:block;margin-top:2px}
 .fs .row2{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:2px 0 6px 28px;font-size:14px}
 .fs input[type=number]{width:72px;font:inherit;font-size:15px;border:1px solid var(--line);border-radius:6px;padding:7px 8px}
 .err{color:#a21d1d;font-weight:700;font-size:14px;margin:0 0 10px}
@@ -240,7 +242,40 @@ var SEL={};
 var FV=1;
 function saveSel(){store('gnt-eds',JSON.stringify(ALLIDS.filter(function(k){return !SEL[k]})))}
 function selCount(){return ALLIDS.filter(function(k){return SEL[k]}).length}
-function filtered(){return selCount()!==ALLIDS.length}
+function edFiltered(){return selCount()!==ALLIDS.length}
+var NOSPELL=store('gnt-nospell')==='1';
+function filtered(){return edFiltered()||NOSPELL}
+/* spelling-only detection: a reading counts as a spelling variant when, word for word, it differs from the base text only by
+   accents/breathings, final sigma, movable nu, ei/i, eu/hu, doubled or assimilated consonants, ou/ouk/ouch, outos/outo, ek/ex */
+function spWord(w){
+  w=w.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ς/g,'σ').replace(/[^α-ω]/g,'');
+  if(!w)return '';
+  w=w.replace(/^(ου|μη)θ/,'$1δ');
+  if(w==='ουχ'||w==='ουκ')w='ου';
+  if(w==='ουτωσ')w='ουτω';
+  if(w==='εξ')w='εκ';
+  if(w==='μεχρισ'||w==='αχρισ')w=w.slice(0,-1);
+  if(w.length>=5&&(/σιν$/.test(w)||/εν$/.test(w)))w=w.slice(0,-1);
+  w=w.replace(/ηυ/g,'ευ').replace(/ει/g,'ι').replace(/γγ/g,'νγ').replace(/γκ/g,'νκ').replace(/γξ/g,'νξ').replace(/γχ/g,'νχ').replace(/ν([μπβφψ])/g,'μ$1').replace(/ττ/g,'σσ');
+  w=w.replace(/([βγδζθκμνπρστφχψ])\1/g,'$1');
+  if(w.indexOf('βαλ')<0)w=w.replace(/λλ/g,'λ');
+  return w;
+}
+function spToks(t){var o=[];String(t).trim().split(/\s+/).forEach(function(x){if(spWord(x))o.push(x)});return o}
+function isSpelling(quote,text){
+  if(!quote||!text||/[\[«]/.test(text))return false;
+  var q=spToks(quote),t=spToks(text);if(!q.length||q.length!==t.length)return false;
+  for(var i=0;i<q.length;i++){
+    if(spWord(q[i])!==spWord(t[i]))return false;
+    var a=q[i].toLowerCase().normalize('NFD'),b=t[i].toLowerCase().normalize('NFD'),ra=/[\u0300-\u036f]/.test(a),rb=/[\u0300-\u036f]/.test(b);
+    if(ra&&rb){var sa=a.replace(/ς/g,'σ'),sb=b.replace(/ς/g,'σ');if(sa!==sb&&sa.replace(/[\u0300-\u036f]/g,'')===sb.replace(/[\u0300-\u036f]/g,''))return false}
+  }
+  return true;
+}
+function filterDesc(){
+  var p=[];if(edFiltered())p.push(selCount()+' of '+ALLIDS.length+' sources');if(NOSPELL)p.push('spelling-only variants hidden');
+  return p.join(', ');
+}
 
 function parseNote(n){
   if(n._p)return n._p;
@@ -300,6 +335,7 @@ function noteView(n,book){
     });
     if(labs.length)out.push({labels:labelStr(labs),text:g.text});
   });
+  if(NOSPELL&&out.length&&!p.ms&&out.every(function(g){return isSpelling(n.quote,g.text)}))out=[];
   var nv=out.length?{groups:out,ms:p.ms,hasMs:!!p.ms}:null;
   n._fv=FV;n._bk=book;n._nv=nv;return nv;
 }
@@ -331,7 +367,7 @@ function fnHtml(n,pos,total){
   if(n.quote)h+='<div class="lemma"><small>Text</small>'+esc(n.quote)+'</div>';
   nv.groups.forEach(function(g){h+='<div class="g"><span class="lab">'+esc(g.labels)+'</span> '+esc(g.text)+'</div>'});
   if(nv.ms){h+='<div class="ms"><b>Manuscript evidence</b>';nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(x){h+='<div class="g">'+esc(x)+'</div>'});h+='</div>'}
-  if(filtered())h+='<div class="src">Showing '+selCount()+' of '+ALLIDS.length+' sources. Use the Editions button to change this.</div>';
+  if(filtered())h+='<div class="src">Filter on: '+filterDesc()+'. Use the Editions button to change this.</div>';
   h+='<div class="src">Guardian Press, 2026 (public domain)</div>';
   return h;
 }
@@ -513,7 +549,7 @@ function openWord(el){
 function legendHtml(cn,total){
   var h='<span class="k">&dagger;</span> edition apparatus &nbsp;&middot;&nbsp; <span class="k2">&Dagger;</span> also has manuscript data &nbsp;&middot;&nbsp; ';
   h+=(filtered()?cn.length+' of '+total:cn.length)+' variant'+(cn.length===1?'':'s')+' shown';
-  if(filtered())h+=' &nbsp;&middot;&nbsp; <a href="#" id="lg-ed">edition filter on ('+selCount()+' of '+ALLIDS.length+' sources)</a>';
+  if(filtered())h+=' &nbsp;&middot;&nbsp; <a href="#" id="lg-ed">filter on ('+filterDesc()+')</a>';
   return h;
 }
 function renderRead(keep){
@@ -616,7 +652,7 @@ function closeModal(){
 }
 modal.addEventListener('click',function(e){if(e.target===modal)closeModal()});
 function head(kicker,title){return '<div class="mhead"><div class="k">'+kicker+'</div><h3>'+title+'</h3><button class="x" id="mx" aria-label="Close">&times;</button></div>'}
-function updateEdBtn(){var b=$('edbtn');b.classList.toggle('on',filtered());b.innerHTML='Editions'+(filtered()?' <span class="cnt">('+selCount()+'/'+ALLIDS.length+')</span>':'')}
+function updateEdBtn(){var b=$('edbtn');b.classList.toggle('on',filtered());b.innerHTML='Editions'+(filtered()?' <span class="cnt">('+(edFiltered()?selCount()+'/'+ALLIDS.length:'')+(edFiltered()&&NOSPELL?', ':'')+(NOSPELL?'no spelling':'')+')</span>':'')}
 function applySel(){
   FV++;saveSel();updateEdBtn();
   if(cur.mode==='read'){var y=window.scrollY;renderRead(true);window.scrollTo(0,y)}
@@ -630,7 +666,7 @@ function edDialog(after){
     g.items.forEach(function(it){h+='<label><input type="checkbox" data-ed="'+it[0]+'" data-g="'+g.k+'"><span><b class="sc">'+DISP[it[0]]+'</b> '+esc(it[1])+'</span></label>'});
     h+='</div>';
   });
-  h+='<div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
+  h+='<fieldset class="fs"><legend>Spelling</legend><label class="sp"><input type="checkbox" id="nospell"><span><b>Hide spelling-only variants</b><br><small>Hides readings that differ from the text only in spelling: accents and breathings, ει/ι, ευ/ηυ, movable ν, ου/ουκ/ουχ, doubled or assimilated consonants (ιωαννης/ιωανης, γινεσθε/γεινεσθε, εγκαινια/ενκαινια). A note that also has manuscript data stays visible.</small></span></label></fieldset><div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
   openModal(h);
   function sync(){
     Array.prototype.forEach.call(mbox.querySelectorAll('input[data-ed]'),function(i){i.checked=!!SEL[i.getAttribute('data-ed')]});
@@ -648,6 +684,8 @@ function edDialog(after){
       sync();
     });
   });
+  $('nospell').checked=NOSPELL;
+  $('nospell').addEventListener('change',function(){NOSPELL=this.checked;store('gnt-nospell',NOSPELL?'1':'0')});
   $('edall').addEventListener('click',function(){ALLIDS.forEach(function(k){SEL[k]=true});sync()});
   $('ednone').addEventListener('click',function(){ALLIDS.forEach(function(k){SEL[k]=false});sync()});
   $('eddone').addEventListener('click',closeModal);
@@ -676,7 +714,8 @@ function reportData(o){
   var items=rangeNotes(o.k1,o.k2),withMs=items.filter(function(x){return x.nv.hasMs}).length;
   var eds=ALLIDS.filter(function(k){return SEL[k]}).map(function(k){return plainOrNot(DISP[k],o.plain)});
   var meta=['Range: '+o.desc,
-    'Editions: '+(filtered()?eds.join(', ')+' ('+selCount()+' of '+ALLIDS.length+' sources)':'all comparison editions and RPmg'),
+    'Editions: '+(edFiltered()?eds.join(', ')+' ('+selCount()+' of '+ALLIDS.length+' sources)':'all comparison editions and RPmg'),
+    (NOSPELL?'Spelling-only variants are hidden.':'Spelling variants are included.'),
     'Variants: '+items.length+(o.ms?' ('+withMs+' with manuscript data)':''),
     (o.ms?'‡ marks variants that include manuscript data.':'Manuscript data is not included.')];
   return {items:items,meta:meta};
@@ -734,7 +773,7 @@ function reportDialog(){
   h+='</fieldset><fieldset class="fs"><legend>Options</legend>';
   h+='<label><input type="checkbox" id="rms"'+(RPT.ms?' checked':'')+'><span>Include manuscript data where the edition gives it (&Dagger;)</span></label>';
   h+='<label><input type="checkbox" id="rplain"'+(RPT.plain?' checked':'')+'><span>Write edition labels in plain capitals (CT, NA28) instead of small capitals</span></label>';
-  h+='</fieldset><p class="mnote">The report lists the variants for your selected editions: '+(filtered()?selCount()+' of '+ALLIDS.length+' sources are selected.':'all sources are selected.')+' <a href="#" id="rped">Change editions</a></p><div class="err" id="rerr" hidden></div></form></div>';
+  h+='</fieldset><p class="mnote">The report lists the variants for your selected editions: '+(filtered()?'filter on: '+filterDesc()+'.':'all sources are selected.')+' <a href="#" id="rped">Change editions</a></p><div class="err" id="rerr" hidden></div></form></div>';
   h+='<div class="mfoot"><button id="rcancel">Cancel</button><button class="primary" id="rgo">Create report</button></div>';
   openModal(h);
   Array.prototype.forEach.call(mbox.querySelectorAll('.row2 select,.row2 input'),function(el){el.addEventListener('focus',function(){mbox.querySelector('input[value="custom"]').checked=true})});
