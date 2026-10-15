@@ -568,7 +568,7 @@ function markSigGroups(s){
       if(ch===pr[0])st.push(i);
       else if(ch===pr[1]&&st.length){
         var o=st.pop(),inner=s.slice(o+1,i);
-        if(!/[:;]|[A-Za-zα-ωά-ώ]{2,}/.test(unsup(inner).replace(/vid/g,''))&&/\S/.test(inner)){out[o]=pr[2];out[i]=pr[3]}
+        if(!/[:;]|[a-zα-ωά-ώ]{2,}/.test(unsup(inner).replace(/vid/g,''))&&/\S/.test(inner)){out[o]=pr[2];out[i]=pr[3]}
       }
     }
   });
@@ -586,7 +586,7 @@ function fmtApp(s,isMs){
     var m=isMs?SIGTOK.exec(t):null,html,eng=false;
     if(m){
       var core=m[2];
-      html=m[1].replace(/[\u0001\u0003]+/g,function(x){return supH(x)})+(core.charAt(0)==='𝔓'?'𝔓'+supH(core.slice(2)):esc(core))+supH(m[3]);
+      html=m[1].replace(/[\u0001\u0003]+/g,function(x){return supH(x)})+(core.indexOf('𝔓')===0?'𝔓'+supH(core.slice(2)+m[3]):esc(core)+supH(m[3]));
     }else if(LATIN.test(t)){eng=true;html=esc(t)}
     else if(prevEng&&REFTOK.test(t)){eng=true;html=esc(t)}
     else html=esc(t);
