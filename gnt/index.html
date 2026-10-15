@@ -95,8 +95,11 @@ footer a{color:var(--cyan)}
 footer p{margin:0 0 10px}
 @media(max-width:560px){body{font-size:17px}.bar{position:static}.bar .wrap{gap:6px}.hide-s{display:none}}
 @media print{.bar,#panel,header.mast .tag,.pager,footer{display:none}sup.fn{display:none}.text{font-size:13pt}}
+sup.ms-s{font-size:.68em;line-height:0;font-weight:400;font-style:normal;vertical-align:super}
+#panel .g i,.rv .rg i,.rv .rt i{font-style:italic}
 sup.fn.ms{color:var(--blue);font-weight:900;font-size:.7em}
 sup.fn.ms:hover,sup.fn.ms.act{background:var(--blue);color:#fff}
+.beta{margin:2px 0 8px;padding:8px 12px;background:#FFF6E0;border-left:4px solid #E0A100;border-radius:6px;font-size:13.5px;line-height:1.45;color:#3a3000}
 .nonote{margin:-8px 0 20px;padding:12px 14px;background:var(--callout,#EDF8FF);border-left:4px solid var(--cyan);border-radius:6px;font-size:15px;color:var(--text)}
 .nonote a{color:var(--blue);font-weight:700}
 .legend{margin:-12px 0 20px;font-size:13px;color:var(--muted)}
@@ -261,7 +264,7 @@ function filtered(){return edFiltered()||VL>0}
 function spWord(w){
   var r=w.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ς/g,'σ').replace(/[^α-ω]/g,'');
   if(!r)return '';
-  w=r;
+  w=r.replace(/τθ/g,'θθ').replace(/πφ/g,'φφ').replace(/κχ/g,'χχ');
   w=w.replace(/^(ου|μη)θ/,'$1δ');
   if(w==='ουχ'||w==='ουκ')w='ου';
   if(w==='ουτωσ')w='ουτω';
@@ -320,7 +323,7 @@ function spellEq(a,b){
   var i=0,j=0;
   while(i<a.length&&j<b.length){
     var A2=a.substr(i,2),B2=b.substr(j,2);
-    if((A2==='ττ'&&B2==='σσ')||(A2==='σσ'&&B2==='ττ')||(A2==='ρρ'&&B2==='ρσ')||(A2==='ρσ'&&B2==='ρρ')){i+=2;j+=2;continue}
+    if((A2==='ττ'&&B2==='σσ')||(A2==='σσ'&&B2==='ττ')||(A2==='ρρ'&&B2==='ρσ')||(A2==='ρσ'&&B2==='ρρ')||(A2==='τθ'&&B2==='θθ')||(A2==='θθ'&&B2==='τθ')||(A2==='πφ'&&B2==='φφ')||(A2==='φφ'&&B2==='πφ')||(A2==='κχ'&&B2==='χχ')||(A2==='χχ'&&B2==='κχ')){i+=2;j+=2;continue}
     if(a.charAt(i)===b.charAt(j)){i++;j++;continue}
     if(A2==='ει'&&b.charAt(j)==='ι'){if(morphEi(a,i))return false;i+=2;j++;continue}
     if(B2==='ει'&&a.charAt(i)==='ι'){if(morphEi(b,j))return false;j+=2;i++;continue}
@@ -344,7 +347,10 @@ function tryTail(l,s){
 /* the attested spellings of a proper name, and a doubled consonant written single, are spelling differences too;
    the guards keep real words apart: βαλλω, μελλω, αποστελλω, αλλασσω, εφαλλομαι, and γεννημα/γενημα */
 function orthCanon(w){
+  w=w.replace(/τθ/g,'θθ').replace(/πφ/g,'φφ').replace(/κχ/g,'χχ');
   w=w.replace(/^μωυσ/,'μωσ').replace(/^δαβιδ/,'δαυιδ').replace(/^καπερναουμ/,'καφαρναουμ').replace(/^ραββουν/,'ραβουν');
+  /* a nasal assimilates to the next consonant (ενπ/εμπ, συνγ/συγγ), and λημψ/λημφ is λψ/λφ with an inserted μ */
+  w=w.replace(/[νμ]([πβφψμ])/g,'μ$1').replace(/[νγ]([κγξχ])/g,'γ$1').replace(/λημ([ψφ])/g,'λη$1');
   if(!/βαλ|μελ|στελ|φαλ|λλασσ|γεννημ|γενημ/.test(w))w=w.replace(/([βγδζθκλμνπρστφχψ])\1/g,'$1');
   return w;
 }
@@ -427,13 +433,26 @@ function labelStr(labs){
   while(stack.length)toks[toks.length-1]+=stack.pop().c;
   return toks.join(' ');
 }
-/* the note as it should appear with the current edition selection, or null when nothing is left to show */
-function noteView(n,book){
-  if(n._fv===FV&&n._bk===book)return n._nv;
-  var p=parseNote(n),out=[];
-  p.groups.forEach(function(g){
-    var labs=[],seen={};
+/* ---------- ordered note list per book, used to resolve "last note" / "next note" / "cf. 16:8" ---------- */
+var NLIST={};
+function noteList(book){
+  if(NLIST[book])return NLIST[book];
+  var L=[],nb=NOTES[book]||{};
+  Object.keys(nb).map(Number).sort(function(a,b){return a-b}).forEach(function(c){
+    Object.keys(nb[c]).map(Number).sort(function(a,b){return a-b}).forEach(function(v){
+      nb[c][v].forEach(function(n){n._ix=L.length;n._ch=c;n._vs=v;L.push(n)});
+    });
+  });
+  return NLIST[book]=L;
+}
+/* a note's view under the current filters, before any cross-reference is rewritten */
+function noteBase(n,book){
+  if(n._fvb===FV&&n._bkb===book)return n._nb;
+  var p=parseNote(n),cand=[];
+  p.groups.forEach(function(g,gi){
+    var labs=[],seen={},split=false;
     g.labs.forEach(function(l){
+      if(l.id==='ECM†'||l.id==='CT†')split=true;
       var M=members(l.id,book),inter=M.filter(function(x){return SEL[x]});
       if(!inter.length)return;
       var ids=inter.length===M.length?[{disp:l.raw,key:l.id}]:compress(inter,l.id).map(function(d){return{disp:DISP[d],key:d}});
@@ -442,10 +461,78 @@ function noteView(n,book){
         if(seen[sig])return;seen[sig]=1;labs.push({disp:x.disp,br:l.br});
       });
     });
-    if(labs.length)out.push({labels:labelStr(labs),text:g.text});
+    if(!labs.length)return;
+    var txt=g.text.trim()==='txt';
+    /* a reading that only says "same as the text" has nothing to say once ECM, whose branch it belongs to, is switched off */
+    if(txt&&!SEL.ECM)return;
+    cand.push({gi:gi,labels:labelStr(labs),text:g.text,split:split,txt:txt,hide:false});
   });
-  if(VL>0&&out.length&&!p.ms)out=out.filter(function(g){return !(isOrthographic(n.quote,g.text)||(VL===2&&isMinorDiff(n.quote,g.text)))});
-  var nv=out.length?{groups:out,ms:p.ms,hasMs:!!p.ms}:null;
+  if(VL>0&&cand.length&&!p.ms){
+    cand.forEach(function(g){g.hide=!g.txt&&(isOrthographic(n.quote,g.text)||(VL===2&&isMinorDiff(n.quote,g.text)))});
+    /* the branches of an ECM split guiding line stand or fall together */
+    var sp=cand.filter(function(g){return g.split});
+    if(sp.length){
+      var anyShown=sp.some(function(g){return !g.txt&&!g.hide});
+      sp.forEach(function(g){g.hide=!anyShown});
+    }
+    cand=cand.filter(function(g){return !g.hide});
+  }
+  var nb=cand.length?{groups:cand,ms:p.ms,hasMs:!!p.ms}:null;
+  n._fvb=FV;n._bkb=book;n._nb=nb;return nb;
+}
+/* "cf. ..." and "as last ..." remarks that point at a note or reading that is no longer on screen */
+function fixRefs(txt,n,book,groups,raw){
+  var L=noteList(book);
+  function hiddenNote(x){return !x||!noteBase(x,book)}
+  function hiddenCf(r){
+    r=r.trim();
+    if(/^last note$/i.test(r))return hiddenNote(L[n._ix-1]);
+    if(/^next note$/i.test(r))return hiddenNote(L[n._ix+1]);
+    var m=/^(\d+):(\d+)(?:[–-](\d+))?$/.exec(r);
+    if(m){
+      var c=+m[1],a=+m[2],b=m[3]?+m[3]:a,found=false,hid=true;
+      L.forEach(function(x){if(x._ch===c&&x._vs>=a&&x._vs<=b){found=true;if(noteBase(x,book))hid=false}});
+      return found&&hid;
+    }
+    return false;
+  }
+  txt=txt.replace(/\s*\(([^()]*)\)/g,function(all,inner){
+    if(!/(^|\b)cf\./.test(inner))return all;
+    var parts=inner.replace(/^\s*and\s+/,'').split(/,\s*(?:and\s+)?/),keep=[],drop=false;
+    parts.forEach(function(pt){
+      var m=/^\s*cf\.\s*(.+?)\s*$/.exec(pt);
+      if(m&&hiddenCf(m[1])){drop=true;return}
+      keep.push(pt.trim());
+    });
+    if(!drop)return all;
+    return keep.length?' ('+keep.join(', ')+')':'';
+  });
+  txt=txt.replace(/\s+$/,'');
+  if(groups){
+    var m=/^as last (\S+)(\s[\s\S]*|)$/.exec(txt);
+    if(m&&LABEL_RE.test(m[1].replace(/^[\[«]+|[\]»]+$/g,''))){
+      var id=coreToId(m[1].replace(/^[\[«]+|[\]»]+$/g,'')),ref=null;
+      raw.forEach(function(g){if(g!==raw.cur&&raw.idx>raw.indexOf(g)&&g.labs.some(function(l){return l.id===id}))ref=g});
+      if(ref){
+        var shown=members(id,book).some(function(x){return SEL[x]})&&groups.some(function(g){return raw[g.gi]===ref});
+        if(!shown)txt=ref.text+m[2];
+      }
+    }
+  }
+  return txt;
+}
+/* the note as it should appear with the current edition selection, or null when nothing is left to show */
+function noteView(n,book){
+  if(n._fv===FV&&n._bk===book)return n._nv;
+  var b=noteBase(n,book),nv=null;
+  if(b){
+    var raw=parseNote(n).groups;
+    var gs=b.groups.map(function(g){
+      raw.cur=raw[g.gi];raw.idx=g.gi;
+      return{labels:g.labels,text:fixRefs(g.text,n,book,b.groups,raw)};
+    });
+    nv={groups:gs,ms:b.ms,hasMs:b.hasMs,quote:fixRefs(n.quote||'',n,book,null,null)};
+  }
   n._fv=FV;n._bk=book;n._nv=nv;return nv;
 }
 function chapterNotes(b,c){
@@ -467,16 +554,66 @@ function adjChapter(d){
   }
 }
 
+/* ---------- display of apparatus text: English in italics, and everything attached to a manuscript siglum superscripted ---------- */
+var SUPBACK={'⁰':'0','¹':'1','²':'2','³':'3','⁴':'4','⁵':'5','⁶':'6','⁷':'7','⁸':'8','⁹':'9','ᵛ':'v','ⁱ':'i','ᵈ':'d','ᶜ':'c','ˢ':'s','ᵃ':'a','ᵇ':'b','ˡ':'l'};
+function unsup(s){return s.replace(/[⁰¹²³⁴⁵⁶⁷⁸⁹ᵛⁱᵈᶜˢᵃᵇˡ]/g,function(c){return SUPBACK[c]})}
+function supH(s){return s?'<sup class="ms-s">'+esc(unsup(s.replace(/[\u0001\u0003]/g,function(c){return c==='\u0001'?'(':'['}).replace(/[\u0002\u0004]/g,function(c){return c==='\u0002'?')':']'})))+'</sup>':''}
+/* a bracket group that holds nothing but sigla marks, like (L) or (*), is part of the siglum notation */
+function markSigGroups(s){
+  var pairs=[['(',')','\u0001','\u0002'],['[',']','\u0003','\u0004']],out=s.split('');
+  pairs.forEach(function(pr){
+    var st=[];
+    for(var i=0;i<s.length;i++){
+      var ch=s.charAt(i);
+      if(ch===pr[0])st.push(i);
+      else if(ch===pr[1]&&st.length){
+        var o=st.pop(),inner=s.slice(o+1,i);
+        if(!/[:;]|[A-Za-zα-ωά-ώ]{2,}/.test(unsup(inner).replace(/vid/g,''))&&/\S/.test(inner)){out[o]=pr[2];out[i]=pr[3]}
+      }
+    }
+  });
+  return out.join('');
+}
+var SIGTOK=/^((?:[\u0001\u0003]|[(\[])*)(𝔓[⁰-⁹]*|ℵ|[A-ZΓΔΘΛΞΠΣΦΨΩ]|\d{2,4})((?:[*ᶜˢᵛⁱᵈ⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇˡ,;:\u0001\u0002\u0003\u0004])*)$/;
+var LATIN=/[A-Za-z]/,REFTOK=/^[(\[]*\d+(?::\d+)?(?:[–-]\d+(?::\d+)?)?[)\]]*[,;.:]*$/;
+function fmtApp(s,isMs){
+  s=String(s);
+  if(isMs)s=markSigGroups(s);
+  var toks=s.split(/(\s+)/),items=[],ws='',prevEng=false;
+  toks.forEach(function(t){
+    if(!t)return;
+    if(/^\s+$/.test(t)){ws=t;return}
+    var m=isMs?SIGTOK.exec(t):null,html,eng=false;
+    if(m){
+      var core=m[2];
+      html=m[1].replace(/[\u0001\u0003]+/g,function(x){return supH(x)})+(core.charAt(0)==='𝔓'?'𝔓'+supH(core.slice(2)):esc(core))+supH(m[3]);
+    }else if(LATIN.test(t)){eng=true;html=esc(t)}
+    else if(prevEng&&REFTOK.test(t)){eng=true;html=esc(t)}
+    else html=esc(t);
+    items.push({h:html,e:eng,w:items.length?ws:''});
+    prevEng=eng;ws='';
+  });
+  var out='',i=0;
+  while(i<items.length){
+    var it=items[i];
+    if(!it.e){out+=it.w+it.h;i++;continue}
+    var run=it.h;i++;
+    while(i<items.length&&items[i].e){run+=items[i].w+items[i].h;i++}
+    out+=it.w+'<i>'+run+'</i>';
+  }
+  return out;
+}
+
 /* ---------- apparatus panel with variant stepper ---------- */
 function visFns(){return Array.prototype.slice.call(view.querySelectorAll('sup.fn'))}
 function fnHtml(n,pos,total){
   var nv=noteView(n,cur.b)||{groups:[],ms:'',hasMs:false};
   var h='<button class="x" aria-label="Close" id="px">&times;</button><div class="ref">'+esc(n.ref)+' &middot; apparatus'+(nv.hasMs?'<span class="msflag">&Dagger; manuscript data</span>':'')+'</div>';
   h+='<div class="stepper"><button id="vprev" title="Previous variant (left arrow key)" aria-label="Previous variant">&lsaquo; Prev</button><span class="pos">'+pos+' of '+total+'<span class="hide-s"> variants in this chapter</span></span><button id="vnext" title="Next variant (right arrow key)" aria-label="Next variant">Next &rsaquo;</button></div>';
-  if(n.quote)h+='<div class="lemma"><small>Text</small>'+esc(n.quote)+'</div>';
-  nv.groups.forEach(function(g){h+='<div class="g"><span class="lab">'+esc(g.labels)+'</span> '+esc(g.text)+'</div>'});
-  if(nv.ms){h+='<div class="ms"><b>Manuscript evidence</b>';nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(x){h+='<div class="g">'+esc(x)+'</div>'});h+='</div>'}
-  if(filtered())h+='<div class="src">Filter on: '+filterDesc()+'. Use the Editions button to change this.</div>';
+  var qt=nv.quote!=null?nv.quote:n.quote;if(qt)h+='<div class="lemma"><small>Text</small>'+fmtApp(qt)+'</div>';
+  nv.groups.forEach(function(g){h+='<div class="g"><span class="lab">'+esc(g.labels)+'</span> '+fmtApp(g.text)+'</div>'});
+  if(nv.ms){h+='<div class="ms"><b>Manuscript evidence</b>';nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(x){h+='<div class="g">'+fmtApp(x,true)+'</div>'});h+='</div>'}
+  if(filtered())h+='<div class="src">Filter on: '+filterDesc()+'. Use the Editions button to change this. Filtering is in beta and might not be perfect yet.</div>';
   h+='<div class="src">Guardian Press, 2026 (public domain)</div>';
   return h;
 }
@@ -665,7 +802,7 @@ var PAR=store('gnt-par')==='1',ENG=null,ENGSTATE=0;
 function loadEng(){
   if(ENGSTATE)return;ENGSTATE=1;
   function done(){if(PAR&&cur.mode==='read'&&TEXT[cur.b]){var y=window.scrollY;renderRead(true);window.scrollTo(0,y)}}
-  fetch('asvbt.json?v=1').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){ENG=j;ENGSTATE=2;done()}).catch(function(){ENGSTATE=3;done()});
+  fetch('asvbt.json?v=2').then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){ENG=j;ENGSTATE=2;done()}).catch(function(){ENGSTATE=3;done()});
 }
 function engCell(b,c,v){
   if(ENGSTATE===2){var t=ENG[b]&&ENG[b][c]&&ENG[b][c][v];return t?esc(t):'<span class="no">(No English for this verse; the Byzantine text omits it or places it elsewhere.)</span>'}
@@ -792,8 +929,8 @@ function edDialog(after){
     g.items.forEach(function(it){h+='<label><input type="checkbox" data-ed="'+it[0]+'" data-g="'+g.k+'"><span><b class="sc">'+DISP[it[0]]+'</b> '+esc(it[1])+'</span></label>'});
     h+='</div>';
   });
-  h+='<fieldset class="fs"><legend>Kind of variant</legend>'+
-    [['0','Show all variants','Every difference in the apparatus, including spelling.','<p>No filtering. Every note and every reading in the apparatus is shown (subject to the edition checkboxes above).</p>'],['1','Hide orthographic variants','Hides readings that differ from the text only in spelling: ει/ι, ττ/σσ, ρρ/ρσ (Δαυιδ/Δαυειδ), elision (αλλα/αλλ’), movable ν or ς, words divided differently (ο τι/οτι), doubled consonants (Ιωαννης/Ιωανης) and name spellings (Μωσης/Μωυσης). In a note with several readings, only the orthographic ones are removed; if all of them are orthographic, the note disappears.','<p><b>How every filter works</b></p><ol><li>The edition checkboxes are applied first.</li><li>Each reading is judged on its own against the note&rsquo;s base text.</li><li>A reading that is hidden is dropped; a reading that is not hidden stays.</li><li>If at least one reading in a note stays, the note stays with only those readings.</li><li>If no reading in a note stays, the note and its dagger disappear.</li><li>A note that carries manuscript evidence (&Dagger;) is never hidden by this setting.</li><li>If the rules cannot prove a reading is hidden, it stays.</li></ol><p><b>A reading is orthographic only if all of these hold</b></p><ul><li>It has no brackets, parentheses or numbers.</li><li>Neither it nor the base text has accents or breathings.</li><li>It has the same number of words as the base, or it is the same letters divided into different words (<span class="gr">ο τι</span>/<span class="gr">οτι</span>, <span class="gr">μαραν αθα</span>/<span class="gr">μαραναθα</span>).</li><li>Every word, compared with the base word in the same position, is identical or differs only in one of the five ways below.</li></ul><p><b>The five differences allowed in a word</b></p><ol><li><b>Spelling.</b> <span class="gr">ει</span> for <span class="gr">ι</span>, <span class="gr">ττ</span> for <span class="gr">σσ</span>, <span class="gr">ρρ</span> for <span class="gr">ρσ</span> (<span class="gr">Δαυιδ</span>/<span class="gr">Δαυειδ</span>, <span class="gr">κρειττον</span>/<span class="gr">κρεισσον</span>, <span class="gr">αρρενες</span>/<span class="gr">αρσενες</span>).</li><li><b>Elision.</b> The longer form is the shorter plus a final <span class="gr">α</span>, <span class="gr">ε</span> or <span class="gr">ο</span>, the shorter ends in a consonant, and the longer is one of the words that elide (<span class="gr">αλλα, δε, ουδε, μηδε, ουτε, μητε, απο, υπο, επι, κατα, μετα, παρα, δια, αντι, αρα, τοτε</span>), or the final <span class="gr">τ</span>, <span class="gr">π</span> or <span class="gr">κ</span> is aspirated as it is before a rough breathing (<span class="gr">μετα</span>/<span class="gr">μεθ</span>, <span class="gr">κατα</span>/<span class="gr">καθ</span>, <span class="gr">χρηστα</span>/<span class="gr">χρησθ</span>).</li><li><b>Movable ν.</b> A final <span class="gr">ν</span> added to a form ending <span class="gr">σι</span>, <span class="gr">στι</span>, <span class="gr">σε</span> or <span class="gr">ε</span> (<span class="gr">εστι</span>/<span class="gr">εστιν</span>, <span class="gr">επεσε</span>/<span class="gr">επεσεν</span>).</li><li><b>Movable ς.</b> A final <span class="gr">ς</span> on <span class="gr">ουτω</span>, <span class="gr">μεχρι</span> or <span class="gr">αχρι</span>.</li><li><b>A doubled consonant written single, and the spellings of a proper name.</b> <span class="gr">Ιωαννης</span>/<span class="gr">Ιωανης</span>, <span class="gr">εννατος</span>/<span class="gr">ενατος</span>, <span class="gr">ερραντισεν</span>/<span class="gr">εραντισεν</span>, <span class="gr">κραββατον</span>/<span class="gr">κραβαττον</span>, and <span class="gr">Μωσης</span>/<span class="gr">Μωυσης</span>, <span class="gr">Δαβιδ</span>/<span class="gr">Δαυιδ</span>, <span class="gr">Καπερναουμ</span>/<span class="gr">Καφαρναουμ</span>, <span class="gr">Ραββουνι</span>/<span class="gr">Ραβουνι</span>.</li></ol><p><b>Where ει and ι are not treated as spelling</b>, because there they mark a different form: in the <span class="gr">λειπ</span>/<span class="gr">λιπ</span> tense stems (<span class="gr">απελειπον</span>/<span class="gr">απελιπον</span>), in the <span class="gr">ειδ</span>/<span class="gr">ιδ</span> stems at the start of a word (<span class="gr">ειδετε</span>/<span class="gr">ιδετε</span>, <span class="gr">ειδητε</span>/<span class="gr">ιδητε</span>), and at the end of a word, where <span class="gr">-ει</span> and <span class="gr">-εις</span> against <span class="gr">-ι</span> and <span class="gr">-ις</span> mark a different form (<span class="gr">επει</span>/<span class="gr">επι</span>, <span class="gr">ερεις</span>/<span class="gr">ερις</span>).</p><p><b>Where a doubled consonant is not treated as spelling</b>, because there it marks the word: <span class="gr">βαλλω</span>, <span class="gr">μελλω</span> (<span class="gr">εμελεν</span>/<span class="gr">εμελλεν</span>), <span class="gr">αποστελλω</span> (<span class="gr">αποστελει</span>/<span class="gr">αποστελλει</span>), <span class="gr">αλλασσω</span>, <span class="gr">εφαλλομαι</span> (<span class="gr">εφαλομενος</span>/<span class="gr">εφαλλομενος</span>), and <span class="gr">γεννημα</span> against <span class="gr">γενημα</span>.</p><p><b>Always kept at this level</b>: bracketed readings, accented readings, added, omitted or different words, any change of form (tense, case, number, person), word-order changes, other itacisms such as <span class="gr">αι</span>/<span class="gr">ε</span> and <span class="gr">η</span>/<span class="gr">ι</span>, <span class="gr">ουκ</span>/<span class="gr">ουχ</span>, and <span class="gr">Ιεροσολυμα</span> against <span class="gr">Ιερουσαλημ</span>, which is a different form of the name rather than a different spelling; that one is hidden only by the next choice.</p>'],['2','Hide orthographic, word-order and minor-word variants','Also hides differences of word order and of minor words (the article, και, δε, τε, γαρ, ουν, μεν) and bracket-only readings. What stays: different words, forms, tenses and moods, additions and omissions of substantive words.','<p><b>How every filter works</b></p><ol><li>The edition checkboxes are applied first.</li><li>Each reading is judged on its own against the note&rsquo;s base text.</li><li>A reading that is hidden is dropped; a reading that is not hidden stays.</li><li>If at least one reading in a note stays, the note stays with only those readings.</li><li>If no reading in a note stays, the note and its dagger disappear.</li><li>A note that carries manuscript evidence (&Dagger;) is never hidden by this setting.</li><li>If the rules cannot prove a reading is hidden, it stays.</li></ol><p><b>A reading is hidden if either test is met</b></p><ol><li>It is orthographic by the strict rules of the previous choice.</li><li>It is a minor difference: after normalizing spelling and ignoring brackets, parenthetical remarks and word order, it differs from the base only by adding, dropping or swapping minor words. The minor words are <span class="gr">ο το του της των τω τη τοις ταις τον την τους τας οι αι τα</span> (the article), <span class="gr">και</span>, <span class="gr">δε</span>, <span class="gr">τε</span>, <span class="gr">γαρ</span>, <span class="gr">ουν</span>, <span class="gr">μεν</span>, <span class="gr">δη</span>. An omission (&ldquo;om.&rdquo;) counts as an empty reading.</li></ol><p><b>The spelling normalizing used by test 2</b> is wider than the orthographic rules, because word order is already ignored here: accents, breathings and punctuation removed; final <span class="gr">ς</span> as <span class="gr">σ</span>; <span class="gr">ουθ</span>/<span class="gr">μηθ</span> as <span class="gr">ουδ</span>/<span class="gr">μηδ</span>; <span class="gr">ουκ</span> and <span class="gr">ουχ</span> as <span class="gr">ου</span>; <span class="gr">ουτως</span> as <span class="gr">ουτω</span>; <span class="gr">εξ</span> as <span class="gr">εκ</span>; <span class="gr">μεχρις</span> and <span class="gr">αχρις</span> without the <span class="gr">ς</span>; movable <span class="gr">ν</span> dropped; <span class="gr">ηυ</span> as <span class="gr">ευ</span>; <span class="gr">ει</span> as <span class="gr">ι</span>; <span class="gr">γγ γκ γξ γχ</span> as <span class="gr">νγ νκ νξ νχ</span>; <span class="gr">ν</span> before <span class="gr">μ π β φ ψ</span> as <span class="gr">μ</span>; <span class="gr">ττ</span> as <span class="gr">σσ</span>; doubled consonants made single, so <span class="gr">Ιωανης</span> matches <span class="gr">Ιωαννης</span>; and the name forms <span class="gr">Μωυσ-</span> as <span class="gr">Μωσ-</span>, <span class="gr">Ιεροσολυμα</span> as <span class="gr">Ιερουσαλημ</span>, <span class="gr">Καπερναουμ</span> as <span class="gr">Καφαρναουμ</span>, <span class="gr">Δαβιδ</span> as <span class="gr">Δαυιδ</span>.</p><p><b>Kept even here</b>: any reading that carries an accent or breathing, because there the accent is the variant (<span class="gr">μενει</span>/<span class="gr">μενεῖ</span>, <span class="gr">τινα</span>/<span class="gr">τίνα</span>); the <span class="gr">λειπ</span>/<span class="gr">λιπ</span> and <span class="gr">ειδ</span>/<span class="gr">ιδ</span> stems and word endings in <span class="gr">-ει</span>/<span class="gr">-ις</span>, as above; the <span class="gr">ν</span> of <span class="gr">ουδεν</span> and <span class="gr">μηδεν</span>; the doubled lambda of <span class="gr">μελλω</span> and <span class="gr">αποστελλω</span> (<span class="gr">αποστελει</span>/<span class="gr">αποστελλει</span>); and of course different words, changes of form, and the addition or omission of any word that is not on the minor-word list.</p>']].map(function(r){return '<label class="sp"><input type="radio" name="vl" value="'+r[0]+'"><span><b>'+r[1]+'</b><br><small>'+r[2]+'</small></span></label><details class="rules"><summary>Exact rules</summary>'+r[3]+'</details>'}).join('')+'<p class="mnote" style="margin:6px 0 0;font-size:13px">A note that also has manuscript data always stays visible. These are automatic rules, so a borderline reading may be classed either way.</p></fieldset><div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
+  h+='<fieldset class="fs"><legend>Kind of variant</legend><p class="beta"><b>Beta.</b> Apparatus filtering is still in beta and may not be perfect yet. If a variant is hidden that you expected to see, or shown when it should be hidden, choose &ldquo;Show all variants&rdquo;.</p>'+
+    [['0','Show all variants','Every difference in the apparatus, including spelling.','<p>No filtering. Every note and every reading in the apparatus is shown (subject to the edition checkboxes above).</p>'],['1','Hide orthographic variants','Hides readings that differ from the text only in spelling: ει/ι, ττ/σσ, ρρ/ρσ (Δαυιδ/Δαυειδ), elision (αλλα/αλλ’), movable ν or ς, words divided differently (ο τι/οτι), doubled consonants (Ιωαννης/Ιωανης) and name spellings (Μωσης/Μωυσης). In a note with several readings, only the orthographic ones are removed; if all of them are orthographic, the note disappears.','<p><b>How every filter works</b></p><ol><li>The edition checkboxes are applied first.</li><li>Each reading is judged on its own against the note&rsquo;s base text.</li><li>A reading that is hidden is dropped; a reading that is not hidden stays.</li><li>If at least one reading in a note stays, the note stays with only those readings.</li><li>If no reading in a note stays, the note and its dagger disappear.</li><li>A note that carries manuscript evidence (&Dagger;) is never hidden by this setting.</li><li>If the rules cannot prove a reading is hidden, it stays.</li></ol><p><b>A reading is orthographic only if all of these hold</b></p><ul><li>It has no brackets, parentheses or numbers.</li><li>Neither it nor the base text has accents or breathings.</li><li>It has the same number of words as the base, or it is the same letters divided into different words (<span class="gr">ο τι</span>/<span class="gr">οτι</span>, <span class="gr">μαραν αθα</span>/<span class="gr">μαραναθα</span>).</li><li>Every word, compared with the base word in the same position, is identical or differs only in one of the six ways below.</li></ul><p><b>The six differences allowed in a word</b></p><ol><li><b>Spelling.</b> <span class="gr">ει</span> for <span class="gr">ι</span>, <span class="gr">ττ</span> for <span class="gr">σσ</span>, <span class="gr">ρρ</span> for <span class="gr">ρσ</span>, <span class="gr">τθ</span> for <span class="gr">θθ</span>, <span class="gr">πφ</span> for <span class="gr">φφ</span>, <span class="gr">κχ</span> for <span class="gr">χχ</span> (<span class="gr">Δαυιδ</span>/<span class="gr">Δαυειδ</span>, <span class="gr">κρειττον</span>/<span class="gr">κρεισσον</span>, <span class="gr">αρρενες</span>/<span class="gr">αρσενες</span>, <span class="gr">ματθαιος</span>/<span class="gr">μαθθαιος</span>).</li><li><b>Elision.</b> The longer form is the shorter plus a final <span class="gr">α</span>, <span class="gr">ε</span> or <span class="gr">ο</span>, the shorter ends in a consonant, and the longer is one of the words that elide (<span class="gr">αλλα, δε, ουδε, μηδε, ουτε, μητε, απο, υπο, επι, κατα, μετα, παρα, δια, αντι, αρα, τοτε</span>), or the final <span class="gr">τ</span>, <span class="gr">π</span> or <span class="gr">κ</span> is aspirated as it is before a rough breathing (<span class="gr">μετα</span>/<span class="gr">μεθ</span>, <span class="gr">κατα</span>/<span class="gr">καθ</span>, <span class="gr">χρηστα</span>/<span class="gr">χρησθ</span>).</li><li><b>Movable ν.</b> A final <span class="gr">ν</span> added to a form ending <span class="gr">σι</span>, <span class="gr">στι</span>, <span class="gr">σε</span> or <span class="gr">ε</span> (<span class="gr">εστι</span>/<span class="gr">εστιν</span>, <span class="gr">επεσε</span>/<span class="gr">επεσεν</span>).</li><li><b>Movable ς.</b> A final <span class="gr">ς</span> on <span class="gr">ουτω</span>, <span class="gr">μεχρι</span> or <span class="gr">αχρι</span>.</li><li><b>A doubled consonant written single, and the spellings of a proper name.</b> <span class="gr">Ιωαννης</span>/<span class="gr">Ιωανης</span>, <span class="gr">εννατος</span>/<span class="gr">ενατος</span>, <span class="gr">ερραντισεν</span>/<span class="gr">εραντισεν</span>, <span class="gr">κραββατον</span>/<span class="gr">κραβαττον</span>, and <span class="gr">Μωσης</span>/<span class="gr">Μωυσης</span>, <span class="gr">Δαβιδ</span>/<span class="gr">Δαυιδ</span>, <span class="gr">Καπερναουμ</span>/<span class="gr">Καφαρναουμ</span>, <span class="gr">Ραββουνι</span>/<span class="gr">Ραβουνι</span>.</li><li><b>Assimilated nasals.</b> <span class="gr">ν</span> and <span class="gr">μ</span> before <span class="gr">π β φ ψ μ</span>, <span class="gr">ν</span> and <span class="gr">γ</span> before <span class="gr">κ γ ξ χ</span>, and the inserted <span class="gr">μ</span> of <span class="gr">λημψ</span>/<span class="gr">λημφ</span> (<span class="gr">ενπεριπατησω</span>/<span class="gr">εμπεριπατησω</span>, <span class="gr">ασυνκριτον</span>/<span class="gr">ασυγκριτον</span>, <span class="gr">ληψεται</span>/<span class="gr">λημψεται</span>).</li></ol><p><b>Where ει and ι are not treated as spelling</b>, because there they mark a different form: in the <span class="gr">λειπ</span>/<span class="gr">λιπ</span> tense stems (<span class="gr">απελειπον</span>/<span class="gr">απελιπον</span>), in the <span class="gr">ειδ</span>/<span class="gr">ιδ</span> stems at the start of a word (<span class="gr">ειδετε</span>/<span class="gr">ιδετε</span>, <span class="gr">ειδητε</span>/<span class="gr">ιδητε</span>), and at the end of a word, where <span class="gr">-ει</span> and <span class="gr">-εις</span> against <span class="gr">-ι</span> and <span class="gr">-ις</span> mark a different form (<span class="gr">επει</span>/<span class="gr">επι</span>, <span class="gr">ερεις</span>/<span class="gr">ερις</span>).</p><p><b>Where a doubled consonant is not treated as spelling</b>, because there it marks the word: <span class="gr">βαλλω</span>, <span class="gr">μελλω</span> (<span class="gr">εμελεν</span>/<span class="gr">εμελλεν</span>), <span class="gr">αποστελλω</span> (<span class="gr">αποστελει</span>/<span class="gr">αποστελλει</span>), <span class="gr">αλλασσω</span>, <span class="gr">εφαλλομαι</span> (<span class="gr">εφαλομενος</span>/<span class="gr">εφαλλομενος</span>), and <span class="gr">γεννημα</span> against <span class="gr">γενημα</span>.</p><p><b>Always kept at this level</b>: bracketed readings, accented readings, added, omitted or different words, any change of form (tense, case, number, person), word-order changes, other itacisms such as <span class="gr">αι</span>/<span class="gr">ε</span> and <span class="gr">η</span>/<span class="gr">ι</span>, <span class="gr">ουκ</span>/<span class="gr">ουχ</span>, and <span class="gr">Ιεροσολυμα</span> against <span class="gr">Ιερουσαλημ</span>, which is a different form of the name rather than a different spelling; that one is hidden only by the next choice.</p>'],['2','Hide orthographic, word-order and minor-word variants','Also hides differences of word order and of minor words (the article, και, δε, τε, γαρ, ουν, μεν) and bracket-only readings. What stays: different words, forms, tenses and moods, additions and omissions of substantive words.','<p><b>How every filter works</b></p><ol><li>The edition checkboxes are applied first.</li><li>Each reading is judged on its own against the note&rsquo;s base text.</li><li>A reading that is hidden is dropped; a reading that is not hidden stays.</li><li>If at least one reading in a note stays, the note stays with only those readings.</li><li>If no reading in a note stays, the note and its dagger disappear.</li><li>A note that carries manuscript evidence (&Dagger;) is never hidden by this setting.</li><li>If the rules cannot prove a reading is hidden, it stays.</li></ol><p><b>A reading is hidden if either test is met</b></p><ol><li>It is orthographic by the strict rules of the previous choice.</li><li>It is a minor difference: after normalizing spelling and ignoring brackets, parenthetical remarks and word order, it differs from the base only by adding, dropping or swapping minor words. The minor words are <span class="gr">ο το του της των τω τη τοις ταις τον την τους τας οι αι τα</span> (the article), <span class="gr">και</span>, <span class="gr">δε</span>, <span class="gr">τε</span>, <span class="gr">γαρ</span>, <span class="gr">ουν</span>, <span class="gr">μεν</span>, <span class="gr">δη</span>. An omission (&ldquo;om.&rdquo;) counts as an empty reading.</li></ol><p><b>The spelling normalizing used by test 2</b> is wider than the orthographic rules, because word order is already ignored here: accents, breathings and punctuation removed; final <span class="gr">ς</span> as <span class="gr">σ</span>; <span class="gr">ουθ</span>/<span class="gr">μηθ</span> as <span class="gr">ουδ</span>/<span class="gr">μηδ</span>; <span class="gr">ουκ</span> and <span class="gr">ουχ</span> as <span class="gr">ου</span>; <span class="gr">ουτως</span> as <span class="gr">ουτω</span>; <span class="gr">εξ</span> as <span class="gr">εκ</span>; <span class="gr">μεχρις</span> and <span class="gr">αχρις</span> without the <span class="gr">ς</span>; movable <span class="gr">ν</span> dropped; <span class="gr">ηυ</span> as <span class="gr">ευ</span>; <span class="gr">ει</span> as <span class="gr">ι</span>; <span class="gr">γγ γκ γξ γχ</span> as <span class="gr">νγ νκ νξ νχ</span>; <span class="gr">ν</span> before <span class="gr">μ π β φ ψ</span> as <span class="gr">μ</span>; <span class="gr">ττ</span> as <span class="gr">σσ</span>; doubled consonants made single, so <span class="gr">Ιωανης</span> matches <span class="gr">Ιωαννης</span>; and the name forms <span class="gr">Μωυσ-</span> as <span class="gr">Μωσ-</span>, <span class="gr">Ιεροσολυμα</span> as <span class="gr">Ιερουσαλημ</span>, <span class="gr">Καπερναουμ</span> as <span class="gr">Καφαρναουμ</span>, <span class="gr">Δαβιδ</span> as <span class="gr">Δαυιδ</span>.</p><p><b>Kept even here</b>: any reading that carries an accent or breathing, because there the accent is the variant (<span class="gr">μενει</span>/<span class="gr">μενεῖ</span>, <span class="gr">τινα</span>/<span class="gr">τίνα</span>); the <span class="gr">λειπ</span>/<span class="gr">λιπ</span> and <span class="gr">ειδ</span>/<span class="gr">ιδ</span> stems and word endings in <span class="gr">-ει</span>/<span class="gr">-ις</span>, as above; the <span class="gr">ν</span> of <span class="gr">ουδεν</span> and <span class="gr">μηδεν</span>; the doubled lambda of <span class="gr">μελλω</span> and <span class="gr">αποστελλω</span> (<span class="gr">αποστελει</span>/<span class="gr">αποστελλει</span>); and of course different words, changes of form, and the addition or omission of any word that is not on the minor-word list.</p>']].map(function(r){return '<label class="sp"><input type="radio" name="vl" value="'+r[0]+'"><span><b>'+r[1]+'</b><br><small>'+r[2]+'</small></span></label><details class="rules"><summary>Exact rules</summary>'+r[3]+'</details>'}).join('')+'<p class="mnote" style="margin:6px 0 0;font-size:13px">A note that also has manuscript data always stays visible. These are automatic rules, so a borderline reading may be classed either way.</p></fieldset><div class="sum" id="edsum"></div></div><div class="mfoot"><button id="edall">Select all</button><button id="ednone">Clear all</button><button class="primary" id="eddone">Done</button></div>';
   openModal(h);
   function sync(){
     Array.prototype.forEach.call(mbox.querySelectorAll('input[data-ed]'),function(i){i.checked=!!SEL[i.getAttribute('data-ed')]});
@@ -853,7 +990,7 @@ function reportText(o){
   var d=reportData(o),t=['Greek New Testament (Byzantine Text), Guardian Press 2026','Variant report',''].concat(d.meta,['']);
   d.items.forEach(function(x){
     t.push(x.n.ref+(o.ms&&x.nv.hasMs?' ‡':''));
-    if(x.n.quote)t.push('TEXT '+x.n.quote);
+    var tq=x.nv.quote!=null?x.nv.quote:x.n.quote;if(tq)t.push('TEXT '+tq);
     x.nv.groups.forEach(function(g){t.push(plainOrNot(g.labels,o.plain)+(g.text?' '+g.text:''))});
     if(o.ms&&x.nv.ms){t.push('MANUSCRIPT EVIDENCE');x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){t.push(m)})}
     t.push('');
@@ -864,9 +1001,9 @@ function reportRows(o,limit){
   var d=reportData(o),h='';
   d.items.slice(0,limit||d.items.length).forEach(function(x){
     h+='<div class="rv"><div class="rr">'+esc(x.n.ref)+(o.ms&&x.nv.hasMs?' &Dagger;':'')+'</div>';
-    if(x.n.quote)h+='<div class="rt"><small>Text</small>'+esc(x.n.quote)+'</div>';
-    x.nv.groups.forEach(function(g){h+='<div class="rg"><span class="rl">'+esc(plainOrNot(g.labels,o.plain))+'</span> '+esc(g.text)+'</div>'});
-    if(o.ms&&x.nv.ms){h+='<div class="rm">Manuscript evidence</div>';x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){h+='<div class="rg">'+esc(m)+'</div>'})}
+    var rq=x.nv.quote!=null?x.nv.quote:x.n.quote;if(rq)h+='<div class="rt"><small>Text</small>'+fmtApp(rq)+'</div>';
+    x.nv.groups.forEach(function(g){h+='<div class="rg"><span class="rl">'+esc(plainOrNot(g.labels,o.plain))+'</span> '+fmtApp(g.text)+'</div>'});
+    if(o.ms&&x.nv.ms){h+='<div class="rm">Manuscript evidence</div>';x.nv.ms.split(/\s*¦\s*/).filter(Boolean).forEach(function(m){h+='<div class="rg">'+fmtApp(m,true)+'</div>'})}
     h+='</div>';
   });
   return {html:h,d:d};
