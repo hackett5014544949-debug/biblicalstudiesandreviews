@@ -605,8 +605,10 @@ function fmtApp(s,isMs){
     if(/^\s+$/.test(t)){ws=t;return}
     var m=isMs?SIGTOK.exec(t):null,html,eng=false;
     if(m){
-      var core=m[2];
-      html=m[1].replace(/[\u0001\u0003]+/g,function(x){return supH(x)})+(core.indexOf('𝔓')===0?'𝔓'+supH(core.slice(2)+m[3]):esc(core)+supH(m[3]))+esc(m[4]);
+      var core=m[2],sfx=m[3],colon=/[:;]+$/.exec(sfx);
+      /* a colon or semicolon after the siglum is punctuation, not a mark, so it stays normal size */
+      if(colon)sfx=sfx.slice(0,colon.index);
+      html=m[1].replace(/[\u0001\u0003]+/g,function(x){return supH(x)})+(core.indexOf('𝔓')===0?'𝔓'+supH(core.slice(2)+sfx):esc(core)+supH(sfx))+(colon?esc(colon[0]):'')+esc(m[4]);
     }else if(LATIN.test(t)){eng=true;html=esc(t)}
     else if(prevEng&&REFTOK.test(t.replace(/[\u0001-\u0004]/g,''))){eng=true;html=esc(t)}
     else html=esc(t);
