@@ -585,15 +585,16 @@ function markSigGroups(s){
       if(ch===pr[0])st.push(i);
       else if(ch===pr[1]&&st.length){
         var o=st.pop(),inner=s.slice(o+1,i);
-        var plain=unsup(inner),startsSig=/^\s*(?:𝔓[\d]*|ℵ|[A-ZΓΔΘΛΞΠΣΦΨΩ]|\d{2,4})[*csvid\d,;:]*(?![A-Za-zα-ωά-ώ])/.test(plain),verseRef=/^\s*\d{1,2}:\d/.test(plain);
-        var sigOnly=!/[:;]|[a-zα-ωά-ώ]{2,}/.test(plain.replace(/vid/g,''))&&/\S/.test(inner);
-        if(sigOnly||(startsSig&&!verseRef)){out[o]=pr[2];out[i]=pr[3]}
+        /* only a group glued to the siglum, like 0233(*) or D*,(2), is superscripted; a group that surrounds the whole siglum, like (D) or (0233*: ...), stays normal size */
+        var attached=o>0&&/[^\s(\[]/.test(s.charAt(o-1));
+        var sigOnly=!/[:;]|[a-zα-ωά-ώ]{2,}/.test(unsup(inner).replace(/vid/g,''))&&/\S/.test(inner);
+        if(attached&&sigOnly){out[o]=pr[2];out[i]=pr[3]}
       }
     }
   });
   return out.join('');
 }
-var SIGTOK=/^((?:[\u0001\u0003]|[(\[])*)(𝔓[⁰-⁹]*|ℵ|[A-ZΓΔΘΛΞΠΣΦΨΩ]|\d{2,4})((?:[*ᶜˢᵛⁱᵈ⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇˡ,;:\u0001\u0002\u0003\u0004])*)$/;
+var SIGTOK=/^((?:[\u0001\u0003]|[(\[])*)(𝔓[⁰-⁹]*|ℵ|[A-ZΓΔΘΛΞΠΣΦΨΩ]|\d{2,4})((?:[*ᶜˢᵛⁱᵈ⁰¹²³⁴⁵⁶⁷⁸⁹ᵃᵇˡ,;:\u0001\u0002\u0003\u0004])*)([)\]]*)$/;
 var LATIN=/[A-Za-z]/,REFTOK=/^[(\[]*\d+(?::\d+)?(?:[–-]\d+(?::\d+)?)?[)\]]*[,;.:]*$/;
 function fmtApp(s,isMs){
   s=String(s);
@@ -605,7 +606,7 @@ function fmtApp(s,isMs){
     var m=isMs?SIGTOK.exec(t):null,html,eng=false;
     if(m){
       var core=m[2];
-      html=m[1].replace(/[\u0001\u0003]+/g,function(x){return supH(x)})+(core.indexOf('𝔓')===0?'𝔓'+supH(core.slice(2)+m[3]):esc(core)+supH(m[3]));
+      html=m[1].replace(/[\u0001\u0003]+/g,function(x){return supH(x)})+(core.indexOf('𝔓')===0?'𝔓'+supH(core.slice(2)+m[3]):esc(core)+supH(m[3]))+esc(m[4]);
     }else if(LATIN.test(t)){eng=true;html=esc(t)}
     else if(prevEng&&REFTOK.test(t.replace(/[\u0001-\u0004]/g,''))){eng=true;html=esc(t)}
     else html=esc(t);
