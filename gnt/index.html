@@ -1300,13 +1300,14 @@ function cmpOut(){
   $('cmpout').innerHTML=h;
 }
 function cmpDialog(){
+  if(!CMP.touched)CMP.scope=cur.b; /* open on the book being read until the reader picks a passage */
   openModal(cmpDialogHtml());
   $('cmp-sc').value=CMP.scope;$('cmp-k').value=String(CMP.kind);
   $('cmp-done').addEventListener('click',closeModal);
   cmpOut();
   mbox.onchange=function(e){
     var t=e.target.id;if(!t||t.indexOf('cmp-')!==0)return;
-    if(t==='cmp-sc'){CMP.scope=e.target.value}
+    if(t==='cmp-sc'){CMP.scope=e.target.value;CMP.touched=true}
     else if(t==='cmp-k'){CMP.kind=+e.target.value}
     else if(t==='cmp-a'){CMP.a=e.target.value}
     else if(t==='cmp-b'){CMP.b=e.target.value}
