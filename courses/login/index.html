@@ -16,6 +16,7 @@ h1{font-size:clamp(28px,5vw,40px);font-weight:900;text-transform:uppercase;line-
 p.lede{color:#d8dde1;margin:0 0 34px;max-width:520px}
 .option{display:block;width:100%;text-align:left;background:#101316;color:#fff;border:2px solid #2a2f35;border-radius:10px;padding:20px 22px;margin-bottom:14px;font:700 17px/1.4 var(--ui);cursor:pointer;text-decoration:none}
 .option:hover{border-color:var(--blue)}
+.option.primary{background:var(--blue);color:#071119;border-color:var(--blue)}.option.primary .sub{color:#0b3550}
 .option .sub{display:block;font-weight:400;font-size:14px;color:#9aa1a8;margin-top:4px}
 .back{display:inline-block;margin-top:20px;font-size:13px;color:#9aa1a8;text-decoration:none}
 .back:hover{color:#fff}
@@ -28,13 +29,17 @@ p.lede{color:#d8dde1;margin:0 0 34px;max-width:520px}
   <h1>Enter the classroom</h1>
   <p class="lede">Tell us where you stand so we can get you to the right place.</p>
 
+  <a class="option primary" href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/">
+    I'm already enrolled, take me to the classroom
+    <span class="sub">Returning students: go straight to your classroom</span>
+  </a>
   <a class="option" href="https://classroom.excavatingthetext.com/register">
     I'm a paying YouTube member
-    <span class="sub">Joined the channel membership at the course tier</span>
+    <span class="sub">First time? Joined the channel membership at the course tier</span>
   </a>
   <a class="option" href="https://classroom.excavatingthetext.com/register">
     I already paid for one-time access
-    <span class="sub">Purchased the standalone course</span>
+    <span class="sub">First time? Purchased the standalone course</span>
   </a>
   <a class="option" href="/courses/">
     Neither yet
