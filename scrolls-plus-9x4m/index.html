@@ -244,6 +244,13 @@ li.mx-hasnote summary .head .ref::after{content:" \270E";color:#0A7AA8;font-size
 .mx-mods a:hover{background:#22A8F0;color:#050505}
 .mx-note{width:100%;min-height:4.5rem;font:inherit;font-size:.95rem;padding:.55rem .65rem;border:1px solid #DFE4E8;border-radius:4px;resize:vertical;background:#fff;color:#1F2328}
 .mx-fine{font-size:.78rem;color:#5B6670;margin:.35rem 0 0}
+.mx-where{margin-top:.9rem;padding-top:.8rem;border-top:1px solid #DFE4E8}
+.mx-where h3{margin:0 0 .35rem;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase;color:#0A7AA8}
+.mx-where p{margin:.3rem 0;font-size:.86rem;line-height:1.4;color:#1F2328}
+.mx-where .mx-fine{color:#5B6670}
+.mx-where .mx-btns{margin-top:.5rem}
+.mx-btn[hidden]{display:none}
+#mx-drawer{overflow:auto}
 #mx-fab{position:fixed;right:1rem;bottom:1rem;z-index:50;font:inherit;font-weight:700;padding:.7rem 1.1rem;border-radius:999px;border:0;background:#22A8F0;color:#050505;box-shadow:0 4px 14px rgba(0,0,0,.35);cursor:pointer}
 #mx-fab span{display:inline-block;min-width:1.4rem;margin-left:.35rem;padding:0 .35rem;border-radius:999px;background:#050505;color:#22A8F0;text-align:center;font-size:.85rem}
 #mx-drawer{position:fixed;top:0;right:0;bottom:0;width:min(26rem,100vw);z-index:60;background:#fff;color:#1F2328;box-shadow:-6px 0 24px rgba(0,0,0,.35);display:flex;flex-direction:column;border-left:4px solid #22A8F0}
@@ -291,7 +298,7 @@ body.mx-onlysaved li.entry:not(.mx-saved){display:none!important}
     </div>
     <dl class="stats" id="stats"></dl>
   </div>
-</header><div id="mx-banner"><div class="mx-in"><div><p class="mx-k">Members Edition</p><p class="mx-t">A gift for students of Foundations of the Septuagint. Star the entries you want to keep, add your own notes, and see where each one comes up in the course.<small>This page is unlisted. Please do not share the link publicly.</small></p></div><div class="mx-btns"><a class="mx-btn solid" href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/" target="_blank" rel="noopener">Open your classroom &rarr;</a><button type="button" class="mx-btn" id="mx-open">My study list</button></div></div></div>
+</header><div id="mx-banner"><div class="mx-in"><div><p class="mx-k">Members Edition</p><p class="mx-t">A gift for students of Foundations of the Septuagint. Star the entries you want to keep, add your own notes, and see where each one comes up in the course.<small>Your notes stay on your own device. In Chrome or Edge on a computer you can also save them to a folder you pick. This page is unlisted, so please do not share the link publicly.</small></p></div><div class="mx-btns"><a class="mx-btn solid" href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/" target="_blank" rel="noopener">Open your classroom &rarr;</a><button type="button" class="mx-btn" id="mx-open">My study list</button></div></div></div>
 
 <main>
   <div id="panel-scrolls" role="tabpanel" aria-labelledby="tab-scrolls">
@@ -1945,8 +1952,68 @@ if(location.hash==='#nt') showTab('nt');
     5: 'Why Does the Septuagint Matter?', 6: 'How Has the Septuagint Shaped the New Testament?',
     7: 'What Authority Does the Septuagint Have for Us?', 8: 'Closing & Certificate'
   };
-  function load() { try { var r = localStorage.getItem(KEY); if (r) { var o = JSON.parse(r); mem.saved = o.saved || {}; mem.notes = o.notes || {}; } } catch (e) {} }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) {} }
+  function load() { try { var r = localStorage.getItem(KEY); if (r) { var o = JSON.parse(r); mem.saved = o.saved || {}; mem.notes = o.notes || {}; mem.t = o.t || 0; } } catch (e) {} }
+  function save(skipFs) { mem.t = Date.now(); try { localStorage.setItem(KEY, JSON.stringify(mem)); } catch (e) {} if (!skipFs) scheduleFs(); }
+  // ---- optional "save to a folder" (File System Access API: Chrome, Edge and other Chromium browsers on a computer)
+  var FS_OK = typeof window.showDirectoryPicker === 'function';
+  var dirHandle = null, fsState = 'off', fsTimer = null; // fsState: off | connected | needs-permission | error
+  function idb() {
+    return new Promise(function (res, rej) {
+      try {
+        var q = indexedDB.open('scrolls-members-fs', 1);
+        q.onupgradeneeded = function () { q.result.createObjectStore('h'); };
+        q.onsuccess = function () { res(q.result); };
+        q.onerror = function () { rej(q.error); };
+      } catch (e) { rej(e); }
+    });
+  }
+  function idbGet(k) { return idb().then(function (db) { return new Promise(function (res, rej) { var r = db.transaction('h').objectStore('h').get(k); r.onsuccess = function () { res(r.result); }; r.onerror = function () { rej(r.error); }; }); }); }
+  function idbSet(k, v) { return idb().then(function (db) { return new Promise(function (res, rej) { var tx = db.transaction('h', 'readwrite'); if (v === undefined) tx.objectStore('h').delete(k); else tx.objectStore('h').put(v, k); tx.oncomplete = function () { res(); }; tx.onerror = function () { rej(tx.error); }; }); }); }
+  function writeTo(dir, name, text) { return dir.getFileHandle(name, { create: true }).then(function (fh) { return fh.createWritable(); }).then(function (w) { return w.write(text).then(function () { return w.close(); }); }); }
+  function readJson(dir) { return dir.getFileHandle('scrolls-notes.json').then(function (fh) { return fh.getFile(); }).then(function (f) { return f.text(); }).then(function (t) { return JSON.parse(t); }).catch(function () { return null; }); }
+  function scheduleFs() { if (!dirHandle || fsState !== 'connected') return; clearTimeout(fsTimer); fsTimer = setTimeout(writeFs, 600); }
+  function writeFs() {
+    if (!dirHandle || fsState !== 'connected') return Promise.resolve();
+    var json = JSON.stringify({ app: 'Where the Scrolls Align, Members Edition', updated: mem.t || Date.now(), saved: mem.saved, notes: mem.notes }, null, 1);
+    return writeTo(dirHandle, 'scrolls-notes.json', json).then(function () { return writeTo(dirHandle, 'scrolls-notes.txt', buildText()); }).then(function () { setFs('connected'); }, function () { setFs('error'); });
+  }
+  function applyMem() { $$('li.entry').forEach(function (li) { var t = $('.mx-note', li); if (t) t.value = mem.notes[li.id] || ''; refreshOne(li); }); renderList(); }
+  function syncFromFolder() {
+    return readJson(dirHandle).then(function (d) {
+      if (d && d.updated && d.updated > (mem.t || 0)) { mem.saved = d.saved || {}; mem.notes = d.notes || {}; mem.t = d.updated; save(true); applyMem(); }
+      return writeFs();
+    });
+  }
+  function setFs(s) {
+    fsState = s;
+    var st = $('#mx-fs-status'); if (!st) return;
+    var name = dirHandle ? dirHandle.name : '';
+    var txt = { off: 'Not saving to a folder yet.', connected: 'Saving automatically to your folder: ' + name + ' (files: scrolls-notes.json and scrolls-notes.txt).', 'needs-permission': 'Folder remembered: ' + name + '. Click Reconnect folder so your browser lets this page save to it again.', error: 'Could not write to your folder. Click Reconnect folder, or choose a different folder.' }[s];
+    st.textContent = FS_OK ? txt : 'This browser cannot save to a folder. Use Chrome or Edge on a computer, or use Download to keep a copy.';
+    var show = function (a, on) { var b = $('[data-a="' + a + '"]'); if (b) b.hidden = !on; };
+    show('fs-pick', FS_OK && (s === 'off' || s === 'error')); show('fs-reconnect', FS_OK && (s === 'needs-permission' || s === 'error') && !!dirHandle); show('fs-stop', FS_OK && !!dirHandle);
+    refreshWhere();
+  }
+  function refreshWhere() {
+    var t = fsState === 'connected' && dirHandle ? 'Saved in this browser and in your folder: ' + dirHandle.name + '.' : 'Saved in this browser on this device only. To keep a copy on your hard drive, open My study list and choose Save to a folder (Chrome or Edge on a computer).';
+    $$('.mx-where-note').forEach(function (p) { p.textContent = t; });
+  }
+  function pickFolder() {
+    return window.showDirectoryPicker({ id: 'scrolls-notes', mode: 'readwrite' }).then(function (h) { dirHandle = h; setFs('connected'); return idbSet('dir', h).catch(function () {}); }).then(syncFromFolder).catch(function (e) { if (e && e.name === 'AbortError') { setFs(dirHandle ? fsState : 'off'); return; } setFs('error'); });
+  }
+  function reconnect() {
+    if (!dirHandle) return pickFolder();
+    return dirHandle.requestPermission({ mode: 'readwrite' }).then(function (p) { if (p === 'granted') { setFs('connected'); return syncFromFolder(); } setFs('needs-permission'); }).catch(function () { setFs('error'); });
+  }
+  function stopFolder() { dirHandle = null; idbSet('dir', undefined).catch(function () {}); setFs('off'); }
+  function initFs() {
+    setFs('off'); if (!FS_OK) return;
+    idbGet('dir').then(function (h) {
+      if (!h) return;
+      dirHandle = h;
+      return h.queryPermission({ mode: 'readwrite' }).then(function (p) { if (p === 'granted') { setFs('connected'); return syncFromFolder(); } setFs('needs-permission'); });
+    }).catch(function () {});
+  }
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
@@ -1970,8 +2037,8 @@ if(location.hash==='#nt') showTab('nt');
   function ensureBox(li) {
     var body = $('.body', li); if (!body || $('.mx-box', li)) return;
     var box = document.createElement('div'); box.className = 'mx-box';
-    box.innerHTML = '<h4>Where this comes up in the course</h4><p class="mx-mods">' + modsFor(li).map(modLink).join('') + '</p><h4>My note</h4><textarea class="mx-note" rows="3" placeholder="Write your own note on this passage..." aria-label="My note"></textarea><p class="mx-fine">Saved on this device and browser only.</p>';
-    body.appendChild(box);
+    box.innerHTML = '<h4>Where this comes up in the course</h4><p class="mx-mods">' + modsFor(li).map(modLink).join('') + '</p><h4>My note</h4><textarea class="mx-note" rows="3" placeholder="Write your own note on this passage..." aria-label="My note"></textarea><p class="mx-fine mx-where-note"></p>';
+    body.appendChild(box); refreshWhere();
     var ta = $('.mx-note', box); ta.value = mem.notes[li.id] || '';
     ta.addEventListener('input', function () {
       var v = ta.value; if (v.trim()) mem.notes[li.id] = v; else delete mem.notes[li.id];
@@ -2000,11 +2067,12 @@ if(location.hash==='#nt') showTab('nt');
 
   var fab = document.createElement('button'); fab.id = 'mx-fab'; fab.type = 'button'; fab.innerHTML = 'My study list <span id="mx-count">0</span>';
   var dr = document.createElement('aside'); dr.id = 'mx-drawer'; dr.hidden = true; dr.setAttribute('role', 'dialog'); dr.setAttribute('aria-label', 'My study list');
-  dr.innerHTML = '<header><h2>My study list</h2><button type="button" class="mx-x" aria-label="Close">&times;</button></header><div id="mx-tools"><div class="mx-btns"><button type="button" class="mx-btn" data-a="copy">Copy</button><button type="button" class="mx-btn" data-a="dl">Download</button><button type="button" class="mx-btn" data-a="print">Print</button><button type="button" class="mx-btn" data-a="clear">Clear</button></div><label><input type="checkbox" id="mx-only"> Show saved entries only</label><p class="mx-fine" id="mx-msg">Star any entry to add it here. Saved on this device and browser only.</p></div><div id="mx-empty">Nothing saved yet. Tap the star on an entry.</div><ol id="mx-items"></ol>';
+  dr.innerHTML = '<header><h2>My study list</h2><button type="button" class="mx-x" aria-label="Close">&times;</button></header><div id="mx-tools"><div class="mx-btns"><button type="button" class="mx-btn" data-a="copy">Copy</button><button type="button" class="mx-btn" data-a="dl">Download</button><button type="button" class="mx-btn" data-a="print">Print</button><button type="button" class="mx-btn" data-a="clear">Clear</button></div><label><input type="checkbox" id="mx-only"> Show saved entries only</label><p class="mx-fine" id="mx-msg">Star any entry to add it here.</p><div class="mx-where"><h3>Where your notes are saved</h3><p>Your stars and notes stay on your own computer or phone. They are saved in this browser on this device only, and nothing is sent to anyone. If you clear your browser data they are erased, and they do not move to other devices.</p><p>On Chrome or Edge on a computer you can also save them to a folder you choose, such as a folder in iCloud Drive, Dropbox or OneDrive.</p><p class="mx-fine" id="mx-fs-status"></p><div class="mx-btns"><button type="button" class="mx-btn" data-a="fs-pick">Save to a folder</button><button type="button" class="mx-btn" data-a="fs-reconnect" hidden>Reconnect folder</button><button type="button" class="mx-btn" data-a="fs-stop" hidden>Stop</button></div></div></div><div id="mx-empty">Nothing saved yet. Tap the star on an entry.</div><ol id="mx-items"></ol>';
   document.body.appendChild(fab); document.body.appendChild(dr);
   var prt = document.createElement('div'); prt.id = 'mx-print'; document.body.appendChild(prt);
 
-  function msg(t) { var m = $('#mx-msg'); if (m) { m.textContent = t; setTimeout(function () { m.textContent = 'Star any entry to add it here. Saved on this device and browser only.'; }, 2500); } }
+  function msg(t) { var m = $('#mx-msg'); if (m) { m.textContent = t; setTimeout(function () { m.textContent = 'Star any entry to add it here.'; }, 2500); } }
+  function exportEntries() { return $$('li.entry').filter(function (li) { return mem.saved[li.id] || (mem.notes[li.id] || '').trim(); }); }
   function renderList() {
     var list = savedEntries(); $('#mx-count').textContent = list.length;
     var ol = $('#mx-items'); ol.innerHTML = ''; $('#mx-empty').style.display = list.length ? 'none' : 'block';
@@ -2024,7 +2092,7 @@ if(location.hash==='#nt') showTab('nt');
   }
   function buildText() {
     var L = ['WHERE THE SCROLLS ALIGN: My study list', 'Excavating the Text, Members Edition', new Date().toLocaleDateString(), ''];
-    savedEntries().forEach(function (li, i) {
+    exportEntries().forEach(function (li, i) {
       L.push((i + 1) + '. ' + refOf(li) + '  [' + tabName(li) + ']');
       var u = $$('summary .unit .u', li).map(function (x) { var s = $('.sig', x), t = $('.ut', x); return (s ? s.textContent.trim() : '') + ': ' + (t ? t.textContent.trim() : ''); });
       if (u.length) L.push('   ' + u.join('  |  '));
@@ -2049,12 +2117,15 @@ if(location.hash==='#nt') showTab('nt');
       }
       return;
     }
-    if (!savedEntries().length) { msg('Save at least one entry first.'); return; }
+    if (a === 'fs-pick') { pickFolder(); return; }
+    if (a === 'fs-reconnect') { reconnect(); return; }
+    if (a === 'fs-stop') { stopFolder(); return; }
+    if (!exportEntries().length) { msg('Star an entry or write a note first.'); return; }
     var t = buildText();
     if (a === 'copy') copyText(t);
     if (a === 'dl') { var A = document.createElement('a'); A.href = URL.createObjectURL(new Blob([t], { type: 'text/plain' })); A.download = 'my-scrolls-study-list.txt'; document.body.appendChild(A); A.click(); A.remove(); msg('Downloaded.'); }
     if (a === 'print') {
-      prt.innerHTML = '<h1>Where the Scrolls Align: My study list</h1><p>Excavating the Text, Members Edition. ' + esc(new Date().toLocaleDateString()) + '</p><ol>' + savedEntries().map(function (li) {
+      prt.innerHTML = '<h1>Where the Scrolls Align: My study list</h1><p>Excavating the Text, Members Edition. ' + esc(new Date().toLocaleDateString()) + '</p><ol>' + exportEntries().map(function (li) {
         var s = $('summary', li), body = s ? s.textContent.replace(/\s+/g, ' ').trim() : ''; var n = (mem.notes[li.id] || '').trim();
         return '<li><strong>' + esc(refOf(li)) + '</strong> (' + tabName(li) + ')<br>' + esc(body.slice(0, 260)) + (n ? '<br><em>Note:</em> ' + esc(n).replace(/\n/g, '<br>') : '') + '</li>';
       }).join('') + '</ol>';
@@ -2076,7 +2147,7 @@ if(location.hash==='#nt') showTab('nt');
   window.addEventListener('storage', function (ev) {
     if (ev.key === KEY) { load(); $$('li.entry').forEach(function (li) { var t = $('.mx-note', li); if (t) t.value = mem.notes[li.id] || ''; refreshOne(li); }); renderList(); }
   });
-  load(); enhanceAll(); renderList();
+  load(); enhanceAll(); renderList(); initFs();
   var tmr = null, mo = new MutationObserver(function () {
     clearTimeout(tmr);
     tmr = setTimeout(function () {
