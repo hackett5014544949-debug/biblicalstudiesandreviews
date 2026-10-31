@@ -221,6 +221,7 @@ button.pill{font:inherit;font-size:.86rem;font-weight:700;background:transparent
 .w.x{color:var(--muted);text-decoration:line-through}
 .eq{margin:14px 0 0;font-size:.95rem}
 
+
 .mx-in{max-width:72rem;margin:0 auto;padding:1.1rem 1.25rem;display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;align-items:center;justify-content:space-between}
 #mx-banner{background:#0E1A22;color:#E8EEF2;border-bottom:4px solid #22A8F0}
 #mx-banner .mx-k{font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#22A8F0;margin:0 0 .25rem}
@@ -235,7 +236,7 @@ li.entry summary{padding-right:3.4rem}
 .mx-star{position:absolute;top:.55rem;right:.6rem;width:2.4rem;height:2.4rem;border:0;background:transparent;font-size:1.5rem;line-height:1;color:#9AA6AF;cursor:pointer;border-radius:50%}
 .mx-star:hover,.mx-star:focus-visible{background:#EEF2F5;color:#0A7AA8;outline:2px solid #22A8F0}
 li.mx-saved .mx-star{color:#E0A800}
-li.mx-hasnote summary .head .ref::after{content:" \270E";color:#0A7AA8;font-size:.85em}
+li.mx-hasnote summary .head .ref::after{content:" \\270E";color:#0A7AA8;font-size:.85em}
 .mx-box{margin-top:1rem;padding:.9rem 1rem;background:#EEF2F5;border-left:4px solid #22A8F0;border-radius:4px}
 .mx-box h4{margin:0 0 .35rem;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#0A7AA8}
 .mx-box h4:not(:first-child){margin-top:.9rem}
@@ -269,6 +270,30 @@ li.mx-hasnote summary .head .ref::after{content:" \270E";color:#0A7AA8;font-size
 .mx-modlist{margin:.6rem 0 1rem;padding-left:1.2rem;line-height:1.7}
 .mx-modlist a{color:#0A7AA8;font-weight:700;text-decoration:none}
 body.mx-onlysaved li.entry:not(.mx-saved){display:none!important}
+.mx-discovery{background:#F2F7FA;border-bottom:1px solid #D8E5EC;color:#1F2328;font-family:Arial,'Helvetica Neue',sans-serif}
+.mx-discovery .mx-in{display:block;padding-block:1.35rem 1.5rem}
+.mx-discovery-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:1rem;margin-bottom:1rem}
+.mx-discovery .mx-k{margin:0 0 .2rem;color:#0877AB;font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.mx-discovery h2{font-size:clamp(1.45rem,4vw,2.15rem);line-height:1.06;letter-spacing:-.02em}
+.mx-discovery-lede{margin:.4rem 0 0;max-width:45rem;color:#46535C}
+.mx-trail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;counter-reset:trail}
+.mx-trail button{counter-increment:trail;position:relative;text-align:left;font:inherit;padding:1rem 1rem 1rem 3.45rem;border:1px solid #C9D7DF;border-radius:8px;background:#fff;color:#1F2328;cursor:pointer;min-height:7.25rem}
+.mx-trail button::before{content:counter(trail);position:absolute;left:1rem;top:1rem;width:1.8rem;height:1.8rem;border-radius:50%;display:grid;place-items:center;background:#050505;color:#20A9ED;font-weight:800}
+.mx-trail button:hover,.mx-trail button:focus-visible{border-color:#20A9ED;box-shadow:0 0 0 2px rgba(32,169,237,.15)}
+.mx-trail strong{display:block;font-size:1rem;margin-bottom:.2rem}
+.mx-trail span{display:block;color:#5B6670;font-size:.86rem;line-height:1.4}
+#mx-guide{position:fixed;left:50%;bottom:1rem;transform:translateX(-50%);z-index:55;width:min(44rem,calc(100vw - 2rem));padding:1rem 1.1rem;border:2px solid #20A9ED;border-radius:10px;background:#050505;color:#F2F5F7;box-shadow:0 10px 35px rgba(0,0,0,.42);font-family:Arial,'Helvetica Neue',sans-serif}
+#mx-guide[hidden]{display:none}
+#mx-guide .mx-guide-top{display:flex;align-items:start;justify-content:space-between;gap:1rem}
+#mx-guide .mx-guide-k{color:#20A9ED;font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+#mx-guide h3{font-size:1.2rem;line-height:1.15;margin:.15rem 0 .3rem}
+#mx-guide p{color:#D7E0E5;font-size:.9rem;line-height:1.45}
+#mx-guide .mx-guide-close{border:0;background:transparent;color:#fff;font-size:1.25rem;cursor:pointer;padding:.1rem .35rem}
+#mx-guide .mx-guide-actions{display:flex;justify-content:space-between;gap:.6rem;margin-top:.8rem}
+#mx-guide .mx-guide-actions div{display:flex;gap:.5rem}
+#mx-guide button{font:inherit}
+.mx-tour-focus{box-shadow:0 0 0 4px rgba(32,169,237,.26),0 10px 30px rgba(0,0,0,.12)!important;border-color:#20A9ED!important}
+@media(max-width:760px){.mx-trail{grid-template-columns:1fr}.mx-trail button{min-height:0}.mx-discovery-head{align-items:start}}
 .mx-heb .mx-btn{margin:.2rem 0 .5rem}
 .mx-hv{margin:.8rem 0;padding:.6rem .7rem;background:#fff;border:1px solid #DFE4E8;border-radius:4px}
 .mx-hl{font-size:.78rem;font-weight:700;color:#0A7AA8;margin-bottom:.4rem}
@@ -283,6 +308,7 @@ body.mx-onlysaved li.entry:not(.mx-saved){display:none!important}
 .mx-hlem span{font-family:"SBL Hebrew","Ezra SIL","Times New Roman",serif;font-size:1.3rem}
 #mx-print{display:none}
 @media print{body.mx-printing>*:not(#mx-print){display:none!important}body.mx-printing #mx-print{display:block;padding:1rem;color:#000;background:#fff;font:12pt/1.45 Georgia,serif}#mx-print h1{font-size:18pt;margin:0 0 .2rem}#mx-print li{margin:0 0 .8rem;break-inside:avoid}}
+
 </style>
 
 <header class="hero">
@@ -2026,7 +2052,7 @@ if(location.hash==='#nt') showTab('nt');
       return h.queryPermission({ mode: 'readwrite' }).then(function (p) { if (p === 'granted') { setFs('connected'); return syncFromFolder(); } setFs('needs-permission'); });
     }).catch(function () {});
   }
-  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '"'); }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   function isNT(li) { return !!li.closest('#panel-nt'); }
@@ -2231,6 +2257,81 @@ if(location.hash==='#nt') showTab('nt');
   }
   function enhanceAll() { var n = 0; $$('li.entry').forEach(function (li) { if (!li.dataset.mx) { enhance(li); if (li.dataset.mx) n++; } }); return n; }
 
+  // ---- Guided discovery: a short, evidence-led path through the two datasets and the study tools.
+  var tourStep = 0, tourFocus = null, tour;
+  var TOUR = [
+    {
+      title: 'See the textual split',
+      text: 'Exodus 1:5 puts the contrast in one glance: MT reads seventy, while the LXX and DSS read seventy-five. Acts 7:14 uses the second number.',
+      run: function () {
+        var tab = $('#tab-scrolls'); if (tab) tab.click();
+        var q = $('#q'); if (q) { q.value = 'Exodus 1:5'; q.dispatchEvent(new Event('input', { bubbles: true })); }
+        setTimeout(function () { focusEntry('e1', false); }, 120);
+      }
+    },
+    {
+      title: 'Follow it into a quotation',
+      text: 'Matthew 1:23 shares 13 of 15 quoted words with the LXX line, yet the verdict is “Differs from both.” Open the calculation to see why a percentage is a guide, not a verdict.',
+      run: function () {
+        var tab = $('#tab-nt'); if (tab) tab.click();
+        var q = $('#nq'); if (q) { q.value = 'Matthew 1:23'; q.dispatchEvent(new Event('input', { bubbles: true })); }
+        setTimeout(function () { focusEntry('qQ179', true); }, 120);
+      }
+    },
+    {
+      title: 'Make the trail your own',
+      text: 'Star the entry, add one observation, then open My study list. Your notes stay on this device and can be copied, downloaded, printed, or saved to a folder.',
+      run: function () {
+        var tab = $('#tab-scrolls'); if (tab) tab.click();
+        var q = $('#q'); if (q) { q.value = 'Exodus 1:5'; q.dispatchEvent(new Event('input', { bubbles: true })); }
+        setTimeout(function () { focusEntry('e1', false, true); }, 120);
+      }
+    }
+  ];
+  function clearTourFocus() { if (tourFocus) tourFocus.classList.remove('mx-tour-focus'); tourFocus = null; }
+  function focusEntry(id, openCalc, focusNote) {
+    clearTourFocus();
+    var li = document.getElementById(id); if (!li) return;
+    var d = $('details', li); if (d) d.open = true;
+    setTimeout(function () {
+      ensureBox(li);
+      if (openCalc) { var calc = $('.calc', li); if (calc) calc.open = true; }
+      tourFocus = li; li.classList.add('mx-tour-focus');
+      try { li.scrollIntoView({ behavior: 'smooth', block: focusNote ? 'center' : 'start' }); } catch (e) { li.scrollIntoView(); }
+      if (focusNote) { var note = $('.mx-note', li); if (note) setTimeout(function () { note.focus({ preventScroll: true }); }, 300); }
+    }, 80);
+  }
+  function paintTour() {
+    if (!tour) return;
+    var s = TOUR[tourStep];
+    $('.mx-guide-k', tour).textContent = 'Guided discovery · ' + (tourStep + 1) + ' of ' + TOUR.length;
+    $('h3', tour).textContent = s.title;
+    $('.mx-guide-copy', tour).textContent = s.text;
+    $('[data-tour="back"]', tour).disabled = tourStep === 0;
+    $('[data-tour="next"]', tour).textContent = tourStep === TOUR.length - 1 ? 'Open study list' : 'Next insight';
+    s.run();
+  }
+  function startTour(n) { tourStep = Math.max(0, Math.min(TOUR.length - 1, n || 0)); tour.hidden = false; paintTour(); }
+  function stopTour() { if (tour) tour.hidden = true; clearTourFocus(); }
+  function initDiscovery() {
+    var banner = $('#mx-banner'); if (!banner || $('#mx-discovery')) return;
+    var sec = document.createElement('section'); sec.id = 'mx-discovery'; sec.className = 'mx-discovery'; sec.setAttribute('aria-labelledby', 'mx-discovery-title');
+    sec.innerHTML = '<div class="mx-in"><div class="mx-discovery-head"><div><p class="mx-k">A guided first look</p><h2 id="mx-discovery-title">Find one textual insight in 90 seconds</h2><p class="mx-discovery-lede">Use this three-stop trail, then keep exploring all 351 entries at your own pace.</p></div><button type="button" class="mx-btn solid" data-tour-start="0">Start the guided discovery</button></div><div class="mx-trail"><button type="button" data-tour-start="0"><strong>See the split</strong><span>Compare seventy with seventy-five in Exodus 1:5.</span></button><button type="button" data-tour-start="1"><strong>Follow a quotation</strong><span>Trace Matthew 1:23 through Greek, Hebrew, and the match calculation.</span></button><button type="button" data-tour-start="2"><strong>Keep your trail</strong><span>Star a passage, add a note, and take your study list with you.</span></button></div></div>';
+    banner.insertAdjacentElement('afterend', sec);
+    tour = document.createElement('aside'); tour.id = 'mx-guide'; tour.hidden = true; tour.setAttribute('role', 'dialog'); tour.setAttribute('aria-label', 'Guided discovery');
+    tour.innerHTML = '<div class="mx-guide-top"><div><div class="mx-guide-k"></div><h3></h3><p class="mx-guide-copy"></p></div><button type="button" class="mx-guide-close" aria-label="Close guided discovery">&times;</button></div><div class="mx-guide-actions"><button type="button" class="mx-btn" data-tour="back">Back</button><div><button type="button" class="mx-btn" data-tour="exit">Explore on my own</button><button type="button" class="mx-btn solid" data-tour="next">Next insight</button></div></div>';
+    document.body.appendChild(tour);
+    sec.addEventListener('click', function (ev) { var b = ev.target.closest('[data-tour-start]'); if (b) startTour(+b.getAttribute('data-tour-start')); });
+    tour.addEventListener('click', function (ev) {
+      if (ev.target.closest('.mx-guide-close') || ev.target.closest('[data-tour="exit"]')) { stopTour(); return; }
+      if (ev.target.closest('[data-tour="back"]')) { tourStep = Math.max(0, tourStep - 1); paintTour(); return; }
+      if (ev.target.closest('[data-tour="next"]')) {
+        if (tourStep === TOUR.length - 1) { stopTour(); dr.hidden = false; renderList(); }
+        else { tourStep++; paintTour(); }
+      }
+    });
+  }
+
   var fab = document.createElement('button'); fab.id = 'mx-fab'; fab.type = 'button'; fab.innerHTML = 'My study list <span id="mx-count">0</span>';
   var dr = document.createElement('aside'); dr.id = 'mx-drawer'; dr.hidden = true; dr.setAttribute('role', 'dialog'); dr.setAttribute('aria-label', 'My study list');
   dr.innerHTML = '<header><h2>My study list</h2><button type="button" class="mx-x" aria-label="Close">&times;</button></header><div id="mx-tools"><div class="mx-btns"><button type="button" class="mx-btn" data-a="copy">Copy</button><button type="button" class="mx-btn" data-a="dl">Download</button><button type="button" class="mx-btn" data-a="print">Print</button><button type="button" class="mx-btn" data-a="clear">Clear</button></div><label><input type="checkbox" id="mx-only"> Show saved entries only</label><p class="mx-fine" id="mx-msg">Star any entry to add it here.</p><div class="mx-where"><h3>Where your notes are saved</h3><p>Your stars and notes stay on your own computer or phone. They are saved in this browser on this device only, and nothing is sent to anyone. If you clear your browser data they are erased, and they do not move to other devices.</p><p>On Chrome or Edge on a computer you can also save them to a folder you choose, such as a folder in iCloud Drive, Dropbox or OneDrive.</p><p class="mx-fine" id="mx-fs-status"></p><div class="mx-btns"><button type="button" class="mx-btn" data-a="fs-pick">Save to a folder</button><button type="button" class="mx-btn" data-a="fs-reconnect" hidden>Reconnect folder</button><button type="button" class="mx-btn" data-a="fs-stop" hidden>Stop</button></div></div></div><div id="mx-empty">Nothing saved yet. Tap the star on an entry.</div><ol id="mx-items"></ol>';
@@ -2278,6 +2379,8 @@ if(location.hash==='#nt') showTab('nt');
       if (!savedEntries().length && !Object.keys(mem.notes).length) return;
       if (confirm('Clear all saved entries AND notes on this device?')) {
         mem.saved = {}; mem.notes = {}; save();
+        document.body.classList.remove('mx-onlysaved');
+        var only = $('#mx-only'); if (only) only.checked = false;
         $$('li.entry').forEach(function (li) { var t = $('.mx-note', li); if (t) t.value = ''; refreshOne(li); });
         renderList();
       }
@@ -2313,7 +2416,7 @@ if(location.hash==='#nt') showTab('nt');
   window.addEventListener('storage', function (ev) {
     if (ev.key === KEY) { load(); $$('li.entry').forEach(function (li) { var t = $('.mx-note', li); if (t) t.value = mem.notes[li.id] || ''; refreshOne(li); }); renderList(); }
   });
-  load(); enhanceAll(); renderList(); initFs();
+  load(); enhanceAll(); renderList(); initFs(); initDiscovery();
   var tmr = null, mo = new MutationObserver(function () {
     clearTimeout(tmr);
     tmr = setTimeout(function () {
