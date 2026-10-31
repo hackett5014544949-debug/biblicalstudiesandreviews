@@ -382,7 +382,7 @@ body.mx-onlysaved li.entry:not(.mx-saved){display:none!important}
         </div>
         <p class="copy">Guide and notes by Stephen Hackett, 2025.</p>
       </div>
-      <div class="cta cta2"><h3>Your course: Foundations of the Septuagint</h3><p>Every entry here carries a note on where it comes up in the course. Jump straight to the module you are in.</p><ol class="mx-modlist"><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-1/" target="_blank" rel="noopener">Module 1</a>: What Is the Septuagint?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-2/" target="_blank" rel="noopener">Module 2</a>: Where Does the Septuagint Come From?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-3/" target="_blank" rel="noopener">Module 3</a>: How Was the Septuagint Actually Translated?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-4/" target="_blank" rel="noopener">Module 4</a>: How Did the Septuagint Change Over Time?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-5/" target="_blank" rel="noopener">Module 5</a>: Why Does the Septuagint Matter?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-6/" target="_blank" rel="noopener">Module 6</a>: How Has the Septuagint Shaped the New Testament?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-7/" target="_blank" rel="noopener">Module 7</a>: What Authority Does the Septuagint Have for Us?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-8/" target="_blank" rel="noopener">Module 8</a>: Closing & Certificate</li></ol><div class="btns"><a class="btn primary" href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/" target="_blank" rel="noopener">Open your classroom &rarr;</a></div></div>
+      <div class="cta cta2"><h3>Your course: Foundations of the Septuagint</h3><p>Every entry here carries a note on where it comes up in the course. Jump straight to the module you are in.</p><ol class="mx-modlist"><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-1/" target="_blank" rel="noopener">Module 1</a>: What Is the Septuagint?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-2/" target="_blank" rel="noopener">Module 2</a>: Where Does the Septuagint Come From?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-3/" target="_blank" rel="noopener">Module 3</a>: How Was the Septuagint Actually Translated?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-4/" target="_blank" rel="noopener">Module 4</a>: How Did the Septuagint Change Over Time?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-5/" target="_blank" rel="noopener">Module 5</a>: Why Does the Septuagint Matter?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-6/" target="_blank" rel="noopener">Module 6</a>: How Has the Septuagint Shaped the New Testament?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-7/" target="_blank" rel="noopener">Module 7</a>: What Authority Does the Septuagint Have for Us?</li><li><a href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/module-8/" target="_blank" rel="noopener">Module 8</a>: Closing &amp; Certificate</li></ol><div class="btns"><a class="btn primary" href="https://classroom.excavatingthetext.com/courses/septuagint-foundations/" target="_blank" rel="noopener">Open your classroom &rarr;</a></div></div>
     </div>
   </section>
 
@@ -1669,7 +1669,7 @@ var reduce=false;
 try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
 
 function $(id){return document.getElementById(id);}
-function esc(s){return String(s).replace(/&/g,'&').replace(/</g,'<').replace(/>/g,'>');}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 function fmt(s){return esc(s).replace(/\*\*(.+?)\*\*/g,'<mark>$1</mark>');}
 function sig(cls,label){return '<i class="sig '+cls+'">'+esc(label)+'</i>';}
 
@@ -2026,7 +2026,7 @@ if(location.hash==='#nt') showTab('nt');
       return h.queryPermission({ mode: 'readwrite' }).then(function (p) { if (p === 'granted') { setFs('connected'); return syncFromFolder(); } setFs('needs-permission'); });
     }).catch(function () {});
   }
-  function esc(s) { return String(s).replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/"/g, '"'); }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '"'); }
   function $(s, r) { return (r || document).querySelector(s); }
   function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
   function isNT(li) { return !!li.closest('#panel-nt'); }
