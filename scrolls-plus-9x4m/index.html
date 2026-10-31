@@ -2132,14 +2132,34 @@ if(location.hash==='#nt') showTab('nt');
   }
   function otText(li) {
     if (!isNT(li)) return refOf(li);
+    var qid = li.getAttribute('data-q'), i;
+    if (qid && typeof NTQ !== 'undefined') for (i = 0; i < NTQ.length; i++) if (NTQ[i].id === qid) return NTQ[i].mt || NTQ[i].ot;
     var t = ''; $$('summary .unit .u', li).forEach(function (u) { var s = $('.sig', u), x = $('.ut', u); if (s && /Old Testament/i.test(s.textContent) && x) t += ' ; ' + x.textContent; });
     return t;
   }
   var STEM = { q: 'Qal', N: 'Niphal', p: 'Piel', P: 'Pual', h: 'Hiphil', H: 'Hophal', t: 'Hithpael', o: 'Polel', O: 'Polal', r: 'Hithpolel', m: 'Poel', M: 'Poal', k: 'Palel', K: 'Pulal', Q: 'Qal passive', l: 'Pilpel', L: 'Polpal', f: 'Hithpalpel', D: 'Nithpael', j: 'Pealal', i: 'Pilel', u: 'Hothpaal', c: 'Tiphil', v: 'Hishtaphel', w: 'Nithpalel', y: 'Nithpoel', z: 'Hithpoel' };
   var VTYPE = { p: 'perfect', q: 'sequential perfect', i: 'imperfect', w: 'sequential imperfect', h: 'cohortative', j: 'jussive', v: 'imperative', r: 'participle (active)', s: 'participle (passive)', a: 'infinitive absolute', c: 'infinitive construct' };
   var GEN = { m: 'masculine', f: 'feminine', b: 'both genders', c: 'common' }, NUM = { s: 'singular', p: 'plural', d: 'dual' }, STATE = { a: 'absolute', c: 'construct', d: 'determined' };
-  var PFX = { b: 'in / with', c: 'and', d: 'the', k: 'like / as', l: 'to / for', m: 'from', s: 'that / which', i: 'interrogative' };
-  var PARTS = { Ta: 'affirmation', Td: 'the (article)', Te: 'exclamation', Ti: 'interrogative', Tj: 'conditional', Tm: 'object marker', Tn: 'negative', To: 'inf. construct particle', Tr: 'relative' };
+  var PFX = { b: 'in / at / with / by', c: 'and', d: 'the', k: 'like / as', l: 'to / for', m: 'from', s: 'that / which', i: 'interrogative' };
+  var PFX_HEB = { b: 'בְּ', c: 'וְ', d: 'הַ', k: 'כְּ', l: 'לְ', m: 'מִן', s: 'שֶׁ', i: 'הֲ' };
+  var PREP_ROLE = {
+    b: 'location, association or means',
+    k: 'comparison',
+    l: 'direction, recipient, purpose or benefit',
+    m: 'source, separation or comparison'
+  };
+  var PARTS = { Ta: 'affirmation', Td: 'the (article)', Te: 'exhortation', Ti: 'interrogative', Tj: 'interjection', Tm: 'demonstrative', Tn: 'negative', To: 'direct object marker', Tr: 'relative' };
+  var PARTICLE_ROLE = {
+    Ta: 'This particle adds affirmation or emphasis. Its force may be expressed by wording or emphasis rather than by a separate English word.',
+    Td: 'This is the definite article, normally represented by English “the.” It is attached to the following word in Hebrew.',
+    Te: 'This exhortation particle adds an urging force such as “please,” “come,” or “now,” depending on context.',
+    Ti: 'This interrogative particle marks a question. English may show that function through word order or punctuation rather than a separate word.',
+    Tj: 'This interjection carries an exclamatory or attention-getting function; the exact English expression depends on context.',
+    Tm: 'This demonstrative or presentative particle points something out, often with a sense such as “look” or “behold.”',
+    Tn: 'This negative particle negates a word or clause, commonly with a sense such as “not,” “no,” or “there is not.”',
+    To: 'This is the direct object marker. It identifies a definite object of the verb but normally has no separate English translation because English signals the relationship through word order.',
+    Tr: 'This relative particle connects a description to its antecedent, often with a sense such as “who,” “which,” or “that.”'
+  };
   function decodeSeg(seg) {
     var t = seg.charAt(0), c = seg.slice(1), o = [];
     function per(s) { return s === '1' ? '1st person' : s === '2' ? '2nd person' : s === '3' ? '3rd person' : ''; }
@@ -2164,7 +2184,35 @@ if(location.hash==='#nt') showTab('nt');
     return segs.map(decodeSeg).filter(Boolean).join('  +  ');
   }
   function mainNum(code) { var segs = code.split('/'); for (var i = segs.length - 1; i >= 0; i--) { var d = segs[i].match(/\d+/); if (d) return d[0]; } return null; }
-  function prefixes(code) { var segs = code.split('/'), o = []; segs.forEach(function (s) { if (!/\d/.test(s) && PFX[s.trim()]) o.push(s.trim() + ' = ' + PFX[s.trim()]); }); return o; }
+  function prefixKeys(code) { var o = []; code.split('/').forEach(function (s) { s = s.trim(); if (!/\d/.test(s) && PFX[s]) o.push(s); }); return o; }
+  function prefixes(code) { return prefixKeys(code).map(function (s) { return (PFX_HEB[s] ? PFX_HEB[s] + ' = ' : '') + PFX[s]; }); }
+  function suffixInfo(morph) {
+    var segs = (morph || '').replace(/^[HA]/, '').split('/'), s = null;
+    segs.forEach(function (x) { if (/^Sp[123][mfc][spd]$/.test(x)) s = x; });
+    if (!s) return null;
+    var p = s.charAt(2), g = s.charAt(3), n = s.charAt(4), gloss = '';
+    if (p === '1') gloss = n === 'p' ? 'us' : 'me';
+    else if (p === '2') gloss = 'you';
+    else if (p === '3') gloss = n === 'p' ? 'them' : (g === 'f' ? 'her / it' : 'him / it');
+    return { code: s, person: p === '1' ? 'first person' : p === '2' ? 'second person' : 'third person', gender: GEN[g] || '', number: NUM[n] || '', gloss: gloss };
+  }
+  function boundFunctionInfo(code, morph) {
+    var keys = prefixKeys(code), prep = null, i;
+    for (i = keys.length - 1; i >= 0; i--) if (PREP_ROLE[keys[i]]) { prep = keys[i]; break; }
+    var sf = suffixInfo(morph); if (!prep || !sf) return null;
+    var lead = keys.indexOf('c') >= 0 ? 'and ' : '';
+    return {
+      label: lead + PFX[prep] + ' ' + sf.gloss,
+      explanation: 'This is not a missing or untranslatable word. Biblical Hebrew has joined the short preposition ' + PFX_HEB[prep] + ' (' + PFX[prep] + ') directly to a pronominal suffix meaning ' + sf.gloss + '. Together they express ' + PREP_ROLE[prep] + '. The exact English choice depends on the sentence.'
+    };
+  }
+  function categoryNote(morph) {
+    var segs = (morph || '').replace(/^[HA]/, '').split('/'), main = '', i;
+    for (i = segs.length - 1; i >= 0; i--) if (/^[NVAPRTCD]/.test(segs[i]) && !/^S/.test(segs[i])) { main = segs[i]; break; }
+    if (/^Np/.test(main)) return 'This is a proper name. English usually transliterates a name rather than translating it as an ordinary vocabulary word.';
+    if (/^T/.test(main)) return 'This is a grammatical particle. ' + (PARTICLE_ROLE[main.slice(0, 2)] || 'Particles organize the sentence or mark relationships, so their English rendering may be short, indirect or supplied by the surrounding syntax.');
+    return '';
+  }
   function hebTokens(t) { return t.split(/[\s־]+/).filter(function (x) { var l = x.replace(/[^א-ת]/g, ''); return l && l !== 'פ' && l !== 'ס'; }); }
   function stripCant(s) { return s.replace(/[֑-֯]/g, ''); }
   function hebRender(out, refs, D) {
@@ -2193,7 +2241,7 @@ if(location.hash==='#nt') showTab('nt');
     if (!html) html = '<p class="mx-fine">No matching Hebrew verse found for this reference.</p>';
     if (capped) html += '<p class="mx-fine">Showing the first 40 verses only.</p>';
     if (skipped && html.indexOf('mx-hv') >= 0) html += '<p class="mx-fine">One or more references (for example a book outside the Hebrew Bible) were skipped.</p>';
-    html += '<p class="mx-fine">Verse numbers are shown as in the Hebrew Bible, which can differ slightly from English Bibles (for example Psalm 22:1 in English is 22:2 in Hebrew). Tap a word for its lemma, meaning and grammar. Hebrew text: Westminster Leningrad Codex (public domain). Lemma and morphology: Open Scriptures Hebrew Bible, CC BY 4.0. Definitions: Strong’s (public domain).</p>';
+    html += '<p class="mx-fine">Verse numbers are shown as in the Hebrew Bible, which can differ slightly from English Bibles (for example Psalm 22:1 in English is 22:2 in Hebrew). Tap a word for its lemma, meaning and grammar. Hebrew text: Westminster Leningrad Codex (public domain). Lemma and morphology: <a href="https://hb.openscriptures.org/parsing/HebrewMorphologyCodes.html" target="_blank" rel="noopener">Open Scriptures Hebrew Bible</a>, CC BY 4.0. Definitions: Strong’s (public domain). Function-word explanations follow <a href="https://en.wikisource.org/wiki/Gesenius%27_Hebrew_Grammar/103._Prepositions_with_Pronominal_Suffixes_and_in_the_Plural_Form" target="_blank" rel="noopener">Gesenius §103</a>.</p>';
     out.innerHTML = html;
     out.onclick = function (ev) {
       var w = ev.target.closest ? ev.target.closest('.mx-w') : null; if (!w) return;
@@ -2203,11 +2251,14 @@ if(location.hash==='#nt') showTab('nt');
       $$('.mx-w', hv).forEach(function (x) { x.classList.remove('mx-on'); });
       if (on) { box.hidden = true; return; }
       w.classList.add('mx-on');
-      var px = prefixes(e[0] || ''), h = '';
+      var px = prefixes(e[0] || ''), bound = boundFunctionInfo(e[0] || '', e[1] || ''), h = '';
       if (lx) h += '<p class="mx-hlem"><span dir="rtl">' + esc(lx.heb) + '</span> <b>' + esc(lx.xlit) + '</b> <i>(' + esc(lx.pron || '') + ')</i> &middot; Strong’s H' + esc(num) + '</p><p><b>' + esc(lx.brief || '') + '</b></p>';
-      else h += '<p class="mx-hlem">' + (px.length ? 'Prefix only' : 'No dictionary entry for this word') + '</p>';
+      else if (bound) h += '<p class="mx-hlem"><b>Bound grammatical form</b></p><p class="mx-fn"><strong>Likely English shape:</strong> ' + esc(bound.label) + '<br>' + esc(bound.explanation) + '</p>';
+      else if (num) h += '<p class="mx-hlem"><b>Lexicon record unavailable</b> &middot; Strong’s H' + esc(num) + '</p><p class="mx-fn">A lemma number is present, but this local dictionary file has no matching record. The grammar below is still useful; consult a current Hebrew lexicon before assigning a meaning. Missing dictionary data does not mean the Hebrew is untranslatable.</p>';
+      else h += '<p class="mx-hlem"><b>No standalone lemma in this dataset</b></p><p class="mx-fn">This may be a grammatical element or a data gap. Use the form and verse context below, and do not treat the missing lookup as evidence that the Hebrew is meaningless or untranslatable.</p>';
       if (px.length) h += '<p>Attached: ' + esc(px.join('; ')) + '</p>';
       var mo = decodeMorph(e[1]); if (mo) h += '<p>Form: ' + esc(mo) + '</p>';
+      var cn = categoryNote(e[1]); if (cn) h += '<p class="mx-fn">' + esc(cn) + '</p>';
       if (lx && lx.def) h += '<p class="mx-fine">' + esc(lx.def.length > 420 ? lx.def.slice(0, 420) + '...' : lx.def) + '</p>';
       box.innerHTML = h; box.hidden = false;
     };
