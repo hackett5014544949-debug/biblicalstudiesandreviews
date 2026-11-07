@@ -184,6 +184,7 @@ fieldset.fs legend{font-size:12px;font-weight:800;letter-spacing:.12em;text-tran
 .usfm-download a:hover{background:#67c8fa;border-color:#67c8fa}
 .usfm-download span{color:var(--pale);font-size:13px}
 @media print{.usfm-download{display:none}}
+.w:focus-visible{outline:2px solid #20a9ed;outline-offset:3px;border-radius:2px}
 </style>
 </head>
 <body>
@@ -212,14 +213,14 @@ fieldset.fs legend{font-size:12px;font-weight:800;letter-spacing:.12em;text-tran
     <button id="cmpbtn" title="See how closely the editions agree with the Byzantine text and with each other">Compare</button>
     <button id="smaller" aria-label="Smaller text">A&minus;</button>
     <button id="bigger" aria-label="Larger text">A+</button>
-    <button id="frontbtn" class="hide-s">Preface &amp; Appendices</button>
+    <button id="frontbtn">Preface &amp; Appendices</button>
   </div>
 </div>
 
 <main><div class="wrap" id="view"></div></main>
 
 <div id="panel" aria-live="polite"><div class="wrapbox"><div class="box" id="pbox"></div></div></div>
-<div class="modal" id="modal" hidden><div class="mbox" id="mbox" role="dialog" aria-modal="true"></div></div>
+<div class="modal" id="modal" hidden><div class="mbox" id="mbox" role="dialog" aria-modal="true" tabindex="-1"></div></div>
 <div id="printarea" aria-hidden="true"></div>
 
 <footer>
@@ -718,7 +719,7 @@ function renderVerse(vn,t,list){
     else if(m[3]||m[4])out+=esc(m[0]);
     else{
       var tok=m[5];
-      if(GREEK_RE.test(tok)){var p=/^([^Ͱ-Ͽἀ-῿]*)(.*?)([^Ͱ-Ͽἀ-῿]*)$/.exec(tok);out+=esc(p[1])+'<span class="w" data-w="'+(wi++)+'">'+esc(p[2])+'</span>'+esc(p[3])}
+      if(GREEK_RE.test(tok)){var p=/^([^Ͱ-Ͽἀ-῿]*)(.*?)([^Ͱ-Ͽἀ-῿]*)$/.exec(tok);out+=esc(p[1])+'<span class="w" role="button" tabindex="-1" data-w="'+(wi++)+'">'+esc(p[2])+'</span>'+esc(p[3])}
       else out+=esc(tok);
     }
   }
@@ -876,6 +877,7 @@ function renderRead(keep){
   var cn=chapterNotes(cur.b,cur.c),total=chapterTotal(cur.b,cur.c);
   h+='<h2 class="ch">'+esc(cur.b)+' '+cur.c+'</h2><p class="sub">Byzantine Text &middot; Guardian Press 2026</p>';
   h+='<p class="legend">'+legendHtml(cn,total)+'</p>';
+  h+='<p class="note">Keyboard: Tab to a verse’s first word, use Left/Right to choose a word, then Enter or Space for parsing.</p>';
   /* a chapter with variants but none left after filtering looks broken; say so plainly */
   if(total>0&&cn.length===0&&filtered())
     h+='<p class="nonote">No variants in this chapter match your current filter ('+filterDesc()+'). This chapter has '+total+' variant'+(total===1?'':'s')+' in all. <a href="#" id="nn-ed">Change the filter</a> or <a href="#" id="nn-all">show all variants</a>.</p>';
@@ -894,6 +896,10 @@ function renderRead(keep){
   var hasPrev=!(bi===0&&ci===0),hasNext=!(bi===ORDER.length-1&&ci===cs.length-1);
   h+='<div class="pager"><button id="p2"'+(hasPrev?'':' disabled')+'>&larr; Previous chapter</button><button id="n2" class="primary"'+(hasNext?'':' disabled')+'>Next chapter &rarr;</button></div>';
   view.className='wrap'+(PAR?' par':'');view.innerHTML=h;
+  Array.prototype.forEach.call(view.querySelectorAll('.v'),function(v){
+    var words=v.querySelectorAll('.w');
+    if(words.length)words[0].tabIndex=0;
+  });
   $('p2').addEventListener('click',function(){step(-1)});$('n2').addEventListener('click',function(){step(1)});
   $('prev').disabled=!hasPrev;$('next').disabled=!hasNext;
   document.title=cur.b+' '+cur.c+' | Greek New Testament Reader | Excavating the Text';
@@ -1116,7 +1122,16 @@ function reportDialog(){
     RPT.ms=$('rms').checked;RPT.plain=$('rplain').checked;
   }
   $('rgo').addEventListener('click',function(){
-    saveRpt();var o={ms:RPT.ms,plain:RPT.plain},er=$('rerr');
+    var er=$('rerr'),scope=mbox.querySelector('input[name=sc]:checked');
+    if(scope&&scope.value==='custom'){
+      var valid=true;
+      [['fb','fc','fv'],['tb','tc','tv']].forEach(function(ids){
+        var b=$(ids[0]).value,c=Number($(ids[1]).value),v=Number($(ids[2]).value);
+        if(!Number.isInteger(c)||!Number.isInteger(v)||!TEXT[b]||!TEXT[b][c]||!Object.prototype.hasOwnProperty.call(TEXT[b][c],v))valid=false;
+      });
+      if(!valid){er.textContent='Choose an existing chapter and verse for both ends of the range.';er.hidden=false;er.setAttribute('role','alert');return}
+    }
+    saveRpt();var o={ms:RPT.ms,plain:RPT.plain};
     if(RPT.scope==='chapter'){o.k1=vkey(cur.b,cur.c,0);o.k2=vkey(cur.b,cur.c,999);o.desc=cur.b+' '+cur.c}
     else if(RPT.scope==='book'){o.k1=vkey(cur.b,0,0);o.k2=vkey(cur.b,999,999);o.desc=cur.b}
     else if(RPT.scope==='other'){o.k1=vkey(RPT.book,0,0);o.k2=vkey(RPT.book,999,999);o.desc=RPT.book}
@@ -1347,9 +1362,31 @@ view.addEventListener('click',function(e){
   var wd=e.target.closest&&e.target.closest('.w');if(wd){openWord(wd);return}
   var vn=e.target.closest&&e.target.closest('.vn');if(vn){cur.v=+vn.getAttribute('data-vn');history.replaceState(null,'',hashFor());Array.prototype.forEach.call(document.querySelectorAll('.v.hl'),function(x){x.classList.remove('hl')});$('v'+cur.v).classList.add('hl');return}
 });
-view.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target.matches&&e.target.matches('sup.fn'))openFn(e.target,false)});
+view.addEventListener('keydown',function(e){
+  var t=e.target;
+  if(t.matches&&t.matches('.w')){
+    if(e.key==='Enter'||e.key===' '){e.preventDefault();openWord(t);return}
+    if(e.key==='ArrowRight'||e.key==='ArrowLeft'||e.key==='Home'||e.key==='End'){
+      e.preventDefault();e.stopPropagation();
+      var words=Array.prototype.slice.call(t.closest('.v').querySelectorAll('.w')),i=words.indexOf(t);
+      var n=e.key==='Home'?0:e.key==='End'?words.length-1:Math.max(0,Math.min(words.length-1,i+(e.key==='ArrowRight'?1:-1)));
+      t.tabIndex=-1;words[n].tabIndex=0;words[n].focus();return;
+    }
+  }
+  if((e.key==='Enter'||e.key===' ')&&t.matches&&t.matches('sup.fn')){e.preventDefault();openFn(t,false)}
+});
 document.addEventListener('keydown',function(e){
-  if(!modal.hidden){if(e.key==='Escape')closeModal();return}
+  if(!modal.hidden){
+    if(e.key==='Escape'){e.preventDefault();closeModal()}
+    if(e.key==='Tab'){
+      var items=Array.prototype.slice.call(mbox.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')).filter(function(x){return !x.disabled&&x.tabIndex>=0&&x.getClientRects().length});
+      var first=items[0],last=items[items.length-1],active=document.activeElement;
+      if(!first){e.preventDefault();mbox.focus()}
+      else if(e.shiftKey&&(active===first||!mbox.contains(active))){e.preventDefault();last.focus()}
+      else if(!e.shiftKey&&(active===last||!mbox.contains(active))){e.preventDefault();first.focus()}
+    }
+    return;
+  }
   if(e.key==='Escape')closePanel();
   var tg=(e.target.tagName||'').toLowerCase();if(tg==='input'||tg==='select'||tg==='textarea')return;
   if(cur.mode==='read'&&!e.metaKey&&!e.ctrlKey&&!e.altKey){
@@ -1363,7 +1400,7 @@ $('rptbtn').addEventListener('click',reportDialog);
 $('cmpbtn').addEventListener('click',cmpDialog);
 
 function fromHash(){
-  var h=decodeURIComponent((location.hash||'').replace(/^#/,'')).split('/');
+  var h;try{h=decodeURIComponent((location.hash||'').replace(/^#/,'')).split('/')}catch(e){return false}
   if(h[0]&&TEXT[h[0]]){cur.b=h[0];var cs=chaptersOf(cur.b);cur.c=cs.indexOf(+h[1])>-1?+h[1]:1;cur.v=h[2]&&TEXT[cur.b][cur.c][h[2]]?+h[2]:null;return true}
   return false;
 }
@@ -1372,6 +1409,7 @@ window.addEventListener('popstate',function(){if(fromHash()){cur.mode='read';fil
 /* init */
 fsz(0);
 $('clean').classList.toggle('on',store('gnt-clean')==='1');
+$('clean').setAttribute('aria-pressed',String(store('gnt-clean')==='1'));
 $('parbtn').classList.toggle('on',PAR);$('parbtn').setAttribute('aria-pressed',String(PAR));
 $('parbtn').addEventListener('click',function(){
   PAR=!PAR;store('gnt-par',PAR?'1':'0');this.classList.toggle('on',PAR);this.setAttribute('aria-pressed',String(PAR));
