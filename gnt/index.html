@@ -178,6 +178,12 @@ fieldset.fs legend{font-size:12px;font-weight:800;letter-spacing:.12em;text-tran
   #printarea .rv .rt,#printarea .rv .rg{font-size:11pt}
   #printarea .rmeta{background:none;border:0;border-left:2pt solid #999;font-size:9.5pt}
 }
+
+.usfm-download{display:flex;align-items:center;flex-wrap:wrap;gap:10px 16px;margin:18px 0 0}
+.usfm-download a{display:inline-block;background:var(--cyan);color:#001a2a;border:1px solid var(--cyan);border-radius:6px;padding:9px 14px;font-size:15px;font-weight:700;text-decoration:none;line-height:1.4}
+.usfm-download a:hover{background:#67c8fa;border-color:#67c8fa}
+.usfm-download span{color:var(--pale);font-size:13px}
+@media print{.usfm-download{display:none}}
 </style>
 </head>
 <body>
@@ -187,6 +193,7 @@ fieldset.fs legend{font-size:12px;font-weight:800;letter-spacing:.12em;text-tran
     <h1>The Greek New Testament</h1>
     <div class="rule"></div>
     <p class="tag">According to the Byzantine Text. Guardian Press, 2026. Free to read. Tap any word for its parsing; tap a dagger for the apparatus. A double dagger marks variants with manuscript data. <a href="guide.html" style="color:var(--cyan);font-weight:700">New here? Read the user guide.</a></p>
+    <p class="usfm-download"><a href="/resources/greek-new-testament-byzantine-text-2026-usfm-2026-10-10.zip" download>Download USFM (ZIP)</a><span>668 KB &middot; Paratext source &middot; October 10, 2026</span></p>
   </div>
 </header>
 
