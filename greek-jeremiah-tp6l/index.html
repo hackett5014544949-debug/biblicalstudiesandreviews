@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Greek Jeremiah Student Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* Layout idea: near-black stage for presenting, white reading page for the student guide. My Style: black, white, cyan. */
+:root{
+  --ink:#050505;
+  --cyan:#20A9ED;
+  --blue:#0877AB;
+  --white:#FFFFFF;
+  --card:#F7F8FA;
+  --callout:#EDF8FF;
+  --text:#202124;
+  --slate:#555D65;
+  --border:#DFE3E7;
+  --pale:#D8DDE1;
+  --warn:#C2410C;
+  --font-body:Arial,Helvetica,sans-serif;
+  --font-gr:"EB Garamond","Palatino Linotype",Palatino,"Times New Roman",serif;
+  /* active palette, switched by mode */
+  --bg:var(--ink);
+  --fg:var(--pale);
+  --fg-strong:#FFFFFF;
+  --panel:#101317;
+  --panel-line:#262c33;
+  --muted:#9AA4AE;
+  --link:var(--cyan);
+  color-scheme:light;
+}
+body[data-mode="guide"]{
+  --bg:var(--white);
+  --fg:var(--text);
+  --fg-strong:var(--ink);
+  --panel:var(--card);
+  --panel-line:var(--border);
+  --muted:var(--slate);
+  --link:var(--blue);
+}
+body[data-mode="presenter"]{color-scheme:dark;}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:18px;line-height:1.65;}
+a{color:var(--link);}
+.gr{font-family:var(--font-gr);font-size:1.18em;letter-spacing:.01em;}
+h1,h2,h3{color:var(--fg-strong);margin:0;text-wrap:balance;}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:2px;}
+
+/* masthead */
+.mast{background:var(--ink);color:var(--pale);border-bottom:4px solid var(--cyan);}
+.mast-in{max-width:1180px;margin:0 auto;padding:18px 20px;display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;}
+.mast h1{font-size:clamp(22px,3.4vw,34px);font-weight:900;text-transform:uppercase;letter-spacing:-.02em;color:#fff;line-height:1.1;}
+.mast .kicker{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px;}
+.mast .meta{font-size:14px;color:var(--pale);}
+.modes{display:flex;gap:6px;}
+.modes button{font:inherit;font-size:15px;font-weight:700;padding:9px 16px;border-radius:6px;border:1px solid #3a424b;background:transparent;color:var(--pale);cursor:pointer;}
+.modes button[aria-pressed="true"]{background:var(--cyan);border-color:var(--cyan);color:var(--ink);}
+
+main{max-width:1180px;margin:0 auto;padding:24px 20px 80px;}
+
+/* presenter chrome */
+.bar{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;justify-content:space-between;margin-bottom:18px;}
+.dots{display:flex;gap:6px;flex-wrap:wrap;}
+.dots button{width:34px;height:34px;border-radius:6px;border:1px solid var(--panel-line);background:var(--panel);color:var(--fg);font:inherit;font-size:14px;font-weight:700;cursor:pointer;}
+.dots button[aria-current="step"]{background:var(--cyan);border-color:var(--cyan);color:var(--ink);}
+.clock{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.clock strong{color:var(--fg-strong);}
+.ctrl{display:flex;gap:8px;}
+.ctrl button{font:inherit;font-size:15px;font-weight:700;padding:9px 16px;border-radius:6px;border:1px solid var(--panel-line);background:var(--panel);color:var(--fg-strong);cursor:pointer;}
+.ctrl button.primary{background:var(--cyan);border-color:var(--cyan);color:var(--ink);}
+.ctrl button:disabled{opacity:.4;cursor:default;}
+
+/* stops */
+.stop{display:none;}
+body[data-mode="presenter"] .stop.active,
+body[data-mode="notes"] .stop.active{display:block;}
+body[data-mode="guide"] .stop{display:block;padding:34px 0;border-top:1px solid var(--border);}
+body[data-mode="guide"] .stop:first-of-type{border-top:0;}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin:0 0 6px;}
+body[data-mode="guide"] .eyebrow{color:var(--blue);}
+.stop h2{font-size:clamp(28px,4.4vw,48px);font-weight:900;letter-spacing:-.02em;line-height:1.08;margin-bottom:6px;}
+body[data-mode="guide"] .stop h2{font-size:clamp(24px,3.2vw,32px);}
+.rule{width:64px;height:4px;background:var(--cyan);margin:14px 0 22px;border:0;}
+.lede{font-size:clamp(18px,2.2vw,24px);max-width:62ch;color:var(--fg-strong);margin:0 0 18px;}
+body[data-mode="guide"] .lede{font-size:19px;color:var(--fg);}
+p{margin:0 0 14px;max-width:70ch;}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.cols4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;}
+.panel{background:var(--panel);border:1px solid var(--panel-line);border-radius:6px;padding:16px 18px;}
+.panel h3{font-size:18px;margin-bottom:6px;}
+.panel p:last-child{margin-bottom:0;}
+.panel .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);margin-bottom:4px;}
+body[data-mode="guide"] .panel .tag{color:var(--blue);}
+.callout{border-left:4px solid var(--cyan);background:#0b1217;color:var(--pale);padding:14px 18px;border-radius:0 6px 6px 0;margin:18px 0;max-width:72ch;}
+body[data-mode="guide"] .callout{background:var(--callout);color:var(--text);}
+.callout strong{color:#fff;}
+body[data-mode="guide"] .callout strong{color:var(--ink);}
+.ask{font-size:clamp(20px,2.6vw,28px);font-weight:700;color:#fff;border-left:4px solid var(--cyan);padding:4px 0 4px 18px;margin:18px 0;max-width:30ch;line-height:1.3;}
+body[data-mode="guide"] .ask{color:var(--ink);font-size:21px;max-width:60ch;}
+ul,ol{margin:0 0 14px;padding-left:22px;max-width:70ch;}
+li{margin-bottom:6px;}
+.quote{border-left:4px solid var(--cyan);background:#0b1217;padding:14px 18px;border-radius:0 6px 6px 0;margin:16px 0;}
+body[data-mode="guide"] .quote{background:var(--callout);}
+.quote p{font-size:clamp(19px,2.3vw,25px);font-weight:700;color:#fff;line-height:1.35;margin:0 0 8px;}
+body[data-mode="guide"] .quote p{color:var(--ink);font-size:20px;}
+.cols .quote p{font-size:clamp(17px,1.7vw,21px);}
+.quote cite{display:block;font-style:normal;font-size:14px;line-height:1.45;color:var(--muted);}
+.small{font-size:15px;color:var(--muted);}
+
+/* outline blocks */
+.outline{display:flex;flex-direction:column;gap:6px;}
+.blk{border:1px solid var(--panel-line);border-radius:6px;padding:10px 14px;background:var(--panel);display:flex;justify-content:space-between;gap:12px;font-size:16px;}
+.blk b{color:var(--fg-strong);}
+.blk span{color:var(--muted);white-space:nowrap;}
+.blk.oan{background:var(--cyan);border-color:var(--cyan);color:var(--ink);}
+.blk.oan b,.blk.oan span{color:var(--ink);}
+.blk.cup{border-style:dashed;border-color:var(--cyan);}
+.col-title{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.nations{columns:1;padding-left:0;list-style:none;counter-reset:n;}
+.nations li{counter-increment:n;display:flex;gap:10px;padding:5px 10px;border:1px solid var(--panel-line);border-radius:6px;margin-bottom:5px;background:var(--panel);font-size:16px;}
+.nations li::before{content:counter(n);font-weight:700;color:var(--cyan);min-width:1.2em;font-variant-numeric:tabular-nums;}
+body[data-mode="guide"] .nations li::before{color:var(--blue);}
+
+/* verse chips */
+.rowlabel{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 8px;}
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+.chip{min-width:44px;text-align:center;padding:8px 10px;border-radius:6px;border:1px solid var(--panel-line);background:var(--panel);color:var(--fg-strong);font-weight:700;font-size:16px;font-variant-numeric:tabular-nums;}
+.chip.same{border-color:var(--panel-line);}
+.chip.moved{background:var(--cyan);border-color:var(--cyan);color:var(--ink);}
+.chip.absent{border:2px dashed var(--warn);color:var(--warn);background:transparent;text-decoration:line-through;}
+.chip.aram{border-color:var(--cyan);}
+.chips.dim .chip.same{opacity:.28;}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px;color:var(--muted);margin-top:12px;}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:-2px;margin-right:6px;border:1px solid var(--panel-line);}
+.legend i.l-moved{background:var(--cyan);border-color:var(--cyan);}
+.legend i.l-absent{border:2px dashed var(--warn);}
+.toggle{font:inherit;font-size:15px;font-weight:700;padding:8px 14px;border-radius:6px;border:1px solid var(--cyan);background:transparent;color:var(--cyan);cursor:pointer;margin-top:12px;}
+body[data-mode="guide"] .toggle{color:var(--blue);border-color:var(--blue);}
+.toggle[aria-pressed="true"]{background:var(--cyan);color:var(--ink);}
+
+/* tables */
+.tablewrap{overflow-x:auto;margin:10px 0 18px;}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:16px;}
+th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--panel-line);vertical-align:top;}
+th{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+td:first-child{font-weight:700;color:var(--fg-strong);}
+
+/* hexapla columns */
+.hex{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;margin:10px 0 14px;}
+.hex div{padding:12px 8px;text-align:center;border:1px solid var(--panel-line);border-radius:6px;background:var(--panel);font-size:14px;font-weight:700;color:var(--fg-strong);}
+.hex div small{display:block;font-weight:400;color:var(--muted);font-size:12px;margin-top:2px;}
+.hex div.five{background:var(--cyan);border-color:var(--cyan);color:var(--ink);}
+.hex div.five small{color:var(--ink);}
+.sign{font-size:1.5em;font-weight:700;color:var(--cyan);margin-right:6px;}
+
+/* notes */
+.notes{margin-top:26px;border:1px solid var(--panel-line);border-radius:6px;background:#0b0e12;padding:14px 18px;}
+.notes h3{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;}
+.notes ul{margin-bottom:0;font-size:16px;}
+body[data-notes="off"] .notes{display:none;}
+body[data-mode="guide"] .notes{display:none;}
+
+/* notes view: speaker notes only, for a second window that is not shared */
+.timerbox,.nextup,.nv,.conn,#btn-script{display:none;}
+.conn{font-size:13px;font-weight:700;padding:8px 12px;border-radius:6px;border:1px solid var(--panel-line);white-space:nowrap;}
+.conn.ok{color:var(--ink);background:var(--cyan);border-color:var(--cyan);}
+.conn.off{color:var(--warn);border-style:dashed;border-color:var(--warn);}
+.script{display:none;font-size:22px;line-height:1.6;}
+.script p{max-width:none;margin-bottom:14px;}
+.script b{color:var(--cyan);text-transform:uppercase;font-size:.62em;letter-spacing:.1em;display:block;margin-bottom:2px;}
+body[data-mode="notes"][data-script="full"] .notes ul{display:none;}
+body[data-mode="notes"][data-script="full"] .script{display:block;}
+body[data-mode="notes"] #btn-script{display:inline-block;}
+body[data-mode="notes"] .conn:not([hidden]){display:inline-block;}
+body[data-mode="notes"] #btn-open{display:none;}
+body[data-mode="notes"] .nv{display:block;margin-top:22px;}
+.nv .panel{margin-bottom:14px;}
+.nv textarea{width:100%;min-height:120px;font:inherit;font-size:17px;line-height:1.5;padding:10px 12px;border-radius:6px;border:1px solid var(--panel-line);background:#0b0e12;color:#fff;resize:vertical;}
+.nv details{margin-bottom:8px;}
+.nv summary{cursor:pointer;font-weight:700;color:var(--fg-strong);}
+.nv ul{font-size:16px;margin-top:8px;}
+body[data-mode="notes"] .mast,
+body[data-mode="notes"] .hint,
+body[data-mode="notes"] #btn-notes{display:none;}
+body[data-mode="notes"] .timerbox{display:flex;align-items:center;gap:8px;}
+.timerbox .tleft{font-size:28px;font-weight:900;color:#fff;font-variant-numeric:tabular-nums;min-width:3.2ch;}
+.timerbox button{font:inherit;font-size:14px;font-weight:700;padding:7px 12px;border-radius:6px;border:1px solid var(--panel-line);background:var(--panel);color:var(--fg-strong);cursor:pointer;}
+body[data-mode="notes"] .nextup{display:block;margin:0 0 14px;font-size:15px;color:var(--muted);}
+body[data-mode="notes"] .nextup strong{color:var(--cyan);}
+body[data-mode="notes"] .stop.active > *:not(.notes):not(.eyebrow):not(h2){display:none;}
+body[data-mode="notes"] .stop h2{font-size:clamp(26px,3.6vw,40px);}
+body[data-mode="notes"] .notes{display:block;margin-top:14px;background:#0b0e12;}
+body[data-mode="notes"] .notes ul{font-size:22px;line-height:1.55;}
+body[data-mode="notes"] .notes h3{font-size:14px;}
+
+/* exercise */
+.case{padding:14px 18px;border:1px solid var(--panel-line);border-radius:6px;background:var(--panel);margin-bottom:12px;}
+.case p{margin-bottom:10px;}
+.case button{font:inherit;font-size:14px;font-weight:700;padding:7px 12px;border-radius:6px;border:1px solid var(--cyan);background:transparent;color:var(--cyan);cursor:pointer;}
+body[data-mode="guide"] .case button{color:var(--blue);border-color:var(--blue);}
+.case .ans{display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--panel-line);}
+.case.open .ans{display:block;}
+
+.guide-only{display:none;}
+body[data-mode="guide"] .guide-only{display:block;}
+body[data-mode="guide"] .bar{display:none;}
+.hint{font-size:14px;color:var(--muted);margin-top:10px;}
+body[data-mode="guide"] .hint{display:none;}
+footer{max-width:1180px;margin:0 auto;padding:0 20px 60px;font-size:14px;color:var(--muted);}
+footer ul{padding-left:18px;}
+
+@media (max-width:820px){
+  .cols,.cols3,.cols4{grid-template-columns:1fr;}
+  .hex{grid-template-columns:repeat(3,minmax(0,1fr));}
+  body{font-size:17px;}
+}
+@media (prefers-reduced-motion:no-preference){
+  .stop.active{animation:in .18s ease-out;}
+  @keyframes in{from{opacity:.6;transform:translateY(4px);}to{opacity:1;transform:none;}}
+}
+</style>
+</head>
+<body data-mode="guide">
+<header class="mast">
+  <div class="mast-in">
+    <div>
+      <div class="kicker">Foundations of the Septuagint · Module 4</div>
+      <h1>How the Greek Old Testament changed over time</h1>
+      <div class="meta">Student guide · Chapter 4 and a worked example: Greek Jeremiah</div>
+    </div>
+  </div>
+</header>
+<main>
+  <section class="stop" data-title="The question" data-time="0:00 to 1:30" id="s1">
+    <p class="eyebrow">Part 1 · From Lanier and Ross, Chapter 4</p>
+    <h2>How did the Greek Old Testament develop?</h2>
+    <hr class="rule">
+    <p class="lede">It did not arrive as one fixed text and stay that way. It was copied, corrected, retranslated and compared for centuries.</p>
+    <div class="ask">If a text is copied by hand for centuries, what happens to it?</div>
+    <div class="cols3">
+      <div class="panel"><span class="tag">Over the centuries</span><h3>Hand copying</h3><p>Jewish and Christian scribes copied the Greek Old Testament by hand.</p></div>
+      <div class="panel"><span class="tag">The result</span><h3>Variants</h3><p>Copying produced both accidental and deliberate differences. Scholars sort them to get back toward the earliest wording.</p></div>
+      <div class="panel"><span class="tag">A working term</span><h3>Old Greek</h3><p>The earliest Greek translation, as distinct from the revisions made to it later.</p></div>
+    </div>
+    <div class="callout"><strong>The plan for today.</strong> Three layers of change that Lanier and Ross describe, then one book where we can test them.</div>
+  </section>
+  <section class="stop" data-title="Revision" data-time="1:30 to 3:00" id="s2">
+    <p class="eyebrow">Part 2 · Layer one</p>
+    <h2>Revision: pulling the Greek toward the Hebrew</h2>
+    <hr class="rule">
+    <p class="lede">Over time, people revised the Greek translations, and the usual direction was toward the Hebrew text they knew.</p>
+    <div class="quote"><p>Revisers often worked to &ldquo;bring them closer to the Hebrew text.&rdquo;</p><cite>Greg Lanier and William A. Ross, &ldquo;7 Questions about the Septuagint,&rdquo; Crossway. Quotation is word for word; the sentence around it is a paraphrase.</cite></div>
+    <div class="cols">
+      <div class="panel"><span class="tag">Around the turn of the era</span><h3>Kaige</h3><p>A revising tradition named for its habit of rendering a Hebrew word for &ldquo;also&rdquo; or &ldquo;even&rdquo; as <span class="gr">καίγε</span>. Best known from a Greek Minor Prophets scroll found at Nahal Hever.</p></div>
+      <div class="panel"><span class="tag">Why it matters</span><h3>Layers</h3><p>Each revision sits on top of the older Greek. Scholars work backward through the layers to reach the Old Greek.</p></div>
+    </div>
+  </section>
+  <section class="stop" data-title="Retranslations" data-time="3:00 to 5:00" id="s3">
+    <p class="eyebrow">Part 3 · Layer two</p>
+    <h2>Aquila, Symmachus, Theodotion</h2>
+    <hr class="rule">
+    <p class="lede">In the second century, three more Greek versions of the Hebrew Scriptures appeared, each with its own instinct.</p>
+    <div class="cols3">
+      <div class="panel"><span class="tag">Second century AD</span><h3>Aquila</h3><p>Extremely literal. Famous for matching the Hebrew word for word, even where the Greek turns awkward.</p></div>
+      <div class="panel"><span class="tag">Second century AD</span><h3>Symmachus</h3><p>The opposite instinct: clear, idiomatic Greek that aims at the sense rather than the word order.</p></div>
+      <div class="panel"><span class="tag">Second century AD</span><h3>Theodotion</h3><p>Stays close to the older Greek while correcting it toward the Hebrew. His Daniel replaced the Old Greek in church use.</p></div>
+    </div>
+    <div class="callout" style="margin-top:20px"><strong>Recap from the lecture, Isaiah 7:14.</strong> The older Greek reads <span class="gr">παρθένος</span>, &ldquo;virgin.&rdquo; The three later versions are reported to read <span class="gr">νεᾶνις</span>, &ldquo;young woman.&rdquo; The difference comes from a revising choice, not from a different Hebrew edition.</div>
+  </section>
+  <section class="stop" data-title="Origen" data-time="5:00 to 7:00" id="s4">
+    <p class="eyebrow">Part 4 · Layer three</p>
+    <h2>Origen&rsquo;s Hexapla</h2>
+    <hr class="rule">
+    <p class="lede">In the 230s AD, Origen laid six versions side by side at Caesarea so that readers could see exactly where Greek and Hebrew differed.</p>
+    <div class="hex">
+      <div>1<small>Hebrew</small></div>
+      <div>2<small>Hebrew in Greek letters</small></div>
+      <div>3<small>Aquila</small></div>
+      <div>4<small>Symmachus</small></div>
+      <div class="five">5<small>Septuagint</small></div>
+      <div>6<small>Theodotion</small></div>
+    </div>
+    <div class="cols">
+      <div class="panel"><h3><span class="sign">※</span>Asterisk</h3><p>Marks material found in the Hebrew but missing from the Greek. Origen filled these gaps mainly from Theodotion.</p></div>
+      <div class="panel"><h3><span class="sign">÷</span>Obelus</h3><p>Marks material found in the Greek but missing from the Hebrew.</p></div>
+    </div>
+    <p class="small">A later Antiochene, or Lucianic, recension also exists. Its background is still debated.</p>
+  </section>
+  <section class="stop" data-title="Bridge" data-time="7:00 to 8:00" id="s5">
+    <p class="eyebrow">Part 5 · From the book to Jeremiah</p>
+    <h2>A harder kind of change</h2>
+    <hr class="rule">
+    <p class="lede">Revision, new versions and Origen all happened after the Greek existed. Greek Jeremiah raises a different question.</p>
+    <div class="cols">
+      <div class="panel"><span class="tag">What the book showed us</span><h3>Changes made to the Greek</h3><p>Someone copied it, revised it, retranslated it, or compared it with the Hebrew.</p></div>
+      <div class="panel"><span class="tag">What Jeremiah asks</span><h3>A difference already in the Hebrew</h3><p>Did the Greek differ because the Hebrew behind it already differed, before anyone translated?</p></div>
+    </div>
+    <div class="ask">How would you tell a change made to the Greek from a difference that was already in the Hebrew?</div>
+  </section>
+  <section class="stop" data-title="Where are the oracles?" data-time="8:00 to 9:30" id="s6">
+    <p class="eyebrow">Part 6 · Opening question</p>
+    <h2>Where do you find the Oracles Against the Nations?</h2>
+    <hr class="rule">
+    <div class="ask">Open your Bible to Jeremiah. Where are the oracles against Egypt, Moab, Edom and Babylon?</div>
+    <p class="lede">In English Bibles they sit near the end of the book, in chapters 46 to 51. In the Greek Old Testament they sit in the middle, right after 25:13. Same prophet, same oracles, different arrangement.</p>
+    <div class="callout"><strong>Today's question:</strong> when two ancient texts of one book disagree, did someone change the text after it was written, or were there already two forms of it?</div>
+  </section>
+  <section class="stop" data-title="Two outlines" data-time="9:30 to 12:00" id="s7">
+    <p class="eyebrow">Part 7 · Hebrew and Old Greek side by side</p>
+    <h2>Two outlines of one book</h2>
+    <hr class="rule">
+    <p class="lede">The cyan block is the same material in both. Watch where it lands, and watch the cup of wrath.</p>
+    <div class="cols">
+      <div>
+        <div class="col-title">Hebrew text (your English Bible)</div>
+        <div class="outline">
+          <div class="blk"><b>Judah and the call of Jeremiah</b><span>1 to 25:13</span></div>
+          <div class="blk cup"><b>Cup of wrath</b><span>25:15 to 38</span></div>
+          <div class="blk"><b>Narrative, trials, hope for restoration</b><span>26 to 45</span></div>
+          <div class="blk oan"><b>Oracles against the nations</b><span>46 to 51</span></div>
+          <div class="blk"><b>Fall of Jerusalem, appendix</b><span>52</span></div>
+        </div>
+      </div>
+      <div>
+        <div class="col-title">Old Greek</div>
+        <div class="outline">
+          <div class="blk"><b>Judah and the call of Jeremiah</b><span>1 to 25:13</span></div>
+          <div class="blk oan"><b>Oracles against the nations</b><span>25:14 to 31</span></div>
+          <div class="blk cup"><b>Cup of wrath</b><span>Greek 32</span></div>
+          <div class="blk"><b>Narrative, trials, hope for restoration</b><span>Greek 33 to 51</span></div>
+          <div class="blk"><b>Fall of Jerusalem, appendix</b><span>52</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="small" style="margin-top:10px">Blocks are not drawn to scale. Greek chapter numbers follow the numbering most Greek editions use.</p>
+    <div class="cols" style="margin-top:18px">
+      <div>
+        <div class="col-title">Order of the nations, Hebrew</div>
+        <ol class="nations"><li>Egypt</li><li>Philistia</li><li>Moab</li><li>Ammon</li><li>Edom</li><li>Damascus</li><li>Kedar</li><li>Elam</li><li>Babylon</li></ol>
+      </div>
+      <div>
+        <div class="col-title">Order of the nations, Old Greek</div>
+        <ol class="nations"><li>Elam</li><li>Egypt</li><li>Babylon</li><li>Philistia</li><li>Edom</li><li>Ammon</li><li>Kedar</li><li>Damascus</li><li>Moab</li></ol>
+      </div>
+    </div>
+  </section>
+  <section class="stop" data-title="Length" data-time="12:00 to 14:00" id="s8">
+    <p class="eyebrow">Part 8 · What the Greek has less of</p>
+    <h2>The Greek is shorter</h2>
+    <hr class="rule">
+    <p class="lede">Greek Jeremiah is somewhere between one eighth and one sixth shorter than the Hebrew, depending on who measures. You can see it without any Greek.</p>
+    <div class="cols3">
+      <div class="panel"><span class="tag">Titles and formulas</span><h3>Shorter names</h3><p>Where the Hebrew says "Jeremiah the prophet" or "Nebuchadnezzar king of Babylon," the Greek often has just the name.</p></div>
+      <div class="panel"><span class="tag">Whole passages</span><h3>Missing verses</h3><p>Jeremiah 33:14 to 26, a promise about David's line and the priests, has no counterpart in the Old Greek.</p></div>
+      <div class="panel"><span class="tag">Repeated wording</span><h3>Fewer doublets</h3><p>Phrases the Hebrew repeats elsewhere in the book are often absent from the Greek.</p></div>
+    </div>
+    <div class="quote"><p>&ldquo;MT is 20 percent longer than LXX.&rdquo;</p><cite>Emanuel Tov, &ldquo;The Book of Jeremiah: a Work in Progress,&rdquo; Bible Review 16:3 (June 2000). MT is the Hebrew text behind your English Bible. LXX is the Greek.</cite></div>
+    <div class="cols">
+      <div>
+        <div class="ask">Three possible explanations. What evidence would decide between them?</div>
+        <ol>
+          <li>The Greek translator trimmed the text.</li>
+          <li>The Hebrew he translated was already shorter.</li>
+          <li>The Hebrew copy behind our Bible was expanded later.</li>
+        </ol>
+      </div>
+      <div class="panel"><span class="tag">NETS introduction to Ieremias</span><h3>How the translator worked</h3>
+        <ol>
+          <li><b>Isomorphism.</b> The translator&rsquo;s basic norm was to represent nearly every element of the Hebrew.</li>
+          <li><b>Problems in the source text</b> are generally passed on to the reader.</li>
+        </ol>
+        <p class="small">Why it matters: a translator who follows the Hebrew this closely is an unlikely trimmer. That points toward explanation 2, though it does not prove it. Pietersma and Saunders, &ldquo;To the Reader of Ieremias,&rdquo; NETS (2007), pp. 876&ndash;880.</p>
+      </div>
+    </div>
+  </section>
+  <section class="stop" data-title="Jeremiah 10" data-time="14:00 to 17:00" id="s9">
+    <p class="eyebrow">Part 9 · Zoom in on one passage</p>
+    <h2>Jeremiah 10: the verses that move and vanish</h2>
+    <hr class="rule">
+    <p class="lede">This is the idol passage. Put the Hebrew verse order above the Greek verse order and look for the gaps.</p>
+    <div class="rowlabel">Hebrew verse order (Jeremiah 10:1 to 16)</div>
+    <div class="chips" id="row-mt"></div>
+    <div class="rowlabel">Old Greek verse order</div>
+    <div class="chips" id="row-og"></div>
+    <div class="legend">
+      <span><i class="l-moved"></i>Moved out of Hebrew order</span>
+      <span><i class="l-absent"></i>No Greek counterpart</span>
+      <span>Verse 11 is in Aramaic in the Hebrew text</span>
+    </div>
+    <button type="button" class="toggle" id="btn-diff" aria-pressed="false">Show only the differences</button>
+    <div class="cols" style="margin-top:20px">
+      <div class="panel"><span class="tag">Only in the Hebrew</span><h3>Verses 6 to 8 and 10</h3><p>Praise that there is none like the LORD, a charge that the idols' teaching is empty wood, and a declaration that the LORD is the true, living God and everlasting king.</p></div>
+      <div class="panel"><span class="tag">Different position</span><h3>Verse 9</h3><p>The silver from Tarshish and gold from Uphaz that the craftsmen use sits in a different place in the Greek, splitting verse 5 into two halves.</p></div>
+    </div>
+  </section>
+  <section class="stop" data-title="The scroll" data-time="17:00 to 19:30" id="s10">
+    <p class="eyebrow">Part 10 · The evidence</p>
+    <h2>A Hebrew scroll that matches the Greek</h2>
+    <hr class="rule">
+    <p class="lede">4Q71, also called 4QJer<sup>b</sup>, is a Hebrew scroll from Qumran Cave 4. It dates to roughly the late third or early second century BC.</p>
+    <div class="cols">
+      <div class="panel"><span class="tag">What survives on the leather</span>
+        <ul>
+          <li>Parts of Jeremiah 9:22 to 10:21, in Hebrew, with verse 11 in Aramaic.</li>
+          <li>Where the text survives, the verse order follows the Greek.</li>
+          <li>Verses 10:6 to 8 and 10:10 are not there.</li>
+        </ul>
+      </div>
+      <div class="panel"><span class="tag">What scholars infer</span>
+        <ul>
+          <li>That the Greek translator worked from a Hebrew text like this one, so the shortness began in Hebrew.</li>
+          <li>That the rest of the scroll, including the placement of the nations, also matched the Greek. That part is a reasonable assumption, not something the fragment shows.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><strong>Both forms existed at the same time.</strong> Other Qumran copies of Jeremiah (4Q70 and 4Q72) follow the longer Hebrew form. Scholars describe this as two editions of the book: a shorter one behind the Greek, and a longer one behind our Bible.</div>
+  </section>
+  <section class="stop" data-title="Edition or revision" data-time="19:30 to 21:30" id="s11">
+    <p class="eyebrow">Part 11 · Connecting it to Chapter 4</p>
+    <h2>Two different kinds of change</h2>
+    <hr class="rule">
+    <p class="lede">Jeremiah shows one kind of difference. The revisers we met earlier show the other. Keeping them apart is the skill of this module.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th></th><th>Different Hebrew edition</th><th>Later revision of the Greek</th></tr></thead>
+        <tbody>
+          <tr><td>When</td><td>Before the translation was made</td><td>After the Greek already existed</td></tr>
+          <tr><td>Who</td><td>Hebrew scribes and editors</td><td>Greek revisers and copyists</td></tr>
+          <tr><td>What changes</td><td>Length, order, whole passages</td><td>Word choice, nudged toward a Hebrew text the reviser knew</td></tr>
+          <tr><td>Evidence</td><td>Hebrew copies that agree with the Greek, like 4Q71</td><td>Greek copies that read like the Hebrew was forced into them</td></tr>
+          <tr><td>Example</td><td>Jeremiah</td><td>Kaige, Aquila, Symmachus, Theodotion</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cols">
+      <div class="quote"><p>Jeremiah&rsquo;s two forms show &ldquo;two different, fairly late stages in the development of the book.&rdquo;</p><cite>Anneli Aejmelaeus, &ldquo;What Happened to the Text in Jer 25:1&ndash;7?&rdquo; TC: A Journal of Biblical Textual Criticism (2017). Quotation is word for word; the lead-in is a paraphrase.</cite></div>
+      <div class="quote"><p>Alexander Rofé argues the Greek underwent &ldquo;a sustained process of editorial concision.&rdquo;</p><cite>Alexander Rof&eacute;, &ldquo;The Double Text of Jeremiah Revisited,&rdquo; The Oxford Handbook of Jeremiah (Oxford University Press, 2021), pp. 114&ndash;128. Quotation is word for word; the lead-in is a paraphrase.</cite></div>
+    </div>
+    <div class="ask">Test question: does a Hebrew copy agree with the Greek, or does the Greek read like the Hebrew was pressed into it?</div>
+  </section>
+  <section class="stop" data-title="Evangelical voices" data-time="21:30 to 24:00" id="s12">
+    <p class="eyebrow">Part 12 · Where evangelical scholarship lands</p>
+    <h2>Which form is closer to the original?</h2>
+    <hr class="rule">
+    <p class="lede">Evangelical commentaries lean toward the shorter Greek reflecting an earlier Hebrew edition. They differ on what follows from that.</p>
+    <div class="cols3">
+      <div class="panel"><span class="tag">Kregel Exegetical Library, 2023</span><h3>Michael Shepherd</h3><p>Reports &ldquo;the growing consensus among textual critics&rdquo; that the Hebrew behind Greek Jeremiah is the earlier edition, and bases his commentary on it (p. 11).</p></div>
+      <div class="panel"><span class="tag">Note on Jeremiah 25:13</span><h3>NET Bible</h3><p>Observes that the Greek inserts the oracles against the nations here and suggests it may represent an earlier form of the book. It does not settle which text is original.</p></div>
+      <div class="panel"><span class="tag">Kerux commentary, 2022</span><h3>Duane Garrett</h3><p>Keeps the Greek as a translation of an earlier Egyptian edition, but rejects a slow &ldquo;rolling corpus.&rdquo; He says that view &ldquo;reduces the book&rsquo;s credibility as a faithful representation&rdquo; of the prophet (p. 49, as quoted in a review).</p></div>
+    </div>
+    <div class="callout"><strong>Earlier is not the same as better.</strong> A commentary can say the Greek reflects an earlier Hebrew edition without saying it replaces the Hebrew. Shepherd goes furthest, writing his commentary on the Hebrew behind the Greek.</div>
+    <div class="ask">If the earlier edition is the shorter one, what does that change for how you read Jeremiah?</div>
+  </section>
+  <section class="stop" data-title="Revision in Jeremiah" data-time="24:00 to 26:00" id="s13">
+    <p class="eyebrow">Part 13 · Revisers and Origen meet Jeremiah</p>
+    <h2>What revision and Origen do to Jeremiah</h2>
+    <hr class="rule">
+    <p class="lede">Revision pulls the Greek toward the Hebrew. Jeremiah&rsquo;s shortness came first, so the revisers cannot be the reason for it.</p>
+    <div class="cols">
+      <div class="panel"><span class="tag">Aquila, Symmachus, Theodotion</span><h3>They came later</h3><p>Nothing about them explains why the Old Greek of Jeremiah was short to begin with.</p></div>
+      <div class="panel"><span class="tag">Origen&rsquo;s asterisk</span><h3>They made it longer</h3><p>Hebrew-only material that the Old Greek lacked could be added to Greek copies under an asterisk.</p></div>
+    </div>
+    <div class="callout"><strong>Why it matters for Jeremiah.</strong> Later copyists often dropped the marks, so some Greek manuscripts of Jeremiah look longer than the Old Greek really was. Editors have to separate the Old Greek from these additions.</div>
+  </section>
+  <section class="stop" data-title="Try it" data-time="26:00 to 30:00" id="s14">
+    <p class="eyebrow">Part 14 · Follow-up exercise and questions</p>
+    <h2>Edition or revision?</h2>
+    <hr class="rule">
+    <p class="lede">For each case, decide which kind of change you are looking at, then open the answer.</p>
+    <div class="case" id="c1"><p><b>1.</b> The Greek lacks Jeremiah 10:6 to 8 and 10, and a Hebrew scroll from Qumran lacks them too.</p><button type="button" data-case="c1" aria-expanded="false">Show answer</button><div class="ans"><p><b>Different Hebrew edition.</b> A Hebrew copy agrees with the Greek, so the shorter form existed before translation.</p></div></div>
+    <div class="case" id="c2"><p><b>2.</b> A Greek manuscript of Jeremiah contains a passage that Origen's marks identify as added from the Hebrew.</p><button type="button" data-case="c2" aria-expanded="false">Show answer</button><div class="ans"><p><b>Later revision.</b> Origen supplied Hebrew-only material into Greek copies. This makes the Greek longer, not shorter.</p></div></div>
+    <div class="case" id="c3"><p><b>3.</b> A Greek version follows the Hebrew so closely that the Greek reads awkwardly.</p><button type="button" data-case="c3" aria-expanded="false">Show answer</button><div class="ans"><p><b>Later revision,</b> in the style of Aquila. The Greek exists and someone re-fitted it to the Hebrew word-for-word.</p></div></div>
+    <div class="case" id="c4"><p><b>4.</b> The Oracles Against the Nations are in a different position in the Greek than in the Hebrew.</p><button type="button" data-case="c4" aria-expanded="false">Show answer</button><div class="ans"><p><b>Most likely a different Hebrew edition.</b> The arrangement is a literary one and scholars generally trace it to the Hebrew the translator used. Note that 4Q71 does not itself show this part, so it rests on inference.</p></div></div>
+    <div class="callout"><strong>Questions from the Module 3 call.</strong> Return to the questions about the shorter Greek form of Jeremiah and the Hexapla that came up last Monday.</div>
+  </section>
+  <section class="guide-only" id="guide-extra">
+    <p class="eyebrow">Student guide</p>
+    <h2 style="font-size:clamp(24px,3.2vw,32px);font-weight:900;margin-bottom:6px">Before and after the call</h2>
+    <hr class="rule">
+    <div class="cols">
+      <div class="panel"><h3>Reading</h3><p>Lanier and Ross, <i>The Septuagint: What It Is and Why It Matters</i>, Chapter 4, "How Did the Greek Old Testament Develop?" Watch the Module 4 lecture first. It runs about 18 minutes.</p></div>
+      <div class="panel"><h3>Take-home exercise</h3><p>Finish the four "Edition or revision?" cases in Part 14 on your own. For each one, write one sentence naming the evidence that decided it.</p></div>
+    </div>
+    <h3 style="margin:24px 0 8px">Key terms</h3>
+    <div class="tablewrap">
+      <table>
+        <tbody>
+          <tr><td>Masoretic Text (MT)</td><td>The Hebrew text behind most English Bibles.</td></tr>
+          <tr><td>Old Greek</td><td>The earliest Greek translation, before later revisers worked on it.</td></tr>
+          <tr><td>Edition</td><td>A distinct form of a book, with its own length and arrangement, that existed in Hebrew before it was translated.</td></tr>
+          <tr><td>Kaige</td><td>A revising tradition that pulled the Greek toward the Hebrew, named for its habit of rendering a Hebrew word as <span class="gr">καίγε</span>.</td></tr>
+          <tr><td>Retranslation</td><td>A new Greek version made from the Hebrew, such as those of Aquila, Symmachus and Theodotion, as opposed to a revision of the older Greek.</td></tr>
+          <tr><td>Hexapla</td><td>Origen's six-column comparison of the Hebrew and Greek versions.</td></tr>
+          <tr><td>Asterisk and obelus</td><td>Origen's marks for material found only in the Hebrew (※) or only in the Greek (÷).</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<footer>
+  <p><b>Sources checked for this page.</b></p>
+  <ul>
+    <li>Albert Pietersma and Marc Saunders, &ldquo;To the Reader of Ieremias,&rdquo; in <i>A New English Translation of the Septuagint</i> (Oxford University Press, 2007), pp. 876&ndash;880, for the card on translation technique.</li>
+    <li>Michael B. Shepherd, <i>A Commentary on Jeremiah</i> (Kregel Exegetical Library, 2023), introduction, p. 11, from the publisher&rsquo;s free excerpt.</li>
+    <li>NET Bible, translator&rsquo;s note on Jeremiah 25:13 (netbible.org).</li>
+    <li>Duane Garrett and Calvin Pearson, <i>Jeremiah and Lamentations</i> (Kerux, 2022), as described and quoted in a review at Reading Acts.</li>
+    <li>Greg Lanier and William A. Ross, &ldquo;7 Questions about the Septuagint,&rdquo; Crossway, for the layers of change named in Stops 1 to 4.</li>
+    <li>Emanuel Tov, &ldquo;The Book of Jeremiah: a Work in Progress,&rdquo; Bible Review 16:3 (June 2000), for the 20 percent figure.</li>
+    <li>Anneli Aejmelaeus, &ldquo;What Happened to the Text in Jer 25:1&ndash;7?&rdquo; TC: A Journal of Biblical Textual Criticism (2017).</li>
+    <li>Alexander Rof&eacute;, &ldquo;The Double Text of Jeremiah Revisited,&rdquo; The Oxford Handbook of Jeremiah (Oxford University Press, 2021), pp. 114&ndash;128, for the one-eighth to one-sixth range and the concision argument.</li>
+    <li>Biblical Archaeology Society, image notes on 4QJer<sup>b</sup> and Jeremiah 9:22 to 10:21, for the missing verses 10:6 to 8 and 10:10.</li>
+    <li>Orion Center bibliography, Richard Saley, "Reconstructing 4QJer<sup>b</sup> According to the Text of the Old Greek," Dead Sea Discoveries 17 (2010).</li>
+    <li>Eibert Tigchelaar, paper on 4QJer<sup>b</sup>, 4QJer<sup>d</sup> and the two-edition hypothesis for Jeremiah (KU Leuven repository), for the caution that only small fragments survive.</li>
+    <li>Reformation Study Bible note at Jeremiah 25:13, for the Greek placement of the oracles against the nations.</li>
+    <li>Encyclopaedia Britannica, "Origen's Hexapla," for the six columns and the marks.</li>
+  </ul>
+</footer>
+<script>
+(function(){
+  // verse chips for Jeremiah 10
+  function chip(label, cls){ var s = document.createElement('span'); s.className = 'chip ' + cls; s.textContent = label; return s; }
+  var mt = document.getElementById('row-mt');
+  var og = document.getElementById('row-og');
+  var absent = {6:1,7:1,8:1,10:1};
+  for(var v=1; v<=16; v++){
+    var c = chip(String(v), absent[v] ? 'absent' : (v===11 ? 'aram' : 'same'));
+    c.title = absent[v] ? 'Verse ' + v + ': no Greek counterpart' : 'Verse ' + v;
+    mt.appendChild(c);
+  }
+  var ogSeq = [['1','same'],['2','same'],['3','same'],['4','same'],['5a','same'],['9','moved'],['5b','moved'],['11','same'],['12','same'],['13','same'],['14','same'],['15','same'],['16','same']];
+  ogSeq.forEach(function(p){ og.appendChild(chip(p[0], p[1])); });
+  var diff = document.getElementById('btn-diff');
+  diff.addEventListener('click', function(){
+    var on = diff.getAttribute('aria-pressed')==='true';
+    diff.setAttribute('aria-pressed', String(!on));
+    diff.textContent = on ? 'Show only the differences' : 'Show all verses';
+    mt.classList.toggle('dim', !on);
+    og.classList.toggle('dim', !on);
+  });
+
+  // exercise reveals
+  Array.prototype.forEach.call(document.querySelectorAll('.case button'), function(b){
+    b.addEventListener('click', function(){
+      var box = document.getElementById(b.getAttribute('data-case'));
+      var open = box.classList.toggle('open');
+      b.textContent = open ? 'Hide answer' : 'Show answer';
+      b.setAttribute('aria-expanded', String(open));
+    });
+  });
+
+
+})();
+</script>
+</body>
+</html>
