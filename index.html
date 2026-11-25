@@ -16,554 +16,341 @@
 <meta content="summary" name="twitter:card"/>
 <meta content="Biblical Studies and Reviews" name="twitter:title"/>
 <meta content="Biblical Studies and Reviews — video Bible study, textual criticism, and reviews, inspired by Jonathan Edwards." name="twitter:description"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&amp;family=EB+Garamond:ital,wght@0,400;0,600;1,400&amp;family=Source+Sans+3:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%23050505'/%3E%3Crect x='14' y='15' width='22' height='6' fill='%2320A9ED'/%3E%3Cpath d='M14 28h36v7H14zM14 42h26v7H14z' fill='%23fff'/%3E%3C/svg%3E" rel="icon" type="image/svg+xml"/>
+<link href="https://i.ytimg.com" rel="preconnect"/>
 <style>
-  :root{
-    --paper: #E8E1D0;
-    --paper-2: #DDD4BE;
-    --paper-deep: #cfc4a8;
-    --ink: #2A241C;
-    --ink-soft: #57503e;
-    --ink-faint: #8b8370;
-    --rubric: #7A2E2A;
-    --rubric-bg: #f0dcd6;
-    --blue: #33465C;
-    --blue-bg: #dbe1e8;
-    --brass: #8a7038;
-    --brass-bg: #e9dcb8;
-    --line: #b9ac8e;
-    --card: #f3eddd;
-    --shadow: 0 2px 10px rgba(42,36,28,0.14);
-    --earth-1: #c4b48a;
-    --earth-2: #a8906a;
-    --earth-3: #8a734e;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'EB Garamond', Georgia, serif;
-    font-size:19px;
-    line-height:1.6;
-  }
-  h1,h2,h3,.display{
-    font-family:'Cormorant Garamond', Georgia, serif;
-    color:var(--ink);
-    font-weight:600;
-  }
-  a{color:var(--blue);}
-  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
-  /* Hero — excavation + scroll atmosphere */
-  header.hero{
-    position:relative;
-    padding:72px 0 56px;
-    text-align:center;
-    border-bottom:1px solid var(--line);
-    background:
-      linear-gradient(180deg,
-        rgba(232,225,208,0.97) 0%,
-        rgba(232,225,208,0.92) 55%,
-        rgba(207,196,168,0.85) 100%),
-      repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 11px,
-        rgba(138,112,56,0.04) 11px,
-        rgba(138,112,56,0.04) 12px
-      );
-    overflow:hidden;
-  }
-  header.hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    background:
-      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(233,220,184,0.45), transparent 70%),
-      linear-gradient(180deg, transparent 70%, rgba(168,144,106,0.12) 100%);
-    pointer-events:none;
-  }
-  header.hero .wrap{position:relative;z-index:1;}
-  header.hero h1{
-    font-size:56px;
-    margin:0 0 8px;
-    letter-spacing:0.3px;
-  }
-  header.hero .tagline{
-    font-style:italic;
-    color:var(--ink-soft);
-    font-size:20px;
-    margin:0 0 20px;
-  }
-  .kicker{
-    font-family:'EB Garamond', serif;
-    letter-spacing:2.5px;
-    text-transform:uppercase;
-    font-size:13px;
-    color:var(--brass);
-    margin-bottom:18px;
-  }
-  .kicker::before,
-  .kicker::after{
-    content:"✦";
-    margin:0 10px;
-    opacity:0.55;
-    font-size:11px;
-  }
-  /* Scroll-framed quote */
-  .quote{
-    max-width:640px;
-    margin:28px auto 0;
-    font-style:italic;
-    color:var(--ink-soft);
-    font-size:18px;
-    padding:22px 28px;
-    position:relative;
-    background:linear-gradient(180deg, #f5efe0 0%, #ebe3d0 100%);
-    border:1px solid var(--line);
-    border-radius:4px;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,0.5) inset,
-      0 3px 12px rgba(42,36,28,0.08);
-  }
-  .quote::before,
-  .quote::after{
-    content:"";
-    position:absolute;
-    top:8px;bottom:8px;
-    width:10px;
-    background:
-      linear-gradient(90deg, var(--brass) 0%, var(--earth-2) 40%, var(--brass) 100%);
-    border-radius:3px;
-    opacity:0.55;
-  }
-  .quote::before{left:-5px;}
-  .quote::after{right:-5px;}
-  .quote cite{
-    display:block;
-    margin-top:10px;
-    font-style:normal;
-    font-size:15px;
-    color:var(--ink-faint);
-  }
-  nav.pillbar{
-    display:flex;
-    justify-content:center;
-    gap:10px;
-    flex-wrap:wrap;
-    margin-top:32px;
-  }
-  nav.pillbar a{
-    text-decoration:none;
-    color:var(--ink);
-    background:var(--card);
-    border:1px solid var(--line);
-    padding:8px 18px;
-    border-radius:999px;
-    font-size:15px;
-    transition:background 0.15s ease, border-color 0.15s ease;
-  }
-  nav.pillbar a:hover{
-    background:var(--brass-bg);
-    border-color:var(--brass);
-  }
-  section{padding:56px 0;border-bottom:1px solid var(--line);}
-  section:last-of-type{border-bottom:none;}
-  section h2{font-size:34px;margin:0 0 6px;}
-  section .section-sub{color:var(--ink-soft);font-style:italic;margin:0 0 28px;}
-  /* About */
-  .about-grid{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap;}
-  .about-grid .photo{
-    width:180px;height:180px;border-radius:6px;
-    background:var(--paper-2);
-    border:1px solid var(--line);
-    flex-shrink:0;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-  }
-  .about-grid .photo img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .about-grid .text{flex:1;min-width:260px;}
-  /* Featured course */
-  section.course-feature{
-    background:linear-gradient(135deg,#171b20 0%,#080a0c 100%) !important;
-    color:#f5f1e8;
-  }
-  .course-feature h2{color:#fff;font-size:42px;line-height:1.08;}
-  section.course-feature .section-sub{color:#bfc7cf;}
-  .course-feature .course-kicker{
-    font-family:'Source Sans 3',Arial,sans-serif;
-    color:#58c4f7;
-    font-size:13px;
-    font-weight:700;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    margin-bottom:12px;
-  }
-  .course-feature .course-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:36px;align-items:center;}
-  .course-feature .course-price{
-    background:rgba(255,255,255,.07);
-    border:1px solid rgba(255,255,255,.18);
-    border-radius:10px;
-    padding:24px;
-  }
-  .course-feature .course-price p{margin:0 0 10px;}
-  .course-feature .course-price p:last-child{margin-bottom:0;}
-  .course-feature .course-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;}
-  .course-feature .course-btn{
-    display:inline-block;
-    background:#20a9ed;
-    color:#071119;
-    text-decoration:none;
-    padding:12px 22px;
-    border:2px solid #20a9ed;
-    border-radius:6px;
-    font-family:'Source Sans 3',Arial,sans-serif;
-    font-size:16px;
-    font-weight:700;
-  }
-  .course-feature .course-btn.secondary{background:transparent;color:#fff;border-color:#8e969e;}
-  /* Video grid */
-  .video-cta{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:28px;
-    box-shadow:var(--shadow);
-    text-align:center;
-    margin-bottom:32px;
-  }
-  .video-cta a.btn{
-    display:inline-block;
-    margin-top:14px;
-    background:var(--rubric);
-    color:#fdf7ee;
-    text-decoration:none;
-    padding:12px 26px;
-    border-radius:6px;
-    font-family:'Cormorant Garamond', serif;
-    font-size:18px;
-    letter-spacing:0.3px;
-  }
-  .video-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
-    gap:20px;
-  }
-  .video-card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:8px;
-    overflow:hidden;
-    box-shadow:var(--shadow);
-  }
-  .video-card .thumb{
-    aspect-ratio:16/9;
-    background:var(--blue-bg);
-    display:flex;align-items:center;justify-content:center;
-    color:var(--blue);
-    font-size:32px;
-  }
-  .video-card .info{padding:14px 16px;}
-  .video-card .info h3{font-size:19px;margin:0 0 4px;}
-  .video-card .info p{margin:0;color:var(--ink-soft);font-size:15px;}
-  /* Blog */
-  .blog-list{display:flex;flex-direction:column;gap:18px;}
-  .blog-post{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:22px 26px;
-    box-shadow:var(--shadow);
-  }
-  .blog-post h3{margin:0 0 6px;font-size:24px;}
-  .blog-post .meta{color:var(--ink-faint);font-size:14px;margin-bottom:10px;}
-  .blog-post p{margin:0;color:var(--ink-soft);}
-  .blog-empty{
-    text-align:center;
-    color:var(--ink-faint);
-    font-style:italic;
-    padding:24px;
-  }
-  /* Resources */
-  .resource-list{display:flex;flex-direction:column;gap:18px;}
-  .resource-card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:22px 26px;
-    box-shadow:var(--shadow);
-  }
-  .resource-card h3{margin:0 0 6px;font-size:24px;}
-  .resource-card .meta{color:var(--ink-faint);font-size:14px;margin-bottom:10px;}
-  .resource-card p{margin:0 0 14px;color:var(--ink-soft);}
-  .resource-card a.btn{
-    display:inline-block;
-    background:var(--ink);
-    color:var(--paper);
-    text-decoration:none;
-    padding:10px 22px;
-    border-radius:6px;
-    font-family:'Cormorant Garamond', serif;
-    font-size:18px;
-    letter-spacing:0.3px;
-  }
-  /* App feature */
-  .app-feature{
-    display:flex;
-    gap:28px;
-    align-items:center;
-    background:var(--brass-bg);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:28px;
-    box-shadow:var(--shadow);
-    flex-wrap:wrap;
-  }
-  .app-feature .spine{
-    width:70px;height:130px;
-    background:#6a4b8a;
-    border-radius:4px;
-    flex-shrink:0;
-    box-shadow:var(--shadow);
-  }
-  .app-feature .text{flex:1;min-width:240px;}
-  .app-feature a.btn{
-    display:inline-block;
-    margin-top:12px;
-    background:var(--ink);
-    color:var(--paper);
-    text-decoration:none;
-    padding:10px 22px;
-    border-radius:6px;
-    font-family:'Cormorant Garamond', serif;
-    font-size:17px;
-  }
-  /* Newsletter */
-  .newsletter-box{
-    background:var(--rubric-bg);
-    border:1px solid var(--line);
-    border-radius:8px;
-    padding:32px;
-    text-align:center;
-    box-shadow:var(--shadow);
-  }
-  .newsletter-box form{
-    display:flex;
-    gap:10px;
-    justify-content:center;
-    flex-wrap:wrap;
-    margin-top:18px;
-  }
-  .newsletter-box input[type="email"]{
-    font-family:'EB Garamond', serif;
-    font-size:17px;
-    padding:11px 14px;
-    border:1px solid var(--line);
-    border-radius:6px;
-    width:280px;
-    background:#fdf7ee;
-    color:var(--ink);
-  }
-  .newsletter-box button{
-    font-family:'Cormorant Garamond', serif;
-    font-size:18px;
-    padding:11px 24px;
-    background:var(--rubric);
-    color:#fdf7ee;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-  }
-  .newsletter-box .fineprint{
-    margin-top:12px;
-    font-size:13px;
-    color:var(--ink-faint);
-  }
-  footer{
-    text-align:center;
-    padding:36px 0 60px;
-    color:var(--ink-faint);
-    font-size:14px;
-  }
-  footer a{color:var(--ink-soft);}
-  @media (max-width:640px){
-    header.hero h1{font-size:40px;}
-    section h2{font-size:28px;}
-    .quote{padding:18px 20px;}
-    .quote::before,.quote::after{display:none;}
-  }
+/* Homepage styles. Self-contained: this page does not load site-theme.css.
+   Follows "My Style": near-black, white, cyan; heavy Arial; 6px radii; flat. */
+:root{
+  --black:#050505; --panel:#0d1114; --panel-2:#12181c; --rule-dark:#252b30;
+  --cyan:#20a9ed; --cyan-hi:#67c8fa; --blue:#0877ab;
+  --white:#fff; --card:#f7f8fa; --callout:#edf8ff;
+  --ink:#202124; --ink-soft:#555d65; --ink-faint:#616b75; --line:#dfe3e7;
+  --on-dark:#d8dde1; --on-dark-soft:#aebac4;
+  --r:6px; --wrap:1160px;
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;scroll-padding-top:84px;-webkit-text-size-adjust:100%;}
+body{margin:0;background:var(--white);color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{color:var(--blue);text-underline-offset:4px;}
+h1,h2,h3{font-weight:800;letter-spacing:-.035em;line-height:1.12;margin:0;color:inherit;}
+p{margin:0 0 16px;}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 32px;}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:4px;border-radius:2px;}
+.skip-link{position:fixed;top:-100px;left:12px;z-index:100;background:#fff;color:#050505;padding:12px;}
+.skip-link:focus{top:12px;}
 
-  /* Site identity — a field notebook for careful study, not a generic ministry page. */
-  :root{
-    --paper:#e9dfca; --paper-2:#ded0b3; --paper-deep:#c9b790;
-    --ink:#29221b; --ink-soft:#5e5140; --ink-faint:#857763;
-    --rubric:#6e3929; --rubric-bg:#f1ddd2; --blue:#385168; --blue-bg:#dbe5e9;
-    --brass:#7d6430; --brass-bg:#eadcb7; --line:#c2ad85; --card:#faf3e5;
-    --shadow:0 12px 32px rgba(60,43,23,.11), 0 2px 5px rgba(60,43,23,.07);
-    --ui:'Source Sans 3', Arial, sans-serif;
-  }
-  body{background:radial-gradient(1100px 560px at 50% -110px,rgba(255,250,236,.95),transparent 68%),repeating-linear-gradient(0deg,rgba(98,72,38,.018) 0,rgba(98,72,38,.018) 1px,transparent 1px,transparent 5px),var(--paper);}
-  .wrap{max-width:1020px;}
-  header.hero{padding:58px 0 50px;border-bottom-color:rgba(125,100,48,.55);}
-  header.hero h1{font-size:clamp(46px,7vw,68px);line-height:.94;letter-spacing:.01em;text-shadow:0 1px 0 #fff9ea,0 4px 16px rgba(73,49,23,.1);}
-  header.hero .tagline{max-width:620px;margin:14px auto 0;font-size:21px;}
-  .kicker,.quote cite{font-family:var(--ui);font-weight:600;letter-spacing:.14em;}
-  .kicker{font-size:10px;margin-bottom:15px;}
-  .quote{max-width:600px;margin-top:26px;padding:17px 25px;font-size:17px;background:rgba(250,243,229,.68);border-color:rgba(125,100,48,.48);}
-  .quote cite{font-size:10px;letter-spacing:.075em;}
-  nav.pillbar{gap:8px;margin-top:26px;}
-  nav.pillbar a{font-family:var(--ui);font-weight:600;font-size:13px;letter-spacing:.02em;padding:8px 15px;background:rgba(250,243,229,.72);transition:all .18s ease;}
-  nav.pillbar a[href="videos.html"]{background:var(--rubric);border-color:var(--rubric);color:#fff9ed;box-shadow:0 3px 8px rgba(110,57,41,.19);}
-  nav.pillbar a:hover{transform:translateY(-2px);box-shadow:0 5px 12px rgba(64,45,22,.12);}
-  section{position:relative;padding:70px 0;border-bottom-color:rgba(194,173,133,.68);}
-  section:nth-of-type(even){background:rgba(255,251,239,.35);}
-  section h2{font-size:clamp(32px,4vw,42px);line-height:1;letter-spacing:.01em;}
-  section h2::before{content:'✦';display:block;margin-bottom:9px;color:var(--brass);font-family:var(--ui);font-size:12px;}
-  section .section-sub{font-size:18px;margin-top:9px;}
-  .about-grid{gap:38px;}
-  .about-grid .photo{width:196px;height:196px;border-radius:50%;padding:6px;background:var(--brass-bg);box-shadow:var(--shadow);}
-  .about-grid .photo img{
-    border-radius:50%;
-    transform:scale(1.28) translateY(-6%);
-    transform-origin:center;
-  }
-  .about-grid .text p:first-child::first-letter{float:left;margin:.12em .12em 0 0;color:var(--rubric);font-family:'Cormorant Garamond',Georgia,serif;font-size:4.2em;line-height:.72;}
-  .video-cta,.blog-post,.app-feature,.newsletter-box{border-radius:12px;box-shadow:var(--shadow);}
-  .video-cta{padding:30px;background:linear-gradient(135deg,#fbf5e8,#eee0c4);}
-  .video-cta a.btn,.app-feature a.btn,.newsletter-box button{font-family:var(--ui);font-weight:700;letter-spacing:.015em;border-radius:7px;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;}
-  .video-cta a.btn{background:var(--rubric);box-shadow:0 4px 11px rgba(110,57,41,.2);}
-  .video-cta a.btn:hover,.app-feature a.btn:hover,.newsletter-box button:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
-  .video-grid{gap:22px;}
-  .video-card{border-radius:12px;transition:transform .2s ease,box-shadow .2s ease;}
-  .video-card:hover{transform:translateY(-5px);box-shadow:0 16px 28px rgba(53,37,19,.15);}
-  .video-card .thumb{position:relative;overflow:hidden;}
-  .video-card .thumb::after{content:'▶';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:grid;place-items:center;width:50px;height:50px;padding-left:3px;border-radius:50%;background:rgba(41,34,27,.77);color:#fffaf0;font-family:var(--ui);font-size:17px;opacity:0;transition:opacity .2s ease,transform .2s ease;}
-  .video-card:hover .thumb::after{opacity:1;transform:translate(-50%,-50%) scale(1.06);}
-  .video-card .info{padding:18px 19px 20px;}
-  .video-card .info h3{font-size:23px;line-height:1.06;}
-  .video-card .info p,.blog-post .meta,.newsletter-box .fineprint{font-family:var(--ui);}
-  .video-card .info p{font-size:14px;line-height:1.45;}
-  .blog-list{gap:14px;}
-  .blog-post{padding:23px 28px;border-left:4px solid var(--brass);transition:transform .18s ease,box-shadow .18s ease;}
-  .blog-post:hover{transform:translateX(5px);box-shadow:0 12px 24px rgba(53,37,19,.1);}
-  .blog-post h3{font-size:27px;line-height:1.05;}
-  .blog-post .meta{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
-  .resource-list{gap:14px;}
-  .resource-card{padding:23px 28px;border-left:4px solid var(--blue);transition:transform .18s ease,box-shadow .18s ease;}
-  .resource-card.gnt-feature{
-    display:grid;
-    grid-template-columns:minmax(260px,.9fr) minmax(0,1.1fr);
-    gap:28px;
-    align-items:center;
-    padding:0;
-    overflow:hidden;
-    border-left:0;
-  }
-  .gnt-feature .gnt-mockup-link{
-    align-self:stretch;
-    min-height:330px;
-    background:#111820;
-  }
-  .gnt-feature .gnt-mockup{
-    display:block;
-    width:100%;
-    height:100%;
-    min-height:330px;
-    object-fit:cover;
-    object-position:center;
-  }
-  .gnt-feature .gnt-copy{padding:30px 30px 30px 0;}
-  .resource-card:hover{transform:translateX(5px);box-shadow:0 12px 24px rgba(53,37,19,.1);}
-  .resource-card h3{font-size:27px;line-height:1.05;}
-  .resource-card .meta{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-family:var(--ui);}
-  .resource-card a.btn{transition:transform .18s ease,box-shadow .18s ease;}
-  .resource-card a.btn:hover{transform:translateY(-2px);box-shadow:0 6px 14px rgba(55,35,19,.18);}
-  .app-feature{padding:34px;background:linear-gradient(135deg,#ebdbb4,#e2cd9c);}
-  .app-feature .spine{position:relative;width:84px;height:146px;background:linear-gradient(90deg,#422d56,#6a4b8a 16%,#7d5ca0 58%,#51376d);box-shadow:inset 5px 0 10px rgba(255,255,255,.12),inset -7px 0 10px rgba(0,0,0,.22),var(--shadow);}
-  .app-feature .spine::after{content:'DIGGING\A DEEP';white-space:pre;position:absolute;inset:16px 0;color:#f8edcc;writing-mode:vertical-rl;text-align:center;font-family:var(--ui);font-size:11px;font-weight:700;letter-spacing:.18em;}
-  .newsletter-box{padding:40px 32px;background:linear-gradient(135deg,#f3dfd5,#edd3c5);}
-  .newsletter-box input[type="email"]{font-family:var(--ui);border-radius:7px;}
-  .newsletter-box button{font-size:15px;}
-  footer{font-family:var(--ui);font-size:12px;letter-spacing:.04em;padding:42px 0 60px;}
-  a:focus-visible,button:focus-visible,input:focus-visible{outline:3px solid rgba(56,81,104,.5);outline-offset:3px;}
-  @media (max-width:640px){
-    header.hero{padding:45px 0 40px;} header.hero .tagline{font-size:19px;}
-    section{padding:52px 0;} .about-grid .photo{margin:0 auto;}
-    .video-card .thumb::after{opacity:1;width:42px;height:42px;font-size:14px;}
-    .app-feature{padding:26px;}
-    .resource-card.gnt-feature{grid-template-columns:1fr;gap:0;}
-    .gnt-feature .gnt-mockup-link,.gnt-feature .gnt-mockup{min-height:0;}
-    .gnt-feature .gnt-copy{padding:24px 22px 26px;}
-    .course-feature .course-grid{grid-template-columns:1fr;gap:22px;}
-    .course-feature h2{font-size:36px;}
-    .course-feature .course-actions{flex-direction:column;}
-    .course-feature .course-btn{text-align:center;}
-  }
-.sept-app{margin-top:40px;padding-top:32px;border-top:1px solid rgba(255,255,255,.16);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px}
-.sept-app h3{margin:6px 0 10px;font-size:1.6rem;line-height:1.2;color:#fff}
-.sept-app p{margin:0;max-width:44rem;color:rgba(255,255,255,.78)}
-.sept-app p.course-kicker{color:inherit;max-width:none}
-</style>
-<link href="/assets/site-theme.css?v=20260919-2" rel="stylesheet"/>
-<style>/* Homepage preview: retain the established black, white and cyan system. */
-.site-navigation{background:#050505;border-bottom:1px solid #252b30;color:#fff}
-.site-navigation nav{display:flex;align-items:center;justify-content:space-between;gap:28px;padding-top:22px;padding-bottom:22px}
-.nav-brand{color:#20a9ed!important;font-size:13px;letter-spacing:1.3px;text-transform:uppercase;font-weight:800;white-space:nowrap}
-.nav-links{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.nav-links a{font-size:13px;font-weight:700;color:#d8dde1;text-decoration:none}
-.nav-links a:hover{color:#20a9ed}.nav-links .student-link,.nav-links .waitlist-link{color:#20a9ed}
-header.hero{padding:52px 0 54px}header.hero h1{font-size:clamp(36px,5.2vw,68px);max-width:900px;line-height:1.04;margin:16px 0 20px}
-header.hero .tagline{max-width:710px;font-size:20px;margin:0;line-height:1.65}
-.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin:27px 0 36px}
-.hero-actions a{display:inline-flex;align-items:center;justify-content:space-between;gap:20px;padding:14px 19px;border-radius:6px;font-size:15px;font-weight:800;text-decoration:none;min-height:48px;box-sizing:border-box}
-.hero-primary{background:#20a9ed;color:#050505!important;border:1px solid #20a9ed}
-.hero-secondary{background:transparent;color:#fff!important;border:1px solid #616b75}
-.hero-feature{display:grid;grid-template-columns:290px 1fr;gap:28px;align-items:center;border-top:1px solid #30383e;padding-top:28px;max-width:920px}
-.feature-image{display:block;position:relative;overflow:hidden;aspect-ratio:16/9;border-radius:6px;background:#202124}
-.feature-image img{width:100%;height:100%;object-fit:cover}
-.play-mark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:white;font-size:27px;text-shadow:0 2px 8px #000}
-.feature-copy .feature-label{font-size:11px;letter-spacing:1.2px;color:#20a9ed;margin:0 0 10px;font-weight:800}
-header.hero .feature-copy h2{font-size:24px;line-height:1.25;margin:0 0 10px;color:white;text-transform:none;letter-spacing:-.5px}
-.feature-copy h2:before,.feature-copy h2:after{display:none!important}
-.feature-copy p{color:#d8dde1;font-size:15px;line-height:1.5;margin:0 0 12px}
-.feature-copy a{color:#20a9ed;font-size:14px;font-weight:700}
-#app .quote{background:#10171b;color:#d8dde1;border-left:4px solid #20a9ed;margin:24px 0 0;padding:20px;font-size:17px}
-#app .quote cite{display:block;font-size:12px;color:#d8dde1;margin-top:12px}
-.skip-link{position:fixed;top:-100px;left:12px;z-index:100;background:#fff;color:#050505;padding:12px}
-.skip-link:focus{top:12px}a:focus-visible,button:focus-visible{outline:3px solid #20a9ed;outline-offset:5px}
-@media(max-width:700px){.site-navigation nav{padding-top:16px;padding-bottom:16px;align-items:flex-start;gap:14px;flex-direction:column}.nav-links{gap:12px 17px}.nav-links a{font-size:12px}.nav-links a[href="#app"],.nav-links a[href="#blog"],.nav-links a[href="#newsletter"]{display:none}header.hero{padding:30px 0 36px}header.hero .tagline{font-size:17px;line-height:1.55}header.hero h1{font-size:36px;margin:12px 0 18px}.hero-actions{margin:22px 0 26px;gap:10px}.hero-actions a{width:100%;font-size:14px;padding:12px 15px}.hero-feature{grid-template-columns:1fr;gap:18px;padding-top:24px}.feature-image{max-width:480px}.feature-copy h2{font-size:22px!important}}
+/* Buttons */
+.btn,.course-btn,.newsletter-box button{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:50px;padding:12px 22px;border-radius:var(--r);
+  background:var(--cyan);color:#04141d;border:2px solid var(--cyan);
+  font:800 15px/1.3 Arial,Helvetica,sans-serif;letter-spacing:-.005em;
+  text-decoration:none;cursor:pointer;
+  transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease;
+}
+.btn:hover,.course-btn:hover,.newsletter-box button:hover{background:var(--cyan-hi);border-color:var(--cyan-hi);transform:translateY(-1px);}
+.btn.ghost{background:transparent;color:var(--ink);border-color:#c5ccd2;}
+.btn.ghost:hover{background:transparent;border-color:var(--blue);color:var(--blue);}
+.on-dark .btn.ghost,.course-btn.secondary{background:transparent;color:#fff;border-color:#4a535b;}
+.on-dark .btn.ghost:hover,.course-btn.secondary:hover{background:transparent;border-color:var(--cyan);color:var(--cyan);}
+.btn-row{display:flex;flex-wrap:wrap;gap:12px;}
+
+/* Labels and section heads */
+.kicker,.course-kicker,.meta,.feature-label{
+  font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;line-height:1.4;margin:0;
+}
+.kicker,.feature-label{color:var(--cyan);}
+.meta{color:var(--ink-faint);letter-spacing:.09em;font-size:11.5px;}
+section{padding:96px 0;}
+section.tint{background:var(--card);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.section-head{margin-bottom:44px;}
+.section-head.split{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;flex-wrap:wrap;}
+section h2{font-size:clamp(32px,4vw,48px);}
+section h2::before{content:'';display:block;width:44px;height:5px;background:var(--cyan);margin-bottom:22px;}
+.section-sub{color:var(--ink-soft);font-size:18px;margin:12px 0 0;max-width:60ch;}
+
+/* Navigation */
+.site-navigation{position:sticky;top:0;z-index:50;background:rgba(5,5,5,.9);-webkit-backdrop-filter:saturate(140%) blur(12px);backdrop-filter:saturate(140%) blur(12px);border-bottom:1px solid var(--rule-dark);color:#fff;}
+.site-navigation nav{display:flex;align-items:center;justify-content:space-between;gap:28px;min-height:68px;}
+.nav-brand{display:inline-flex;align-items:center;gap:12px;color:#fff;text-decoration:none;font-size:14px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap;}
+.nav-brand::before{content:'';width:22px;height:5px;background:var(--cyan);}
+.nav-links{display:flex;align-items:center;gap:2px;}
+.nav-links a{font-size:13px;font-weight:700;color:var(--on-dark);text-decoration:none;padding:9px 8px;border-radius:var(--r);white-space:nowrap;transition:color .15s ease,background .15s ease;}
+.nav-links a:hover{color:#fff;background:#161c20;}
+.nav-links .waitlist-link{color:var(--cyan);}
+.nav-links .student-link{margin-left:8px;border:1px solid #3a434a;color:#fff;padding:8px 12px;}
+.nav-links .student-link:hover{border-color:var(--cyan);color:var(--cyan);background:transparent;}
+
+/* Hero */
+header.hero{position:relative;overflow:hidden;background:var(--black);color:#fff;padding:84px 0 150px;}
+header.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:64px 64px;
+  -webkit-mask-image:radial-gradient(ellipse 75% 85% at 78% 35%,#000 0%,transparent 72%);mask-image:radial-gradient(ellipse 75% 85% at 78% 35%,#000 0%,transparent 72%);}
+header.hero::after{content:'';position:absolute;right:-12%;top:-30%;width:62%;height:120%;pointer-events:none;background:radial-gradient(closest-side,rgba(32,169,237,.2),transparent 70%);}
+.hero-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:60px;align-items:center;}
+header.hero h1{font-size:clamp(42px,5.5vw,78px);font-weight:900;line-height:.98;letter-spacing:-.05em;text-transform:uppercase;margin:22px 0 26px;}
+header.hero h1 span{color:var(--cyan);}
+header.hero .tagline{color:var(--on-dark);font-size:21px;line-height:1.6;max-width:30em;margin:0 0 34px;}
+.hero-feature{display:block;}
+.feature-image{display:block;position:relative;overflow:hidden;aspect-ratio:16/9;border-radius:var(--r);background:var(--panel-2);border:1px solid #2c343a;box-shadow:0 30px 70px -20px rgba(0,0,0,.9),0 0 0 6px rgba(32,169,237,.08);}
+.feature-image img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.feature-image:hover img{transform:scale(1.03);}
+.play-mark{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(180deg,transparent 45%,rgba(5,5,5,.55));}
+.play-mark i{display:grid;place-items:center;width:76px;height:76px;border-radius:50%;background:var(--cyan);box-shadow:0 10px 30px rgba(0,0,0,.5);transition:transform .2s ease,background .2s ease;}
+.play-mark i::before{content:'';margin-left:6px;border-style:solid;border-width:13px 0 13px 22px;border-color:transparent transparent transparent #04141d;}
+.feature-image:hover .play-mark i{transform:scale(1.08);background:var(--cyan-hi);}
+.feature-copy{margin-top:22px;padding-left:18px;border-left:4px solid var(--cyan);}
+header.hero .feature-copy h2{font-size:23px;line-height:1.25;letter-spacing:-.02em;margin:8px 0 6px;color:#fff;}
+.feature-copy p:not(.feature-label){color:var(--on-dark-soft);font-size:15.5px;line-height:1.55;margin:0 0 8px;}
+.feature-copy a{color:var(--cyan);font-size:14.5px;font-weight:800;text-decoration:none;}
+.feature-copy a:hover{text-decoration:underline;}
+
+/* Start-here tiles (overlap the hero) */
+.paths{position:relative;z-index:2;margin-top:-84px;}
+.paths-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 24px 60px -28px rgba(8,25,38,.45);}
+.path{position:relative;display:block;padding:28px 28px 30px;text-decoration:none;color:var(--ink);border-left:1px solid var(--line);transition:background .16s ease;}
+.path:first-child{border-left:0;}
+.path::before{content:'';position:absolute;left:0;right:0;top:0;height:4px;background:var(--cyan);transform:scaleX(0);transform-origin:left;transition:transform .22s ease;}
+.path:hover{background:var(--callout);}
+.path:hover::before{transform:scaleX(1);}
+.path .num{display:block;font-size:12px;font-weight:800;letter-spacing:.14em;color:var(--blue);margin-bottom:12px;}
+.path strong{display:block;font-size:21px;font-weight:800;letter-spacing:-.03em;line-height:1.2;margin-bottom:6px;}
+.path span.d{display:block;font-size:15px;line-height:1.5;color:var(--ink-soft);}
+.path .go{position:absolute;right:22px;top:24px;font-weight:800;color:var(--cyan);transition:transform .16s ease;}
+.path:hover .go{transform:translateX(4px);}
+
+/* About */
+#about{padding-top:104px;}
+.about-grid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:72px;align-items:center;}
+.about-grid .photo{position:relative;}
+.about-grid .photo::before{content:'';position:absolute;inset:22px -18px -18px 22px;background:var(--cyan);border-radius:var(--r);}
+.about-grid .photo img{position:relative;width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:var(--r);}
+.about-grid .text p{font-size:19px;max-width:62ch;}
+.about-grid .text p:last-child{margin-bottom:0;}
+.about-grid .section-head{margin-bottom:26px;}
+
+/* Course */
+section.course-feature{position:relative;overflow:hidden;background:var(--black);color:#fff;}
+section.course-feature::before{content:'';position:absolute;left:-10%;bottom:-45%;width:60%;height:120%;background:radial-gradient(closest-side,rgba(32,169,237,.14),transparent 70%);pointer-events:none;}
+.course-feature .wrap{position:relative;}
+.course-feature .course-kicker{color:var(--cyan);margin-bottom:22px;}
+.course-feature h2{font-size:clamp(34px,4.6vw,56px);color:#fff;}
+.course-feature h2::before{display:none;}
+.course-feature .section-sub{color:#fff;font-size:21px;font-weight:700;letter-spacing:-.01em;margin:18px 0 14px;max-width:32em;}
+.course-feature .course-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:56px;align-items:center;}
+.course-feature .course-grid > div:first-child > p:not([class]){color:var(--on-dark);max-width:36em;}
+.course-feature .course-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px;}
+.course-feature .course-btn{padding:12px 18px;}
+.course-feature .course-price{background:var(--panel);border:1px solid #2a3238;border-top:5px solid var(--cyan);border-radius:var(--r);padding:34px 32px;}
+.course-feature .course-price p{margin:0;color:var(--on-dark);font-size:17px;line-height:1.5;}
+.course-feature .course-price p + p{margin-top:20px;padding-top:20px;border-top:1px solid #262d33;}
+.course-feature .course-price p:nth-child(-n+2) strong:first-child{display:block;color:#fff;font-size:34px;font-weight:900;letter-spacing:-.04em;line-height:1.1;margin-bottom:6px;}
+.course-feature .course-price p:last-child{color:var(--on-dark-soft)!important;font-size:15px!important;}
+.sept-app{margin-top:72px;padding:36px 40px;background:var(--panel);border:1px solid #2a3238;border-left:5px solid var(--cyan);border-radius:var(--r);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:28px;}
+.sept-app > div:first-child{flex:1 1 420px;}
+.sept-app .course-kicker{margin-bottom:10px;}
+.sept-app h3{font-size:28px;color:#fff;margin:0 0 10px;}
+.sept-app p:not(.course-kicker){margin:0;max-width:44em;color:var(--on-dark);font-size:17px;}
+.sept-app .course-actions{margin-top:0;}
+
+/* Videos */
+.video-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px;}
+.video-card{display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;text-decoration:none;color:inherit;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;}
+.video-card:hover{transform:translateY(-4px);border-color:#b9c4cc;box-shadow:0 22px 40px -22px rgba(8,25,38,.4);}
+.video-card .thumb{position:relative;aspect-ratio:16/9;background:#0d1114;overflow:hidden;}
+.video-card .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.video-card:hover .thumb img{transform:scale(1.04);}
+.video-card .thumb::after{content:'';position:absolute;left:14px;bottom:14px;width:46px;height:46px;border-radius:50%;background:var(--cyan) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9 6.5v11l9-5.5z' fill='%2304141d'/%3E%3C/svg%3E") center/26px no-repeat;box-shadow:0 6px 18px rgba(0,0,0,.45);transition:transform .2s ease;}
+.video-card:hover .thumb::after{transform:scale(1.1);}
+.video-card .info{padding:22px 24px 26px;}
+.video-card .info h3{font-size:21px;line-height:1.25;letter-spacing:-.025em;margin:0 0 8px;}
+.video-card .info p{margin:0;color:var(--ink-soft);font-size:15.5px;line-height:1.55;}
+.video-cta{margin:0;}
+.video-cta p{display:none;}
+
+/* Blog: first post is featured, the rest are a compact list */
+.blog-list{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);column-gap:56px;align-items:start;}
+.blog-post{position:relative;padding:24px 0;border-top:1px solid var(--line);grid-column:2;}
+.blog-post:nth-child(2){border-top:0;padding-top:0;}
+.blog-post h3{font-size:21px;line-height:1.3;letter-spacing:-.025em;margin:6px 0 6px;}
+.blog-post h3 a{color:var(--ink);text-decoration:none;transition:color .15s ease;}
+.blog-post h3 a::after{content:'';position:absolute;inset:0;}
+.blog-post:hover h3 a{color:var(--blue);}
+.blog-post p{margin:0;color:var(--ink-soft);font-size:16px;line-height:1.6;}
+.blog-post:first-child{grid-column:1;grid-row:1 / span 20;align-self:stretch;display:flex;flex-direction:column;border:0;border-top:6px solid var(--cyan);border-radius:var(--r);background:var(--black);color:#fff;padding:40px 44px 44px;min-height:420px;transition:box-shadow .2s ease,transform .2s ease;}
+.blog-post:first-child h3 a,.blog-post:first-child:hover h3 a{color:#fff;}
+.blog-post:first-child p{color:var(--on-dark);}
+.blog-post:first-child .meta{color:var(--on-dark-soft);}
+.blog-post:first-child:hover{transform:translateY(-3px);box-shadow:0 22px 40px -22px rgba(8,25,38,.35);}
+.blog-post:first-child::before{content:'Latest post';font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:auto;padding-bottom:48px;}
+.blog-post:first-child h3{font-size:clamp(30px,3.4vw,44px);line-height:1.12;letter-spacing:-.04em;margin:12px 0 14px;}
+.blog-post:first-child p{font-size:18px;}
+.blog-post:first-child::after{content:'Read the post \2192';padding-top:26px;font-size:15px;font-weight:800;color:var(--cyan);}
+.blog-post .meta{order:0;}
+
+/* Resources */
+.resource-card.gnt-feature{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);background:var(--black);color:#fff;border-radius:var(--r);overflow:hidden;}
+.gnt-feature .gnt-mockup-link{display:block;min-height:440px;background:#111820;overflow:hidden;}
+.gnt-feature .gnt-mockup{width:100%;height:100%;object-fit:cover;transition:transform .6s ease;}
+.gnt-feature .gnt-mockup-link:hover .gnt-mockup{transform:scale(1.03);}
+.gnt-feature .gnt-copy{padding:52px 52px 54px;align-self:center;}
+.gnt-feature h3{font-size:clamp(28px,3vw,38px);color:#fff;margin:12px 0 18px;}
+.gnt-feature .meta{color:var(--cyan);}
+.gnt-feature p{color:var(--on-dark)!important;font-size:17px;margin:0 0 16px!important;}
+.gnt-feature .btn-row{margin-top:28px;}
+
+/* App */
+.app-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:stretch;}
+.app-feature{background:#fff;border:1px solid var(--line);border-top:6px solid var(--cyan);border-radius:var(--r);padding:40px;}
+.app-feature h3{font-size:30px;margin:10px 0 14px;}
+.app-feature .text > p{color:var(--ink-soft);margin:0;}
+.app-gate{margin-top:26px;padding-top:26px;border-top:1px solid var(--line);}
+.app-gate p{color:var(--ink-soft);font-size:15.5px;line-height:1.6;margin:0 0 16px;}
+.app-gate form{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:14px;}
+.app-gate input{flex:1 1 180px;min-width:0;min-height:50px;font:16px Arial,Helvetica,sans-serif;padding:10px 14px;border:1px solid #88929b;border-radius:var(--r);background:#fff;color:var(--ink);}
+.app-gate #appGateError{color:#b3261e;font-size:14.5px;margin:10px 0 0;}
+.app-gate #appGateUnlocked{margin-top:22px;}
+.app-gate #appGateUnlocked .btn{margin:0 10px 10px 0;}
+.app-gate #appForgetMe{background:none;border:0;padding:0;color:var(--ink-faint);font:13px Arial,Helvetica,sans-serif;text-decoration:underline;cursor:pointer;}
+.method-card{display:flex;flex-direction:column;background:var(--black);color:#fff;border-radius:var(--r);padding:40px;}
+.method-card .meta{color:var(--cyan);}
+.method-card h3{font-size:26px;color:#fff;margin:10px 0 14px;}
+.method-card p{color:var(--on-dark);font-size:16.5px;margin:0 0 22px;}
+.method-card .btn{align-self:flex-start;}
+.method-card .quote{margin-top:auto;padding:4px 0 4px 20px;border-left:4px solid var(--cyan);color:var(--on-dark);font-size:17px;font-style:italic;line-height:1.6;}
+.method-card .btn + .quote{margin-top:34px;}
+.method-card .quote cite{display:block;margin-top:12px;font-style:normal;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--on-dark-soft);}
+
+/* Newsletter and footer share one dark band */
+#newsletter{background:var(--black);color:#fff;padding:88px 0;position:relative;overflow:hidden;}
+#newsletter::before{content:'';position:absolute;right:-8%;top:-60%;width:55%;height:220%;background:radial-gradient(closest-side,rgba(32,169,237,.16),transparent 70%);pointer-events:none;}
+.newsletter-box{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px 64px;align-items:center;}
+.newsletter-box h2{font-size:clamp(32px,4vw,48px);color:#fff;}
+.newsletter-box .section-sub{color:var(--on-dark);margin-top:14px;}
+
+.newsletter-box form{display:flex;gap:10px;flex-wrap:wrap;}
+.newsletter-box input[type="email"]{flex:1 1 220px;min-width:0;min-height:54px;font:17px Arial,Helvetica,sans-serif;padding:12px 16px;border:1px solid #3a434a;border-radius:var(--r);background:#fff;color:var(--ink);}
+.newsletter-box button{min-height:54px;padding:12px 28px;}
+.newsletter-box .fineprint{margin-top:14px;font-size:13.5px;color:var(--on-dark-soft);}
+footer{background:var(--black);color:var(--on-dark-soft);border-top:1px solid var(--rule-dark);padding:44px 0 56px;font-size:14.5px;}
+.footer-grid{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;}
+.footer-brand{display:inline-flex;align-items:center;gap:12px;color:#fff;font-weight:800;letter-spacing:-.02em;font-size:17px;}
+.footer-brand::before{content:'';width:22px;height:5px;background:var(--cyan);}
+.footer-links{display:flex;flex-wrap:wrap;gap:6px 26px;}
+footer a{color:var(--on-dark);text-decoration:none;font-weight:700;}
+footer a:hover{color:var(--cyan);}
+
+/* Tablet */
+@media (max-width:1320px){
+  .nav-links a[href="#blog"],.nav-links a[href="#newsletter"]{display:none;}
+}
+@media (max-width:1080px){
+  .hero-grid{gap:40px;}
+  .about-grid{grid-template-columns:280px minmax(0,1fr);gap:56px;}
+  .gnt-feature .gnt-copy{padding:40px;}
+}
+@media (max-width:900px){
+  section{padding:72px 0;}
+  .site-navigation nav{flex-direction:column;align-items:stretch;gap:0;min-height:0;padding-top:14px;padding-bottom:0;}
+  .nav-links{overflow-x:auto;gap:2px;margin:6px -32px 0;padding:4px 24px 10px;scrollbar-width:none;-webkit-overflow-scrolling:touch;}
+  .nav-links::-webkit-scrollbar{display:none;}
+  .nav-links a[href="#blog"],.nav-links a[href="#newsletter"]{display:inline-block;}
+  .nav-links .student-link{margin-left:6px;}
+  html{scroll-padding-top:110px;}
+  header.hero{padding:56px 0 124px;}
+  .hero-grid{grid-template-columns:1fr;gap:44px;}
+  .paths-grid{grid-template-columns:repeat(2,1fr);}
+  .path:nth-child(3){border-left:0;}
+  .path:nth-child(n+3){border-top:1px solid var(--line);}
+  .course-feature .course-grid{grid-template-columns:1fr;gap:36px;}
+  .video-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .blog-list{grid-template-columns:1fr;}
+  .blog-post,.blog-post:first-child{grid-column:1;grid-row:auto;}
+  .blog-post:first-child{margin-bottom:12px;}
+  .blog-post:nth-child(2){padding-top:24px;}
+  .resource-card.gnt-feature{grid-template-columns:1fr;}
+  .gnt-feature .gnt-mockup-link{min-height:0;aspect-ratio:3/2;}
+  .app-grid{grid-template-columns:1fr;}
+  .newsletter-box{grid-template-columns:1fr;}
+  .newsletter-box .form-side{margin-top:12px;}
+}
+/* Phone */
+@media (max-width:640px){
+  body{font-size:17px;}
+  .wrap{padding:0 22px;}
+  .nav-links{margin:6px -22px 0;padding:4px 14px 10px;}
+  section{padding:60px 0;}
+  .section-head{margin-bottom:32px;}
+  header.hero{padding:40px 0 112px;}
+  header.hero h1{font-size:clamp(38px,11.5vw,52px);margin:16px 0 20px;}
+  header.hero .tagline{font-size:18px;margin-bottom:26px;}
+  .btn-row .btn,.course-feature .course-btn{width:100%;}
+  .play-mark i{width:62px;height:62px;}
+  .paths{margin-top:-76px;}
+  .path{padding:20px 18px 22px;}
+  .path strong{font-size:18px;padding-right:18px;}
+  .path span.d{font-size:14px;}
+  .path .go{right:14px;top:16px;}
+  #about{padding-top:72px;}
+  .about-grid{grid-template-columns:1fr;gap:44px;}
+  .about-grid .photo{max-width:260px;}
+  .about-grid .text p{font-size:17.5px;}
+  .course-feature .course-price{padding:28px 24px;}
+  .sept-app{margin-top:48px;padding:28px 24px;}
+  .sept-app .course-actions{width:100%;}
+  .video-grid{grid-template-columns:1fr;}
+  .blog-post:first-child{padding:28px 24px 30px;min-height:0;}
+  .blog-post:first-child::before{padding-bottom:28px;}
+  .gnt-feature .gnt-copy{padding:32px 24px 36px;}
+  .app-feature,.method-card{padding:28px 24px;}
+  .newsletter-box button{width:100%;}
+  #newsletter{padding:64px 0;}
+  .footer-grid{flex-direction:column;align-items:flex-start;}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{transition:none!important;animation:none!important;}
+}
 </style></head>
 <body><a class="skip-link" href="#main-content">Skip to main content</a>
-<div class="site-navigation"><nav aria-label="Main navigation" class="wrap"><a class="nav-brand" href="#about">Excavating the Text</a><div class="nav-links"><a href="videos.html">Videos</a><a href="/greek-nt.html">Greek NT PDFs</a><a href="/gnt/#Matthew/1">Online Greek NT</a><a class="waitlist-link" href="/hardbound-gnt.html#waitlist">Greek NT waitlist</a><a href="#course">Septuagint</a><a href="#app">Apps</a><a href="#blog">Blog</a><a href="#newsletter">Newsletter</a><a class="student-link" href="/courses/login/">Student login →</a></div></nav></div><main id="main-content"><header class="hero">
-<div class="wrap">
+<div class="site-navigation"><nav aria-label="Main navigation" class="wrap"><a class="nav-brand" href="#about">Excavating the Text</a><div class="nav-links"><a href="videos.html">Videos</a><a href="/greek-nt.html">Greek NT PDFs</a><a href="/gnt/#Matthew/1">Online Greek NT</a><a class="waitlist-link" href="/hardbound-gnt.html#waitlist">Greek NT waitlist</a><a href="#course">Septuagint</a><a href="#app">Apps</a><a href="#blog">Blog</a><a href="#newsletter">Newsletter</a><a class="student-link" href="/courses/login/">Student login →</a></div></nav></div><main id="main-content"><header class="hero on-dark">
+<div class="wrap hero-grid">
+<div class="hero-copy">
 <div class="kicker">Excavating the Text</div>
-<h1>Biblical Studies and Reviews</h1>
+<h1>Biblical Studies <span>and Reviews</span></h1>
 <p class="tagline">Bible studies and reviews for readers who want to see what the manuscripts actually say.</p>
-
-
-<div class="hero-actions"><a class="hero-primary" href="https://www.youtube.com/watch?v=jyKKFMm0Eyw">Watch the featured review <span aria-hidden="true">↗</span></a><a class="hero-secondary" href="/gnt/#Matthew/1">Open the Greek NT reader <span aria-hidden="true">→</span></a></div>
-<div class="hero-feature"><a aria-label="Watch The Greek New Testament Study Bible Review on YouTube" class="feature-image" href="https://www.youtube.com/watch?v=jyKKFMm0Eyw"><img alt="The Greek New Testament Study Bible video review" height="360" src="https://i.ytimg.com/vi/jyKKFMm0Eyw/hqdefault.jpg" width="480"/><span aria-hidden="true" class="play-mark">▶</span></a><div class="feature-copy"><p class="feature-label">FEATURED VIDEO · BOOK REVIEW</p><h2>The Greek New Testament Study Bible: Should You Buy It?</h2><p>Join Stephen for a closer look at a tool for studying the Greek New Testament.</p><a href="https://www.youtube.com/watch?v=jyKKFMm0Eyw">Watch on YouTube ↗</a></div></div></div>
-</header><section id="about">
+<div class="hero-actions btn-row"><a class="btn hero-primary" href="https://www.youtube.com/watch?v=jyKKFMm0Eyw">Watch the featured review <span aria-hidden="true">↗</span></a><a class="btn ghost hero-secondary" href="/gnt/#Matthew/1">Open the Greek NT reader <span aria-hidden="true">→</span></a></div>
+</div>
+<div class="hero-feature"><a aria-label="Watch The Greek New Testament Study Bible Review on YouTube" class="feature-image" href="https://www.youtube.com/watch?v=jyKKFMm0Eyw"><img alt="The Greek New Testament Study Bible video review" height="720" src="https://i.ytimg.com/vi/jyKKFMm0Eyw/maxresdefault.jpg" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/jyKKFMm0Eyw/hqdefault.jpg'" width="1280"/><span aria-hidden="true" class="play-mark"><i></i></span></a><div class="feature-copy"><p class="feature-label">FEATURED VIDEO · BOOK REVIEW</p><h2>The Greek New Testament Study Bible: Should You Buy It?</h2><p>Join Stephen for a closer look at a tool for studying the Greek New Testament.</p><a href="https://www.youtube.com/watch?v=jyKKFMm0Eyw">Watch on YouTube ↗</a></div></div>
+</div>
+</header>
+<div class="paths"><div class="wrap"><nav aria-label="Start here" class="paths-grid">
+<a class="path" href="videos.html"><span class="num">01</span><strong>Videos</strong><span class="d">New studies and reviews, posted regularly.</span><span aria-hidden="true" class="go">→</span></a>
+<a class="path" href="#resources"><span class="num">02</span><strong>Greek New Testament</strong><span class="d">Free PDF, online reader, and the hardbound printing.</span><span aria-hidden="true" class="go">→</span></a>
+<a class="path" href="#course"><span class="num">03</span><strong>Septuagint course</strong><span class="d">Eight modules with live discussion calls.</span><span aria-hidden="true" class="go">→</span></a>
+<a class="path" href="#app">
+<span class="num">04</span><strong>Free apps</strong><span class="d">Digging Deep and Where the Scrolls Align.</span><span aria-hidden="true" class="go">→</span></a>
+</nav></div></div>
+<section id="about">
 <div class="wrap">
-<h2>About</h2>
-<p class="section-sub">Who this channel is for, and why it exists.</p>
 <div class="about-grid">
 <div class="photo">
-<img alt="Stephen Hackett" height="1254" loading="lazy" src="/assets/stephen-hackett-thumbnail-portrait.png" style="transform:none" width="1254"/>
+<img alt="Stephen Hackett" height="800" loading="lazy" src="/assets/stephen-hackett-portrait-800.jpg" width="800"/>
 </div>
 <div class="text">
+<div class="section-head">
+<h2>About</h2>
+<p class="section-sub">Who this channel is for, and why it exists.</p>
+</div>
 <p>I'm Stephen Hackett, and Biblical Studies and Reviews is where I work through Scripture the slow way — textual criticism, original languages, and the questions that come up when you actually sit with a passage instead of skimming it. Some of it is verse-by-verse study, some of it is reviewing tools and resources for people doing the same kind of digging.</p>
 <p>This site is the home base for the channel: videos, a running blog for things that don't fit in a video, and a link to <a href="#app">Digging Deep: Notetaker Deluxe</a>, the Bible study notebook app that grew out of this work.</p>
 </div>
 </div>
 </div>
-</section><section class="course-feature" id="course">
+</section><section class="course-feature on-dark" id="course">
 <div class="wrap">
 <div class="course-grid">
 <div>
@@ -580,7 +367,7 @@ header.hero .feature-copy h2{font-size:24px;line-height:1.25;margin:0 0 10px;col
 <div class="course-price">
 <p><strong>$49 once</strong> for the standalone course</p>
 <p><strong>or $7.99/month</strong> through the YouTube <strong>Course Taker</strong> tier</p>
-<p style="color:#bfc7cf;font-size:16px;">Both options include the complete course and live calls.</p>
+<p>Both options include the complete course and live calls.</p>
 </div>
 </div>
 <div class="sept-app">
@@ -597,32 +384,36 @@ header.hero .feature-copy h2{font-size:24px;line-height:1.25;margin:0 0 10px;col
 </div>
 </section><section id="videos">
 <div class="wrap">
+<div class="section-head split">
+<div>
 <h2>Videos</h2>
 <p class="section-sub">New studies and reviews, posted regularly.</p>
+</div>
 <div class="video-cta">
-<p style="margin:0;">Explore more studies and reviews, or subscribe on YouTube so you don't miss a new one.</p>
-<div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
+<p>Explore more studies and reviews, or subscribe on YouTube so you don't miss a new one.</p>
+<div class="btn-row">
 <a class="btn" href="videos.html">Browse more videos →</a>
-<a class="btn" href="https://www.youtube.com/@BiblicalStudiesandReviews" rel="noopener" style="background:transparent;color:var(--rubric);border:1px solid var(--rubric);" target="_blank">Subscribe on YouTube →</a>
+<a class="btn ghost" href="https://www.youtube.com/@BiblicalStudiesandReviews" rel="noopener" target="_blank">Subscribe on YouTube →</a>
+</div>
 </div>
 </div>
 <div class="video-grid">
-<a class="video-card" href="https://www.youtube.com/watch?v=GE0bAMTiqw8" rel="noopener" style="text-decoration:none;color:inherit;display:block;" target="_blank">
-<div class="thumb" style="background-image:url('https://i.ytimg.com/vi/GE0bAMTiqw8/hqdefault.jpg');background-size:cover;background-position:center;"></div>
+<a class="video-card" href="https://www.youtube.com/watch?v=GE0bAMTiqw8" rel="noopener" target="_blank">
+<div class="thumb"><img alt="" height="360" loading="lazy" src="https://i.ytimg.com/vi/GE0bAMTiqw8/mqdefault.jpg" width="640"/></div>
 <div class="info">
 <h3>Their Best Fossil Just Backfired on Them!</h3>
 <p>Digging into a fossil find that creates more problems than it solves for the standard narrative.</p>
 </div>
 </a>
-<a class="video-card" href="https://www.youtube.com/watch?v=tkAGIzgkR-E" rel="noopener" style="text-decoration:none;color:inherit;display:block;" target="_blank">
-<div class="thumb" style="background-image:url('https://i.ytimg.com/vi/tkAGIzgkR-E/hqdefault.jpg');background-size:cover;background-position:center;"></div>
+<a class="video-card" href="https://www.youtube.com/watch?v=tkAGIzgkR-E" rel="noopener" target="_blank">
+<div class="thumb"><img alt="" height="360" loading="lazy" src="https://i.ytimg.com/vi/tkAGIzgkR-E/mqdefault.jpg" width="640"/></div>
 <div class="info">
 <h3>Creationism and the Septuagint: Recent Study Alters Debate!</h3>
 <p>A recent study on the Septuagint that shifts how we should think about the debate.</p>
 </div>
 </a>
-<a class="video-card" href="https://www.youtube.com/watch?v=Su_WhkptRnk" rel="noopener" style="text-decoration:none;color:inherit;display:block;" target="_blank">
-<div class="thumb" style="background-image:url('https://i.ytimg.com/vi/Su_WhkptRnk/hqdefault.jpg');background-size:cover;background-position:center;"></div>
+<a class="video-card" href="https://www.youtube.com/watch?v=Su_WhkptRnk" rel="noopener" target="_blank">
+<div class="thumb"><img alt="" height="360" loading="lazy" src="https://i.ytimg.com/vi/Su_WhkptRnk/mqdefault.jpg" width="640"/></div>
 <div class="info">
 <h3>Septuagint Bible Makeover: Turning an Ugly Bible into a Masterpiece</h3>
 <p>Reviewing and rebuilding a Septuagint Bible into something worth studying from.</p>
@@ -630,91 +421,101 @@ header.hero .feature-copy h2{font-size:24px;line-height:1.25;margin:0 0 10px;col
 </a>
 </div>
 </div>
-</section><section id="blog">
+</section><section class="tint" id="blog">
 <div class="wrap">
+<div class="section-head">
 <h2>Blog</h2>
 <p class="section-sub">Notes and write-ups that don't fit neatly into a video.</p>
+</div>
 <!-- EDIT ME: each post is its own page in the /blog folder, built from
          blog/template.html. To publish a new post, duplicate template.html,
-         write it, then add an entry here, newest first (top of the list). -->
+         write it, then add an entry here, newest first (top of the list).
+         The first entry is automatically shown as the large "Latest post"
+         card; the rest become the compact list beside it. Every entry uses
+         the same markup: meta line, then h3 link, then one-sentence summary. -->
 <div class="blog-list">
 <div class="blog-post">
-<h3><a href="blog/greek-new-testament-printing-update.html">The Greek New Testament Project: Printing Update</a></h3>
 <div class="meta">November 8, 2026 · Project update</div>
+<h3><a href="blog/greek-new-testament-printing-update.html">The Greek New Testament Project: Printing Update</a></h3>
 <p>The proofs are approved, production is moving forward, and I have an update on when I expect to start shipping your copies.</p>
 </div>
 <div class="blog-post">
-<h3><a href="blog/greek-new-testament-project-update.html">The Greek New Testament Project: Where Things Stand</a></h3>
 <div class="meta">September 7, 2026 · Project update</div>
+<h3><a href="blog/greek-new-testament-project-update.html">The Greek New Testament Project: Where Things Stand</a></h3>
 <p>A personal update on my role in the project, the people who carried the work, and our plans for an independent hardbound printing.</p>
 </div>
 <div class="blog-post">
-<h3><a href="blog/choosing-a-desert-island-bible.html">On Choosing a Desert-Island Bible</a></h3>
 <div class="meta">August 6, 2026 · Mark 8:34</div>
+<h3><a href="blog/choosing-a-desert-island-bible.html">On Choosing a Desert-Island Bible</a></h3>
 <p>Three English translations I'd keep if I could only have three — and why even three can't carry everything the Greek does.</p>
 </div>
 <div class="blog-post">
-<h3><a href="blog/1400-missing-years-genesis-5-and-11.html">The 1,400 Missing Years: Genesis 5 and 11 in Greek and Hebrew</a></h3>
 <div class="meta">August 6, 2026 · Genesis 5:3</div>
+<h3><a href="blog/1400-missing-years-genesis-5-and-11.html">The 1,400 Missing Years: Genesis 5 and 11 in Greek and Hebrew</a></h3>
 <p>Why the Septuagint's chronology in Genesis 5 and 11 runs about 1,400 years longer than the Masoretic Text — and why neither side gets to claim neutrality by default.</p>
 </div>
 <div class="blog-post">
-<h3><a href="blog/starlight-and-the-convention-of-simultaneity.html">Starlight and the Convention of Simultaneity</a></h3>
 <div class="meta">August 6, 2026 · Genesis 1:14</div>
+<h3><a href="blog/starlight-and-the-convention-of-simultaneity.html">Starlight and the Convention of Simultaneity</a></h3>
 <p>Why the starlight-travel-time objection to a young universe rests on an assumption most people never examine.</p>
 </div>
 </div>
 </div>
 </section><section id="resources">
 <div class="wrap">
+<div class="section-head">
 <h2>Resources</h2>
 <p class="section-sub">Public-domain texts and reference tools worth having on hand.</p>
+</div>
 <div class="resource-list">
-<div class="resource-card gnt-feature">
+<div class="resource-card gnt-feature on-dark">
 <a aria-label="See the hardbound Greek New Testament printing details and waitlist" class="gnt-mockup-link" href="/hardbound-gnt.html">
 <img alt="Mockup of the dark navy hardbound Greek New Testament with gold foil lettering" class="gnt-mockup" height="1024" loading="lazy" src="/assets/greek-new-testament-hardbound-mockup.jpg?v=20260924-3" width="1536"/>
 </a>
 <div class="gnt-copy">
-<h3>Greek New Testament resources</h3>
 <div class="meta">Robinson–Pierpont Byzantine Text (2026) · Free PDF &amp; hardbound printing</div>
+<h3>Greek New Testament resources</h3>
 <p>A public-domain Byzantine Greek New Testament (plain PDF and hyperlinked edition), plus notes on an independent hardbound printing and a short guide for comparing editions. The full PDF description, print-your-own steps, hardbound update, and waitlist live on their own pages so this homepage stays light.</p>
-<p style="margin:0 0 14px; color:var(--ink-soft);">Start with the free PDFs, join the waitlist for this site’s independent hardbound printing, or take a short quiz that compares two Byzantine editions from different publishers (not options within this waitlist).</p>
-<div style="display:flex; flex-wrap:wrap; gap:12px;">
+<p>Start with the free PDFs, join the waitlist for this site’s independent hardbound printing, or take a short quiz that compares two Byzantine editions from different publishers (not options within this waitlist).</p>
+<div class="btn-row">
 <a class="btn" href="/hardbound-gnt.html">See the hardbound book →</a>
-<a class="btn" href="/greek-nt.html" style="background:transparent; color:var(--ink); border:1px solid var(--ink);">Free PDF / Greek NT →</a>
-<a class="btn" href="/gnt-edition-picker.html" style="background:transparent; color:var(--ink); border:1px solid var(--ink);">Compare editions →</a>
+<a class="btn ghost" href="/greek-nt.html">Free PDF / Greek NT →</a>
+<a class="btn ghost" href="/gnt-edition-picker.html">Compare editions →</a>
 </div>
 </div>
 </div>
 </div>
 </div>
-</section><section id="app">
+</section><section class="tint" id="app">
 <div class="wrap">
+<div class="section-head">
 <h2>The App</h2>
 <p class="section-sub">A running Bible study notebook, built alongside this channel.</p>
+</div>
+<div class="app-grid">
 <div class="app-feature">
-<div class="spine"></div>
 <div class="text">
-<h3 style="margin:0 0 8px;font-size:24px;">Digging Deep: Notetaker Deluxe</h3>
-<p style="margin:0;color:var(--ink-soft);">A running notebook for Bible study, built around the way Jonathan Edwards worked: read, resolve, write it down, and cross-reference it later. Includes the KJV, ASV, SBLGNT with tap-to-view critical apparatus, Strong's numbers, and more — free to use, right in your browser.</p>
+<div class="meta">Free · In your browser</div>
+<h3>Digging Deep: Notetaker Deluxe</h3>
+<p>A running notebook for Bible study, built around the way Jonathan Edwards worked: read, resolve, write it down, and cross-reference it later. Includes the KJV, ASV, SBLGNT with tap-to-view critical apparatus, Strong's numbers, and more — free to use, right in your browser.</p>
 <div class="app-gate">
-<p style="margin:10px 0 12px;color:var(--ink-soft);font-size:15px;">Free to use. Go through the quick page below — give your email and tip if you'd like — and you'll get a password to unlock it here.</p>
-<a class="btn" href="#" id="gumroadLink" rel="noopener" style="margin-bottom:14px;" target="_blank">Get your free password →</a>
-<form id="appGateForm" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px;">
-<input autocomplete="off" id="appGateInput" placeholder="Enter password" style="font-family:'EB Garamond', serif;font-size:16px;padding:9px 12px;border:1px solid var(--line);border-radius:6px;background:#fdf7ee;color:var(--ink);width:200px;" type="text"/>
-<button class="btn" style="margin-top:0;" type="submit">Unlock →</button>
+<p>Free to use. Go through the quick page below — give your email and tip if you'd like — and you'll get a password to unlock it here.</p>
+<a class="btn" href="#" id="gumroadLink" rel="noopener" target="_blank">Get your free password →</a>
+<form id="appGateForm">
+<input aria-label="App password" autocomplete="off" id="appGateInput" placeholder="Enter password" type="text"/>
+<button class="btn ghost" type="submit">Unlock →</button>
 </form>
-<p id="appGateError" style="display:none;color:var(--rubric);font-size:14px;margin-top:8px;">That's not quite right — check your Gumroad receipt email.</p>
+<p id="appGateError" style="display:none;">That's not quite right — check your Gumroad receipt email.</p>
 <div id="appGateUnlocked" style="display:none;">
-<p style="margin:0 0 10px;color:var(--ink-soft);font-size:15px;">Welcome back — you've already unlocked this.</p>
+<p>Welcome back — you've already unlocked this.</p>
 <a class="btn" href="#" id="appOpenDirect" rel="noopener" target="_blank">Open Digging Deep →</a>
-<a class="btn" href="app/download.html" id="appDownloadLink" style="background:var(--blue);margin-left:10px;">Use it offline →</a>
-<button id="appForgetMe" style="margin-left:10px;background:none;border:none;color:var(--ink-faint);font-size:13px;text-decoration:underline;cursor:pointer;font-family:'EB Garamond', serif;" type="button">not you? reset</button>
+<a class="btn ghost" href="app/download.html" id="appDownloadLink">Use it offline →</a>
+<button id="appForgetMe" type="button">not you? reset</button>
 </div>
 </div>
 </div>
 </div>
-<div class="resource-card" style="margin-top:18px;">
+<div class="resource-card method-card on-dark">
 <div class="meta">Video · Method</div>
 <h3>Learn Jonathan Edwards’ Notetaking Method</h3>
 <p>Before you dig into the notebook app, see how Edwards numbered, cross-referenced, and kept a running record of what he resolved in Scripture — the habit Digging Deep is built around.</p>
@@ -724,11 +525,15 @@ header.hero .feature-copy h2{font-size:24px;line-height:1.25;margin:0 0 10px;col
       <cite>— Jonathan Edwards, Resolution 35, Dec. 18, 1722</cite>
 </div></div>
 </div>
-</section><section id="newsletter">
+</div>
+</section><section class="on-dark" id="newsletter">
 <div class="wrap">
 <div class="newsletter-box">
-<h2 style="margin:0;">Get new studies by email</h2>
-<p class="section-sub" style="margin-bottom:0;">No spam — just a note when something new goes up.</p>
+<div class="copy-side">
+<h2>Get new studies by email</h2>
+<p class="section-sub">No spam — just a note when something new goes up.</p>
+</div>
+<div class="form-side">
 <form action="https://outlook.us9.list-manage.com/subscribe/post?u=1b93f0f648a0ee28b86fced7b&amp;id=c54e302dc7" method="post" target="_blank">
 <input aria-label="Email address" name="EMAIL" placeholder="you@example.com" required="" type="email"/>
 <div aria-hidden="true" style="position:absolute;left:-5000px;">
@@ -739,17 +544,12 @@ header.hero .feature-copy h2{font-size:24px;line-height:1.25;margin:0 0 10px;col
 <div class="fineprint">Powered by Mailchimp. Unsubscribe anytime.</div>
 </div>
 </div>
+</div>
 </section></main>
-
-
-
-
-
-
-
 <footer>
-<div class="wrap">
-<p>Biblical Studies and Reviews · <a href="/the-site.html">About this site</a> · <a href="/greek-nt.html">Greek NT PDF</a> · <a href="/hardbound-gnt.html">Hardbound GNT</a> · <a href="/gnt-edition-picker.html">Edition picker</a> · <a href="https://www.youtube.com/@BiblicalStudiesandReviews" rel="noopener" target="_blank">YouTube</a> · <a href="https://x.com/stephen_hackett" rel="noopener" target="_blank">X</a> · <a href="#app">Digging Deep app</a></p>
+<div class="wrap footer-grid">
+<span class="footer-brand">Biblical Studies and Reviews</span>
+<div class="footer-links"><a href="/the-site.html">About this site</a><a href="/greek-nt.html">Greek NT PDF</a><a href="/hardbound-gnt.html">Hardbound GNT</a><a href="/gnt-edition-picker.html">Edition picker</a><a href="https://www.youtube.com/@BiblicalStudiesandReviews" rel="noopener" target="_blank">YouTube</a><a href="https://x.com/stephen_hackett" rel="noopener" target="_blank">X</a><a href="#app">Digging Deep app</a></div>
 </div>
 </footer>
 <script>
